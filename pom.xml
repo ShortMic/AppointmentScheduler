@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.appointmentscheduler/com.example.appointmentscheduler.HelloApplication
+                                com.example.appointmentscheduler/com.example.appointmentscheduler.ApplicationMain
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

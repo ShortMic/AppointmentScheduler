@@ -1,11 +1,3 @@
 Application: Appointment Scheduler. A javafx GUI application with a user login screen and appointment scheduling utility as a client to business portal.
 Author: Michael Short
 Contact: msho110@wgu.edu
-Version: 0.1
-Date: 05/14/2023
-IDE: Intellij Community 2021.3.3
-openjdk-18 JavaFX-SDK-17.0.1
-
-Directions:
-
-______ Report:
