@@ -1,6 +1,7 @@
 module AppointmentScheduler {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens AppointmentScheduler to javafx.fxml;
