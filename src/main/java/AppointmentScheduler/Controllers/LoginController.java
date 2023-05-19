@@ -1,4 +1,4 @@
-package com.example.appointmentscheduler;
+package AppointmentScheduler.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

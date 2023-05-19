@@ -1,4 +1,4 @@
-package Models;
+package AppointmentScheduler.Models;
 
 import java.util.Date;
 

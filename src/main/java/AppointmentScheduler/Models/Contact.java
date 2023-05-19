@@ -1,4 +1,4 @@
-package Models;
+package AppointmentScheduler.Models;
 
 public class Contact {
     private int countryId;

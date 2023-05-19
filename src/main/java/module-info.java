@@ -1,8 +1,10 @@
-module com.example.appointmentscheduler {
+module AppointmentScheduler {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.example.appointmentscheduler to javafx.fxml;
-    exports com.example.appointmentscheduler;
+    opens AppointmentScheduler to javafx.fxml;
+    exports AppointmentScheduler;
+    exports AppointmentScheduler.Controllers;
+    opens AppointmentScheduler.Controllers to javafx.fxml;
 }
