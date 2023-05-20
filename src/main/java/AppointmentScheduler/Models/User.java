@@ -1,14 +1,51 @@
 package AppointmentScheduler.Models;
 
-public class User {
+public abstract class User {
 
-    private int userId;
-    private String userName; //unique
-    private String password;
+    private static int userId;
+    private static String userName; //unique
+    private static String password;
+    private static boolean assigned = false;
 
-    public User(int userId, String userName, String password){
-        this.userId = userId;
-        this.userName = userName;
-        this.password = password;
+    public static void setUserId(int userId) {
+        User.userId = userId;
     }
+
+    public static int getUserId() {
+        return userId;
+    }
+
+    public static void setUserName(String thisUserName) {
+        userName = thisUserName;
+    }
+
+    public static String getUserName() {
+        return userName;
+    }
+
+    public static void setPassword(String thisPassword) {
+        password = thisPassword;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void assign(){
+        if(!(userId == 0 && userName == null && password == null)){
+            assigned = true;
+        }
+    }
+
+    public static boolean isAssigned(){
+        return assigned;
+    }
+
+    public static void clear(){
+        userId = 0;
+        userName = null;
+        password = null;
+        assigned = false;
+    }
+
 }
