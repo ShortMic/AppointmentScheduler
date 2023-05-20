@@ -1,6 +1,6 @@
 package Utilities;
 
-import AppointmentScheduler.Models.User;
+import Application.Models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

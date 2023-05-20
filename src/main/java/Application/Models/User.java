@@ -1,4 +1,4 @@
-package AppointmentScheduler.Models;
+package Application.Models;
 
 public abstract class User {
 

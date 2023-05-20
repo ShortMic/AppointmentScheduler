@@ -4,8 +4,8 @@ module AppointmentScheduler {
     requires java.sql;
 
 
-    opens AppointmentScheduler to javafx.fxml;
-    exports AppointmentScheduler;
-    exports AppointmentScheduler.Controllers;
-    opens AppointmentScheduler.Controllers to javafx.fxml;
+    opens Application to javafx.fxml;
+    exports Application;
+    exports Application.Controllers;
+    opens Application.Controllers to javafx.fxml;
 }

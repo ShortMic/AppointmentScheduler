@@ -1,6 +1,6 @@
-package AppointmentScheduler.Controllers;
+package Application.Controllers;
 
-import AppointmentScheduler.ApplicationMain;
+import Application.ApplicationMain;
 import Utilities.UserQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
