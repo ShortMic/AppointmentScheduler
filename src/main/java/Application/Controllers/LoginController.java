@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     public static Locale locale;
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
     private ResourceBundle rb;
     private Alert alert;
     @FXML

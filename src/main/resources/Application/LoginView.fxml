@@ -10,9 +10,9 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.LoginController">
    <children>
       <TextField id="cssUserNameTextbox" fx:id="userNameTextbox" layoutX="222.0" layoutY="167.0" />
-      <Text id="cssUserNameLabel" fx:id="userNameLabel" layoutX="134.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+      <Text id="cssUserNameLabel" fx:id="userNameLabel" layoutX="110.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
       <TextField id="cssPasswordTextbox" fx:id="passwordTextbox" layoutX="222.0" layoutY="209.0" />
-      <Text id="cssPasswordLabel" fx:id="passwordLabel" layoutX="134.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+      <Text id="cssPasswordLabel" fx:id="passwordLabel" layoutX="110.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
       <Text id="cssAppTitleLabel" fx:id="appTitleLabel" layoutX="234.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduler" textAlignment="CENTER" wrappingWidth="125.595703125">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -24,7 +24,7 @@
          </font>
       </Text>
       <Button id="cssSubmitCredentialsButton" fx:id="submitCredentialsButton" layoutX="275.0" layoutY="260.0" mnemonicParsing="false" onAction="#onLoginSubmit" text="Enter" />
-      <Label id="cssLocaleLabel" fx:id="localeLabel" layoutX="400.0" layoutY="171.0" text="Locale" />
-      <Label id="cssZoneIdLabel" fx:id="zoneIdLabel" layoutX="444.0" layoutY="171.0" text="US (Default)" />
+      <Label id="cssLocaleLabel" fx:id="localeLabel" layoutX="110.0" layoutY="129.0" text="Locale" />
+      <Label id="cssZoneIdLabel" fx:id="zoneIdLabel" layoutX="265.0" layoutY="130.0" text="US (Default)" />
    </children>
 </AnchorPane>
