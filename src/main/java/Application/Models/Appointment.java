@@ -26,4 +26,5 @@ public class Appointment {
         this.userId = userId;
         this.contactId = contactId;
     }
+
 }

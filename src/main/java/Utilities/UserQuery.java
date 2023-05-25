@@ -10,6 +10,7 @@ public abstract class UserQuery implements Queryable{
 
     public static String table = "users";
     public static String[] fields = {"User_ID", "User_Name", "Password"};
+    public static int userID = 0;
 
     public static int insert(String userName, String password) throws SQLException {
         String sql = "INSERT INTO "+table+" (User_Name, Password) VALUES(?, ?)";
@@ -38,8 +39,9 @@ public abstract class UserQuery implements Queryable{
             System.out.println("Login Username and Password not found in User table!");
             return -1;
         }else{
+            userID = rs.getInt("User_ID");
             System.out.println("Login Username "+userName+" and password match found! Logging in...");
-            User.setUserId(rs.getInt("User_ID"));
+            User.setUserId(userID);
             User.setUserName(rs.getString("User_Name"));
             User.setPassword(rs.getString("Password"));
             User.assign();

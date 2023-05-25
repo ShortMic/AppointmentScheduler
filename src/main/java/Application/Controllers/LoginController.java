@@ -4,13 +4,17 @@ import Application.ApplicationMain;
 import Utilities.UserQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Locale;
@@ -112,15 +116,18 @@ public class LoginController implements Initializable {
         return translation;
     }
 
+    private void loadMainMenu(ActionEvent e) throws IOException {
+        ((Stage)(((Button)e.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
+    }
+
     @FXML
     public void onLoginSubmit(ActionEvent actionEvent) throws SQLException {
-//        System.out.println(actionEvent.getSource().toString()+": "+actionEvent.getEventType().getName().toString());
-//        System.out.println(actionEvent.toString());
         int userId = 0;
         try{
             userId = UserQuery.select(userNameTextbox.getText(), passwordTextbox.getText());
             if(userId > 0){
                 System.out.println("User and password accepted!");
+                loadMainMenu(actionEvent);
             }else if(userId == -1){
                 alert = new Alert(Alert.AlertType.ERROR,
                         translate("Invalid username and/or password!"));

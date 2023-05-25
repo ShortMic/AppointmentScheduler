@@ -1,27 +1,37 @@
 package Application.Models;
 
 public class Contact {
-    private int countryId;
-    private String country;
+    private int contactId;
+    private String contactName;
+    private String email;
 
-    public Contact(int countryId, String country){
-        this.countryId = countryId;
-        this.country = country;
+    public Contact(int countryId, String contactName, String email){
+        this.contactId = countryId;
+        this.contactName = contactName;
+        this.email = email;
     }
 
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
     }
 
-    public int getCountryId() {
-        return countryId;
+    public int getContactId() {
+        return contactId;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
 
-    public String getCountry() {
-        return country;
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public String getEmail(){
+        return email;
     }
 }
