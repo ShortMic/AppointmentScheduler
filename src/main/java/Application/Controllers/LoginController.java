@@ -128,6 +128,7 @@ public class LoginController implements Initializable {
             if(userId > 0){
                 System.out.println("User and password accepted!");
                 loadMainMenu(actionEvent);
+                //((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
             }else if(userId == -1){
                 alert = new Alert(Alert.AlertType.ERROR,
                         translate("Invalid username and/or password!"));

@@ -5,13 +5,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
-public class CustomersCache {
+public class ContactsCache {
 
     private ObservableList<Customer> customers;
     public FilteredList<Customer> filteredCustomers;
     public static boolean isCached = false;
 
-    public CustomersCache(){
+    public ContactsCache(){
         customers = FXCollections.observableArrayList();
     }
 }

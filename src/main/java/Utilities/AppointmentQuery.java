@@ -32,7 +32,7 @@ public abstract class AppointmentQuery implements Queryable{
      */
 
     public static ResultSet selectAllApptView() throws SQLException {
-        String sql = "SELECT Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, End, Customer_ID, User_ID" +
+        String sql = "SELECT Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, End, Customer_ID, User_ID, appointments.Contact_ID" +
                 " FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID"; //WHERE User_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         //Filter by current user
