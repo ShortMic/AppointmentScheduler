@@ -51,11 +51,11 @@
                            <columns>
                               <TableColumn fx:id="customerIdCol" text="Customer ID" />
                               <TableColumn fx:id="customerNameCol" prefWidth="193.0" text="Name" />
-                              <TableColumn fx:id="customerAddressCol" prefWidth="206.0" text="Address" />
-                              <TableColumn fx:id="customerPostalCodeCol" prefWidth="75.0" text="Postal Code" />
-                              <TableColumn fx:id="customerPhoneCol" prefWidth="102.0" text="Phone Number" />
-                              <TableColumn fx:id="customerCountryCol" prefWidth="177.0" text="Country" />
-                              <TableColumn fx:id="customerStateProvinceCol" prefWidth="161.0" text="State/Province" />
+                              <TableColumn fx:id="customerAddressCol" prefWidth="231.0" text="Address" />
+                              <TableColumn fx:id="customerPostalCodeCol" prefWidth="84.0" text="Postal Code" />
+                              <TableColumn fx:id="customerPhoneCol" prefWidth="111.0" text="Phone Number" />
+                              <TableColumn fx:id="customerCountryCol" prefWidth="156.0" text="Country" />
+                              <TableColumn fx:id="customerStateProvinceCol" prefWidth="139.0" text="State/Province" />
                            </columns>
                         </TableView>
                         <Button fx:id="addCustomerBtn" layoutX="919.0" layoutY="427.0" mnemonicParsing="false" onAction="#onAddCustomer" text="Add Customer" />

@@ -1,5 +1,6 @@
 package Application.Controllers;
 
+import Application.ApplicationMain;
 import Application.Models.Appointment;
 import Application.Models.AppointmentTable;
 import Application.Models.Contact;
@@ -8,12 +9,15 @@ import Application.Repository.AppointmentsCache;
 import Application.Repository.CustomersCache;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -102,7 +106,8 @@ public class MainMenuController implements Initializable{
     }
 
     @FXML
-    public void onAddAppointment(ActionEvent actionEvent) {
+    public void onAddAppointment(ActionEvent actionEvent) throws IOException {
+        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("AddAppointmentView.fxml")).load(), 600, 400));
     }
 
     @FXML
