@@ -1,7 +1,10 @@
 package Application.Repository;
 
+import Application.Models.AppointmentTable;
+import Application.Models.Country;
 import Application.Models.Customer;
 import Application.Models.CustomerTable;
+import Utilities.AppointmentQuery;
 import Utilities.CustomerQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,21 +13,20 @@ import javafx.collections.transformation.FilteredList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CustomersCache {
+public class CountryCache {
 
-    private static CustomersCache instance;
+    private static CountryCache instance;
     private ObservableList<CustomerTable> cache;
     public FilteredList<Customer> filteredCountries;
     public static boolean isCached = false;
 
-    private CustomersCache() throws SQLException {
+    private CountryCache(){
         //TODO: implement countrycache query function and instantiation function. Maybe make an abstract or interface class for this?
-        populateCache();
     }
 
-    public static CustomersCache getInstance() throws SQLException {
+    public static CountryCache getInstance() throws SQLException {
         if(instance == null){
-            instance = new CustomersCache();
+            instance = new CountryCache();
         }
         return instance;
     }

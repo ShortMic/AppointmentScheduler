@@ -10,17 +10,29 @@ import javafx.collections.transformation.FilteredList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AppointmentsCache {
+public class AppointmentsCache implements Cachable<AppointmentTable>{
 
-    public ObservableList<AppointmentTable> appointmentsTable;
+    private static AppointmentsCache instance;
+    private ObservableList<AppointmentTable> cache;
     public FilteredList<Appointment> filteredAppointments;
     public static boolean isCached = false;
-    //private ObservableList<> appointments;
-    public AppointmentsCache() throws SQLException {
-        appointmentsTable = FXCollections.observableArrayList();
+
+    private AppointmentsCache() throws SQLException {
+        populateCache();
+    }
+
+    public static AppointmentsCache getInstance() throws SQLException {
+        if(instance == null){
+            instance = new AppointmentsCache();
+        }
+        return instance;
+    }
+
+    public void populateCache() throws SQLException {
+        cache = FXCollections.observableArrayList();
         ResultSet rs = AppointmentQuery.selectAllApptView();
         while(rs.next()){
-            appointmentsTable.add(new AppointmentTable(rs.getInt("Appointment_ID"),
+            cache.add(new AppointmentTable(rs.getInt("Appointment_ID"),
                     rs.getString("Title"),
                     rs.getString("Description"),
                     rs.getString("Location"),
@@ -42,8 +54,8 @@ public class AppointmentsCache {
         isCached = true;
     }
 
-    public ObservableList<AppointmentTable> getAppointments() {
-        return appointmentsTable;
+    public ObservableList<AppointmentTable> getCache() {
+        return cache;
     }
 
 }
