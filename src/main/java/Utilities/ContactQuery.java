@@ -4,9 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class ContactQuery implements Queryable{
+public abstract class ContactQuery extends Queryable {
 
-    public static String table = "appointments";
+    public static String table = "contacts";
     public static String[] fields = {"User_ID", "User_Name", "Password"};
 
     /*
@@ -46,9 +46,4 @@ public abstract class ContactQuery implements Queryable{
         return "";
     }
 
-    public static ResultSet selectAll() throws SQLException {
-        String sql = "SELECT * FROM contacts";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        return ps.executeQuery();
-    }
 }

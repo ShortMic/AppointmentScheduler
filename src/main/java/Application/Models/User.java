@@ -1,38 +1,44 @@
 package Application.Models;
 
-public abstract class User {
+public class User {
 
-    private static int userId;
-    private static String userName; //unique
-    private static String password;
+    //Current User
+    private static int currentUserId;
+    private static String currentUserName; //unique
+    private static String currentPassword;
     private static boolean assigned = false;
+    //Generic Users
+    private int userId;
+    private String userName; //unique
+    private String password;
 
-    public static void setUserId(int userId) {
-        User.userId = userId;
+    //Current User
+    public static void setCurrentUserId(int userId) {
+        User.currentUserId = userId;
     }
 
-    public static int getUserId() {
-        return userId;
+    public static int getCurrentUserId() {
+        return User.currentUserId;
     }
 
-    public static void setUserName(String thisUserName) {
-        userName = thisUserName;
+    public static void setCurrentUserName(String thisUserName) {
+        User.currentUserName = thisUserName;
     }
 
-    public static String getUserName() {
-        return userName;
+    public static String getCurrentUserName() {
+        return User.currentUserName;
     }
 
-    public static void setPassword(String thisPassword) {
-        password = thisPassword;
+    public static void setCurrentPassword(String thisPassword) {
+        User.currentPassword = thisPassword;
     }
 
-    public static String getPassword() {
-        return password;
+    public static String getCurrentPassword() {
+        return User.currentPassword;
     }
 
     public static void assign(){
-        if(!(userId == 0 && userName == null && password == null)){
+        if(!(currentUserId == 0 && currentUserName == null && currentPassword == null)){
             assigned = true;
         }
     }
@@ -42,10 +48,40 @@ public abstract class User {
     }
 
     public static void clear(){
-        userId = 0;
-        userName = null;
-        password = null;
+        currentUserId = 0;
+        currentUserName = null;
+        currentPassword = null;
         assigned = false;
+    }
+
+    //Generic Users
+    public User(int userId, String userName, String password){
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+    }
+    public void setUserId(int userId) {
+        userId = userId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserName(String thisUserName) {
+        userName = thisUserName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setPassword(String thisPassword) {
+        password = thisPassword;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
 }

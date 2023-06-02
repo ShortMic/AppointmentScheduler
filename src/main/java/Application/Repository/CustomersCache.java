@@ -10,7 +10,7 @@ import javafx.collections.transformation.FilteredList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CustomersCache {
+public class CustomersCache implements Cachable<CustomerTable>{
 
     private static CustomersCache instance;
     private ObservableList<CustomerTable> cache;
@@ -18,7 +18,6 @@ public class CustomersCache {
     public static boolean isCached = false;
 
     private CustomersCache() throws SQLException {
-        //TODO: implement countrycache query function and instantiation function. Maybe make an abstract or interface class for this?
         populateCache();
     }
 

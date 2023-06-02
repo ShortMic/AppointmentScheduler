@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class UserQuery implements Queryable{
+public abstract class UserQuery extends Queryable {
 
     public static String table = "users";
     public static String[] fields = {"User_ID", "User_Name", "Password"};
@@ -41,9 +41,9 @@ public abstract class UserQuery implements Queryable{
         }else{
             userID = rs.getInt("User_ID");
             System.out.println("Login Username "+userName+" and password match found! Logging in...");
-            User.setUserId(userID);
-            User.setUserName(rs.getString("User_Name"));
-            User.setPassword(rs.getString("Password"));
+            User.setCurrentUserId(userID);
+            User.setCurrentUserName(rs.getString("User_Name"));
+            User.setCurrentPassword(rs.getString("Password"));
             User.assign();
             return rs.getInt("User_ID");
         }

@@ -1,12 +1,8 @@
 package Application.Controllers;
 
 import Application.ApplicationMain;
-import Application.Models.Appointment;
-import Application.Models.AppointmentTable;
-import Application.Models.Contact;
-import Application.Models.CustomerTable;
-import Application.Repository.AppointmentsCache;
-import Application.Repository.CustomersCache;
+import Application.Models.*;
+import Application.Repository.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,6 +63,10 @@ public class MainMenuController implements Initializable{
     public Button exitBtn;
     public AppointmentsCache appointmentsCache;
     public CustomersCache customersCache;
+    public ContactsCache contactsCache;
+    public CountryCache countryCache;
+    public DivisionLevelCache divisionLevelCache;
+    public UsersCache usersCache;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -78,6 +78,7 @@ public class MainMenuController implements Initializable{
         }
         populateAppointmentsTable();
         populateCustomersTable();
+        populateLocalCaches();
     }
 
     private void populateAppointmentsTable(){
@@ -103,6 +104,14 @@ public class MainMenuController implements Initializable{
         customerCountryCol.setCellValueFactory(new PropertyValueFactory<CustomerTable, String>("country"));
         customerStateProvinceCol.setCellValueFactory(new PropertyValueFactory<CustomerTable, String>("stateProvince"));
         customerTable.setItems(customersCache.getCache());
+    }
+
+    private void populateLocalCaches(){
+        try {
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML

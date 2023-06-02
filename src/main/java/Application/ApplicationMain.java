@@ -34,7 +34,7 @@ public class ApplicationMain extends Application {
         launch(args);
         String exitMsg = "Closing system";
         if(User.isAssigned()){
-            System.out.println(exitMsg+" and logging user "+User.getUserName()+" out!");
+            System.out.println(exitMsg+" and logging user "+ User.getCurrentUserName()+" out!");
             User.clear();
         }else{
             System.out.println(exitMsg+"...");

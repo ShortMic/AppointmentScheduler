@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class CustomerQuery implements Queryable{
+public abstract class CustomerQuery extends Queryable {
 
     public static String table = "customers";
     public static String[] fields = {"Customer_ID", "Customer_Name", "Address", "Postal_Code", "Phone", "Division_ID"};

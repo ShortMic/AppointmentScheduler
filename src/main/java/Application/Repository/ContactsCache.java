@@ -1,6 +1,7 @@
 package Application.Repository;
 
 import Application.Models.AppointmentTable;
+import Application.Models.Contact;
 import Application.Models.Customer;
 import Application.Models.CustomerTable;
 import Utilities.AppointmentQuery;
@@ -12,11 +13,11 @@ import javafx.collections.transformation.FilteredList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ContactsCache implements Cachable<CustomerTable>{
+public class ContactsCache implements Cachable<Contact>{
 
     private static ContactsCache instance;
-    private ObservableList<CustomerTable> cache;
-    public FilteredList<Customer> filteredCustomers;
+    private ObservableList<Contact> cache;
+    public FilteredList<Contact> filteredContacts;
     public static boolean isCached = false;
 
     private ContactsCache()throws SQLException {
@@ -58,7 +59,7 @@ public class ContactsCache implements Cachable<CustomerTable>{
     }
 
     @Override
-    public ObservableList<CustomerTable> getCache() {
+    public ObservableList<Contact> getCache() {
         return cache;
     }
 }

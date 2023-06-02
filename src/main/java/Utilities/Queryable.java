@@ -1,26 +1,14 @@
 package Utilities;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public interface Queryable {
+public abstract class Queryable implements IQueryable{
 
-    static String table = null;
-    static String[] fields = null;
-
-    static int insert(String userName, String password) throws SQLException {
-        return 0;
+    public static ResultSet selectAll() throws SQLException {
+        String sql = "SELECT * FROM "+table;
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        return ps.executeQuery();
     }
-
-    static int update(String userName, String password) throws SQLException {
-        return 0;
-    }
-
-    static int select(String userName, String password) throws SQLException {
-        return 0;
-    }
-
-    static int delete(String userName, String password) throws SQLException {
-        return 0;
-    }
-
 }

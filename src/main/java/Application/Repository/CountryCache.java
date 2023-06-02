@@ -13,15 +13,15 @@ import javafx.collections.transformation.FilteredList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CountryCache {
+public class CountryCache implements Cachable<Country>{
 
     private static CountryCache instance;
-    private ObservableList<CustomerTable> cache;
-    public FilteredList<Customer> filteredCountries;
+    private ObservableList<Country> cache;
+    public FilteredList<Country> filteredCountry;
     public static boolean isCached = false;
 
-    private CountryCache(){
-        //TODO: implement countrycache query function and instantiation function. Maybe make an abstract or interface class for this?
+    private CountryCache() throws SQLException {
+        populateCache();
     }
 
     public static CountryCache getInstance() throws SQLException {
@@ -34,27 +34,27 @@ public class CountryCache {
     public void populateCache() throws SQLException {
         cache = FXCollections.observableArrayList();
         ResultSet rs = CustomerQuery.selectAllCustomersView();
-        while(rs.next()){
-            cache.add(new CustomerTable(rs.getInt("Customer_ID"),
-                    rs.getString("Customer_Name"),
-                    rs.getString("Address"),
-                    rs.getString("Postal_Code"),
-                    rs.getString("Phone"),
-                    rs.getString("Country"),
-                    rs.getString("StateProvince"),
-                    rs.getInt("Division_ID")));
-            /*
-            if(ContactsCache.isCached && AppointmentsCache.isCached){
-
-            }else{
-
-            }
-             */
-        }
+//        while(rs.next()){
+//            cache.add(new CustomerTable(rs.getInt("Customer_ID"),
+//                    rs.getString("Customer_Name"),
+//                    rs.getString("Address"),
+//                    rs.getString("Postal_Code"),
+//                    rs.getString("Phone"),
+//                    rs.getString("Country"),
+//                    rs.getString("StateProvince"),
+//                    rs.getInt("Division_ID")));
+//            /*
+//            if(ContactsCache.isCached && AppointmentsCache.isCached){
+//
+//            }else{
+//
+//            }
+//             */
+//        }
         isCached = true;
     }
 
-    public ObservableList<CustomerTable> getCache() {
+    public ObservableList<Country> getCache() {
         return cache;
     }
 }

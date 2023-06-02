@@ -1,13 +1,10 @@
 package Utilities;
 
-import Application.Models.Appointment;
-import Application.Models.User;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class AppointmentQuery implements Queryable{
+public abstract class AppointmentQuery extends Queryable {
 
     public static String table = "appointments";
     public static String[] fields = {"User_ID", "User_Name", "Password"};
