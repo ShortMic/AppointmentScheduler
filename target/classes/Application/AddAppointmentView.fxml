@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -10,7 +11,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.AddAppointmentController">
    <children>
@@ -47,7 +47,7 @@
             <Label text="End Date" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label text="End Time" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Label text="Contact" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <MenuButton mnemonicParsing="false" prefHeight="25.0" prefWidth="186.0" text="Select User ID" GridPane.columnIndex="3">
+            <MenuButton fx:id="userIdMenuBtn" mnemonicParsing="false" onAction="#onUserIdMenuBtn" prefHeight="25.0" prefWidth="186.0" text="Select User ID" GridPane.columnIndex="3">
               <items>
                 <MenuItem mnemonicParsing="false" text="Action 1" />
                 <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -83,5 +83,6 @@
       </GridPane>
       <Button fx:id="cancelAppointmentBtn" layoutX="411.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCancelAppointmentBtn" text="Cancel" textFill="RED" />
       <Button fx:id="addAppointmentBtn" layoutX="518.0" layoutY="354.0" mnemonicParsing="false" onAction="#onAddAppointmentBtn" text="Save" textFill="#2200ff" />
+      <ComboBox fx:id="testComboBox" layoutX="79.0" layoutY="354.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
