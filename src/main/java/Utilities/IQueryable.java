@@ -4,9 +4,6 @@ import java.sql.SQLException;
 
 public interface IQueryable {
 
-    static String table = null;
-    static String[] fields = null;
-
     static int insert(String userName, String password) throws SQLException {
         return 0;
     }

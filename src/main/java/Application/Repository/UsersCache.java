@@ -20,10 +20,17 @@ public class UsersCache implements Cachable<User>{
         populateCache();
     }
 
+    public static UsersCache getInstance() throws SQLException {
+        if(instance == null){
+            instance = new UsersCache();
+        }
+        return instance;
+    }
+
     @Override
     public void populateCache() throws SQLException {
         cache = FXCollections.observableArrayList();
-        ResultSet rs = UserQuery.selectAll();
+        ResultSet rs = UserQuery.selectAll("users");
         while(rs.next()){
             cache.add(new User(rs.getInt("User_ID"),
                     rs.getString("User_Name"),

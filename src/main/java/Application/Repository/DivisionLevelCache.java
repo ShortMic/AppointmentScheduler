@@ -1,12 +1,13 @@
 package Application.Repository;
 
-import Application.Models.Appointment;
 import Application.Models.AppointmentTable;
-import Application.Models.CustomerTable;
 import Application.Models.DivisionLevel1;
+import Utilities.DivisionLevelQuery;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DivisionLevelCache implements Cachable<DivisionLevel1>{
@@ -20,9 +21,30 @@ public class DivisionLevelCache implements Cachable<DivisionLevel1>{
         populateCache();
     }
 
+    public static DivisionLevelCache getInstance() throws SQLException {
+        if(instance == null){
+            instance = new DivisionLevelCache();
+        }
+        return instance;
+    }
+
     @Override
     public void populateCache() throws SQLException {
+        cache = FXCollections.observableArrayList();
+        ResultSet rs = DivisionLevelQuery.selectAll("first_level_divisions");
+        while(rs.next()){
+            cache.add(new DivisionLevel1(rs.getInt("Division_ID"),
+                    rs.getString("Division"),
+                    rs.getInt("Country_ID")));
+            /*
+            if(ContactsCache.isCached && AppointmentsCache.isCached){
 
+            }else{
+
+            }
+             */
+        }
+        isCached = true;
     }
 
     @Override

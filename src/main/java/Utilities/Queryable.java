@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public abstract class Queryable implements IQueryable{
 
-    public static ResultSet selectAll() throws SQLException {
+    public static ResultSet selectAll(String table) throws SQLException {
         String sql = "SELECT * FROM "+table;
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         return ps.executeQuery();

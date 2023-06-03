@@ -33,24 +33,18 @@ public class CountryCache implements Cachable<Country>{
 
     public void populateCache() throws SQLException {
         cache = FXCollections.observableArrayList();
-        ResultSet rs = CustomerQuery.selectAllCustomersView();
-//        while(rs.next()){
-//            cache.add(new CustomerTable(rs.getInt("Customer_ID"),
-//                    rs.getString("Customer_Name"),
-//                    rs.getString("Address"),
-//                    rs.getString("Postal_Code"),
-//                    rs.getString("Phone"),
-//                    rs.getString("Country"),
-//                    rs.getString("StateProvince"),
-//                    rs.getInt("Division_ID")));
-//            /*
-//            if(ContactsCache.isCached && AppointmentsCache.isCached){
-//
-//            }else{
-//
-//            }
-//             */
-//        }
+        ResultSet rs = CustomerQuery.selectAll("countries");
+        while(rs.next()){
+            cache.add(new Country(rs.getInt("Country_ID"),
+                    rs.getString("Country")));
+            /*
+            if(ContactsCache.isCached && AppointmentsCache.isCached){
+
+            }else{
+
+            }
+             */
+        }
         isCached = true;
     }
 

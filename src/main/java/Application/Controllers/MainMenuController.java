@@ -108,10 +108,14 @@ public class MainMenuController implements Initializable{
 
     private void populateLocalCaches(){
         try {
-
+            contactsCache = ContactsCache.getInstance();
+            countryCache = CountryCache.getInstance();
+            divisionLevelCache = DivisionLevelCache.getInstance();
+            usersCache = UsersCache.getInstance();
         }catch (Exception e){
             e.printStackTrace();
         }
+        System.out.println("Local Caches populated!");
     }
 
     @FXML

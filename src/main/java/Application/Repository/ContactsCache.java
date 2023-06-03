@@ -34,19 +34,11 @@ public class ContactsCache implements Cachable<Contact>{
     @Override
     public void populateCache() throws SQLException {
         cache = FXCollections.observableArrayList();
-//        ResultSet rs = ContactQuery.selectAllApptView();
-//        while(rs.next()){
-//            cache.add(new AppointmentTable(rs.getInt("Appointment_ID"),
-//                    rs.getString("Title"),
-//                    rs.getString("Description"),
-//                    rs.getString("Location"),
-//                    rs.getString("Contact_Name"),
-//                    rs.getString("Type"),
-//                    rs.getDate("Start"),
-//                    rs.getDate("End"),
-//                    rs.getInt("Customer_ID"),
-//                    rs.getInt("User_ID"),
-//                    rs.getInt("Contact_ID")));
+        ResultSet rs = ContactQuery.selectAll("contacts");
+        while(rs.next()){
+            cache.add(new Contact(rs.getInt("Contact_ID"),
+                    rs.getString("Contact_Name"),
+                    rs.getString("Email")));
             /*
             if(ContactsCache.isCached && AppointmentsCache.isCached){
 
@@ -54,7 +46,7 @@ public class ContactsCache implements Cachable<Contact>{
 
             }
              */
-        //}
+        }
         isCached = true;
     }
 
