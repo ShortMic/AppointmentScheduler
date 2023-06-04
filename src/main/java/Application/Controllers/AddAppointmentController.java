@@ -1,9 +1,15 @@
 package Application.Controllers;
 
 import Application.ApplicationMain;
+import Application.Models.Contact;
+import Application.Models.Customer;
+import Application.Models.CustomerTable;
+import Application.Models.User;
 import Application.Repository.ContactsCache;
 import Application.Repository.CustomersCache;
 import Application.Repository.UsersCache;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,8 +17,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,49 +37,101 @@ public class AddAppointmentController implements Initializable{
     public TextField titleTextField;
     public TextField descriptionTextField;
     public TextField typeTextField;
-    public MenuButton startTimeMenuBtn;
-    public MenuButton contactMenuBtn;
-    public MenuButton customerIDMenuBtn;
-    public MenuButton endTimeMenuBtn;
+    public ComboBox<String> startTimeMenuBtn;
+    public ComboBox<String> endTimeMenuBtn;
+    public ComboBox<User> userIdMenuBtn;
+    public ComboBox<Contact> contactMenuBtn;
+    public ComboBox<CustomerTable> customerIDMenuBtn;
     public DatePicker startDateField;
     public DatePicker endDateField;
     public Button cancelAppointmentBtn;
     public Button addAppointmentBtn;
-    public MenuButton userIdMenuBtn;
-    EventHandler<ActionEvent> menuSelection;
+    ObservableList<String> timeSelectionList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        menuSelection = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                ((MenuButton)actionEvent.getSource()).setText(((MenuItem)actionEvent.getSource()).getText());
-            }
-        };
-        userIdMenuBtn.getItems().clear();
-        startTimeMenuBtn.getItems().clear();
-        endTimeMenuBtn.getItems().clear();
-        customerIDMenuBtn.getItems().clear();
-        contactMenuBtn.getItems().clear();
+        //customerIDMenuBtn = new ComboBox<CustomerTable>();
+//        menuSelection = new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent actionEvent) {
+//                ((MenuButton)actionEvent.getSource()).setText(((MenuItem)actionEvent.getSource()).getText());
+//            }
+//        };
+//        userIdMenuBtn.getItems().clear();
+//        startTimeMenuBtn.getItems().clear();
+//        endTimeMenuBtn.getItems().clear();
+//        customerIDMenuBtn.getItems().clear();
+//        contactMenuBtn.getItems().clear();
         try {
-            UsersCache.getInstance().getCache().forEach((x) -> userIdMenuBtn.getItems().add(new MenuItem(Integer.toString(x.getUserId()))));
-            //userIdMenuBtn.setContentDisplay();
-            userIdMenuBtn.setOnAction(menuSelection);
-            CustomersCache.getInstance().getCache().forEach((x) -> customerIDMenuBtn.getItems().add(new MenuItem(Integer.toString(x.getCustomerId()))));
-            ContactsCache.getInstance().getCache().forEach((x) -> contactMenuBtn.getItems().add(new MenuItem(x.getContactName())));
+            userIdMenuBtn.setItems(UsersCache.getInstance().getCache());
+            userIdMenuBtn.setConverter(new StringConverter<User>() {
+                @Override
+                public String toString(User user) {
+                    return user == null ? null : Integer.toString(user.getUserId());
+                }
+
+                @Override
+                public User fromString(String s) {
+                    try {
+                        return UsersCache.getInstance().getCache().stream().filter(x -> Integer.toString(x.getUserId()).equals(s)).findFirst().orElse(null);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+            });
+            contactMenuBtn.setItems(ContactsCache.getInstance().getCache());
+            contactMenuBtn.setConverter(new StringConverter<Contact>() {
+                @Override
+                public String toString(Contact contact) {
+                    return contact == null ? null : contact.getContactName();
+                }
+
+                @Override
+                public Contact fromString(String s) {
+                    try {
+                        return ContactsCache.getInstance().getCache().stream().filter(x -> x.getContactName().equals(s)).findFirst().orElse(null);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+            });
+            customerIDMenuBtn.setItems(CustomersCache.getInstance().getCache());
+            customerIDMenuBtn.setConverter(new StringConverter<CustomerTable>() {
+                @Override
+                public String toString(CustomerTable customerTable) {
+                    return customerTable == null ? null : Integer.toString(customerTable.getCustomerId());
+                }
+
+                @Override
+                public CustomerTable fromString(String s) {
+                    try {
+                        return CustomersCache.getInstance().getCache().stream()
+                                .filter(x -> Integer.toString(x.getCustomerId()).equals(s))
+                                .findFirst()
+                                .orElse(null);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+            });
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        populateTimeSelection(startTimeMenuBtn);
-        populateTimeSelection(endTimeMenuBtn);
+        populateTimeSelection();
+        startTimeMenuBtn.setItems(timeSelectionList);
+        endTimeMenuBtn.setItems(timeSelectionList);
     }
 
-    private void populateTimeSelection(MenuButton menu){
+    private void populateTimeSelection(){
+        timeSelectionList = FXCollections.observableArrayList();
         for(int i = 1; i < 13; i++){
-            menu.getItems().add(new MenuItem(Integer.toString(i)+" AM"));
+            timeSelectionList.add(i+" AM");
         }
         for(int i = 1; i < 13; i++){
-            menu.getItems().add(new MenuItem(Integer.toString(i)+" PM"));
+            timeSelectionList.add(i+" PM");
         }
     }
 

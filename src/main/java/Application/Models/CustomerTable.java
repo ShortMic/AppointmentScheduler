@@ -1,7 +1,5 @@
 package Application.Models;
 
-import Application.Repository.CountryCache;
-
 public class CustomerTable extends Customer{
 
     private String country;

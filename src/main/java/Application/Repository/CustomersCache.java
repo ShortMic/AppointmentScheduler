@@ -40,13 +40,6 @@ public class CustomersCache implements Cachable<CustomerTable>{
                     rs.getString("Country"),
                     rs.getString("StateProvince"),
                     rs.getInt("Division_ID")));
-            /*
-            if(ContactsCache.isCached && AppointmentsCache.isCached){
-
-            }else{
-
-            }
-             */
         }
         isCached = true;
     }

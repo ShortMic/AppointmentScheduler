@@ -4,8 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -47,42 +45,16 @@
             <Label text="End Date" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label text="End Time" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Label text="Contact" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <MenuButton fx:id="userIdMenuBtn" mnemonicParsing="false" onAction="#onUserIdMenuBtn" prefHeight="25.0" prefWidth="186.0" text="Select User ID" GridPane.columnIndex="3">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
-            </MenuButton>
-            <MenuButton fx:id="startTimeMenuBtn" mnemonicParsing="false" onAction="#onStartTimeMenuBtn" prefHeight="25.0" prefWidth="186.0" text="Select Start Time" GridPane.columnIndex="3" GridPane.rowIndex="2">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </MenuButton>
-            <MenuButton fx:id="contactMenuBtn" mnemonicParsing="false" popupSide="TOP" prefHeight="25.0" prefWidth="186.0" text="Select Contact" GridPane.columnIndex="3" GridPane.rowIndex="5">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </MenuButton>
-            <MenuButton fx:id="customerIDMenuBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="186.0" text="Select Customer ID" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </MenuButton>
-            <MenuButton fx:id="endTimeMenuBtn" mnemonicParsing="false" onAction="#onEndTimeMenuBtn" prefHeight="25.0" prefWidth="186.0" text="Select End Time" GridPane.columnIndex="3" GridPane.rowIndex="4">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </MenuButton>
             <DatePicker fx:id="startDateField" onAction="#onStartDateField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <DatePicker fx:id="endDateField" onAction="#onEndDateField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <ComboBox fx:id="customerIDMenuBtn" prefHeight="25.0" prefWidth="186.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="userIdMenuBtn" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="3" />
+            <ComboBox fx:id="startTimeMenuBtn" prefHeight="25.0" prefWidth="176.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <ComboBox fx:id="endTimeMenuBtn" prefHeight="25.0" prefWidth="179.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <ComboBox fx:id="contactMenuBtn" prefHeight="25.0" prefWidth="176.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <Button fx:id="cancelAppointmentBtn" layoutX="411.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCancelAppointmentBtn" text="Cancel" textFill="RED" />
       <Button fx:id="addAppointmentBtn" layoutX="518.0" layoutY="354.0" mnemonicParsing="false" onAction="#onAddAppointmentBtn" text="Save" textFill="#2200ff" />
-      <ComboBox fx:id="testComboBox" layoutX="79.0" layoutY="354.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
