@@ -38,8 +38,8 @@ public class AppointmentsCache implements Cachable<AppointmentTable>{
                     rs.getString("Location"),
                     rs.getString("Contact_Name"),
                     rs.getString("Type"),
-                    rs.getDate("Start"),
-                    rs.getDate("End"),
+                    rs.getDate("Start").toLocalDate(),
+                    rs.getDate("End").toLocalDate(),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"),
                     rs.getInt("Contact_ID")));

@@ -1,13 +1,12 @@
 package Application.Controllers;
 
 import Application.ApplicationMain;
-import Application.Models.Contact;
-import Application.Models.Customer;
-import Application.Models.CustomerTable;
-import Application.Models.User;
+import Application.Models.*;
+import Application.Repository.AppointmentsCache;
 import Application.Repository.ContactsCache;
 import Application.Repository.CustomersCache;
 import Application.Repository.UsersCache;
+import Utilities.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,10 +21,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import javafx.util.converter.LocalDateTimeStringConverter;
+import javafx.util.converter.LocalTimeStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable{
@@ -37,6 +42,7 @@ public class AddAppointmentController implements Initializable{
     public TextField titleTextField;
     public TextField descriptionTextField;
     public TextField typeTextField;
+    public ArrayList<ComboBox> comboFields;
     public ComboBox<String> startTimeMenuBtn;
     public ComboBox<String> endTimeMenuBtn;
     public ComboBox<User> userIdMenuBtn;
@@ -46,10 +52,24 @@ public class AddAppointmentController implements Initializable{
     public DatePicker endDateField;
     public Button cancelAppointmentBtn;
     public Button addAppointmentBtn;
-    ObservableList<String> timeSelectionList;
+    private ObservableList<String> timeSelectionList;
+    private String errorMsg = "";
+    private boolean errorFlag = false;
+
+    private DateTimeFormatter date = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+    private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+    private DateTimeFormatter timeFormat24hr = DateTimeFormatter.ofPattern("H:mma");
+    private LocalDateTime start;
+    private LocalDateTime end;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        comboFields = new ArrayList<>();
+        comboFields.add(startTimeMenuBtn);
+        comboFields.add(endTimeMenuBtn);
+        comboFields.add(userIdMenuBtn);
+        comboFields.add(contactMenuBtn);
+        comboFields.add(customerIDMenuBtn);
         //customerIDMenuBtn = new ComboBox<CustomerTable>();
 //        menuSelection = new EventHandler<ActionEvent>() {
 //            @Override
@@ -128,10 +148,10 @@ public class AddAppointmentController implements Initializable{
     private void populateTimeSelection(){
         timeSelectionList = FXCollections.observableArrayList();
         for(int i = 1; i < 13; i++){
-            timeSelectionList.add(i+" AM");
+            timeSelectionList.add(i+":00AM");
         }
         for(int i = 1; i < 13; i++){
-            timeSelectionList.add(i+" PM");
+            timeSelectionList.add(i+":00PM");
         }
     }
 
@@ -152,35 +172,49 @@ public class AddAppointmentController implements Initializable{
     }
 
     public void onAddAppointmentBtn(ActionEvent actionEvent) throws IOException {
-
         try{
             textFieldDataValidationLogger("Title", titleTextField, "String");
             textFieldDataValidationLogger("Description", descriptionTextField, "String");
             textFieldDataValidationLogger("Type", typeTextField, "String");
             textFieldDataValidationLogger("Location", locationTextField, "String");
-//
-//            if(amount >= min && amount <= max && min >= 0){
-//                if (outSourceRadioButton.isSelected()){
-//                    newPart = new Outsourced(IMSApplication.uniqueId++, AddPartNameTextField.getText(),
-//                            Double.parseDouble(AddPartCostTextField.getText()), amount, min, max,
-//                            AddPartMachineIDTextField.getText());
-//                }else{
-//                    newPart = new InHouse(IMSApplication.uniqueId++, AddPartNameTextField.getText(),
-//                            Double.parseDouble(AddPartCostTextField.getText()), amount, min, max,
-//                            Integer.parseInt(AddPartMachineIDTextField.getText()));
-//                }
-//                IMSApplication.inventory.addPart(newPart);
-//                ((Stage)(((Button)e.getSource()).getScene().getWindow())).setScene(mainScene);
-//            }else{
-//                alert = new Alert(Alert.AlertType.ERROR,
-//                        "Minimum must be equal to or below maximum and inventory amount must be within range!");
-//                alert.setHeaderText("Invalid Input");
-//                alert.show();
-//            }
+            if(errorFlag){
+                alert = new Alert(Alert.AlertType.ERROR, errorMsg);
+                alert.setHeaderText("Invalid Input");
+                alert.show();
+                errorMsg = "";
+                errorFlag = false;
+            }else{
+                String customerId, userId, contactName, startTime, endTime;
+                errorFlag = comboFields.stream().anyMatch(comboBox -> comboBox.getSelectionModel().getSelectedItem() == null);
+                if(errorFlag){
+                    alert = new Alert(Alert.AlertType.ERROR, "Combo Box Field(s) not entered. Please make a selection!");
+                    alert.setHeaderText("Missing Required Field");
+                    alert.show();
+                    errorFlag = false;
+                }else{
+                    //TODO: Find out about the specific date class use required and format,
+                    LocalTime localStartTime = LocalTime.parse(startTimeMenuBtn.getSelectionModel().getSelectedItem(), timeFormat24hr);
+                    LocalTime localEndTime = LocalTime.parse(endTimeMenuBtn.getSelectionModel().getSelectedItem(), timeFormat24hr);
+                    start = LocalDateTime.of(startDateField.getValue(), localStartTime);
+                    end = LocalDateTime.of(endDateField.getValue(), localEndTime);
+                    if(start.isAfter(end)){
+                        alert = new Alert(Alert.AlertType.ERROR, "Start date/time is after end date/time!");
+                        alert.setHeaderText("Invalid Date/Time");
+                        alert.show();
+                    }else{
+                        //temporary id to replace on insert update query
+                        Appointment appointment = new Appointment(-1, titleTextField.getText(), descriptionTextField.getText(),
+                                locationTextField.getText(), typeTextField.getText(), startDateField.getValue(), endDateField.getValue(),
+                                customerIDMenuBtn.getSelectionModel().getSelectedItem().getCustomerId(), userIdMenuBtn.getSelectionModel().getSelectedItem().getUserId(), contactMenuBtn.getSelectionModel().getSelectedItem().getContactId());
+                        appointment.setAppointmentId(AppointmentQuery.update(appointment));
+                        AppointmentsCache.getInstance().getCache().add(new AppointmentTable(appointment, contactMenuBtn.getSelectionModel().getSelectedItem().getContactName()));
+                        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
+                    }
+                }
+            }
         }catch(Exception exception){
             System.out.println(exception.getMessage());
         }
-        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
 
     /**
@@ -210,6 +244,8 @@ public class AddAppointmentController implements Initializable{
                 break;
         }
         if(!message.equals("")){
+            errorMsg += message+" ";
+            errorFlag = true;
             System.out.println(message);
         }
     }

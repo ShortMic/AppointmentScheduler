@@ -1,12 +1,13 @@
 package Application.Models;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class AppointmentTable extends Appointment{
 
     private String contactName;
 
-    public AppointmentTable(int appointmentId, String title, String description, String location, String contactName, String type, Date start, Date end, int customerId, int userId, int contactId) {
+    public AppointmentTable(int appointmentId, String title, String description, String location, String contactName, String type, LocalDate start, LocalDate end, int customerId, int userId, int contactId) {
         super(appointmentId, title, description, location, type, start, end, customerId, userId, contactId);
         this.contactName = contactName;
     }
