@@ -73,6 +73,23 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
         }catch(Exception exception){
             return -1;
         }
+    }//detailed_store1_inventory WHERE detailed_store1_inventory.film_id = OLD.film_id;
+
+    public static boolean delete(Appointment appointment) throws SQLException {
+        try{
+            String sql = "DELETE FROM "+table+" WHERE "+table+".Appointment_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, appointment.getAppointmentId());
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Appointment "+appointment.getTitle()+" (ID: "+appointment.getAppointmentId()+") has been successfully deleted");
+                return true;
+            }
+            return false;
+        }catch (Exception exception){
+            System.out.println(exception.getMessage());
+            return false;
+        }
     }
 
 

@@ -3,6 +3,7 @@ package Application.Controllers;
 import Application.ApplicationMain;
 import Application.Models.*;
 import Application.Repository.*;
+import Utilities.AppointmentQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,6 +69,8 @@ public class MainMenuController implements Initializable{
     public CountryCache countryCache;
     public DivisionLevelCache divisionLevelCache;
     public UsersCache usersCache;
+    public Label appointmentTablePlaceholderLabel;
+    private Alert alert;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -130,6 +133,64 @@ public class MainMenuController implements Initializable{
 
     @FXML
     public void onDeleteAppointment(ActionEvent actionEvent) {
+        try{
+            if(appointmentTable.getSelectionModel().getSelectedItem() != null) {
+                alert = new Alert(Alert.AlertType.CONFIRMATION,
+                        "Do you want to delete this appointment?");
+                alert.setHeaderText("Delete");
+                alert.showAndWait().ifPresent(
+                        response -> {
+                            if (response == ButtonType.OK) {
+                                try {
+                                    AppointmentQuery.delete(appointmentTable.getSelectionModel().getSelectedItem());
+                                    AppointmentsCache.getInstance().getCache().remove(appointmentTable.getSelectionModel().getSelectedItem());
+                                    tableLabelUpdater(appointmentTablePlaceholderLabel, "Appointment");
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                );
+            }else{
+                alert = new Alert(Alert.AlertType.ERROR,
+                        "You have not selected a valid appointment to delete!");
+                alert.setHeaderText("Invalid Selection");
+                alert.show();
+            }
+        }catch(Exception exception){
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    /**
+     * Private helper method that keeps the associated table's placeholder text accurate to the current context of the table
+     * For use in table search query methods and table delete methods.
+     * @param label Associated table's placeholder label
+     * @param type String of associated object type: Part or Product
+     */
+    private void tableLabelUpdater(Label label, String type) throws SQLException {
+        boolean isEmpty = false;
+        switch (type) {
+            case "Appointment" -> {
+                isEmpty = AppointmentsCache.getInstance().getCache().isEmpty();
+                if (isEmpty) {
+                    label.setText("No " + type + "s Scheduled");
+                } else {
+                    label.setText(type + " Name/Id not found");
+                }
+            }
+            case "Customers" -> {
+                isEmpty = CustomersCache.getInstance().getCache().isEmpty();
+                if (isEmpty) {
+                    label.setText(type + "s Table Empty");
+                } else {
+                    label.setText(type + " Name/Id not found");
+                }
+            }
+            default -> {
+                System.out.println("Unexpected type value for tableLabelUpdater");
+            }
+        }
     }
 
     @FXML

@@ -12,6 +12,10 @@ public interface IQueryable {
         return 0;
     }
 
+    static <T> boolean delete(T o) throws SQLException {
+        return false;
+    }
+
     static int select(String userName, String password) throws SQLException {
         return 0;
     }
