@@ -25,13 +25,13 @@
                         <TableView fx:id="appointmentTable" layoutX="17.0" layoutY="14.0" prefHeight="406.0" prefWidth="995.0">
                           <columns>
                             <TableColumn fx:id="appointmentIdCol" prefWidth="50.0" text="Appt ID" />
-                            <TableColumn fx:id="appointmentTitleCol" prefWidth="90.0" text="Title" />
-                              <TableColumn fx:id="appointmentDescriptionCol" prefWidth="211.0" text="Description" />
-                              <TableColumn fx:id="appointmentLocationCol" prefWidth="121.0" text="Location" />
-                              <TableColumn fx:id="appointmentContactCol" prefWidth="106.0" text="Contact" />
-                              <TableColumn fx:id="appointmentTypeCol" prefWidth="89.0" text="Type" />
-                              <TableColumn fx:id="appointmentStartCol" prefWidth="109.0" text="Start Time" />
-                              <TableColumn fx:id="appointmentEndCol" prefWidth="93.0" text="End Time" />
+                            <TableColumn fx:id="appointmentTitleCol" prefWidth="82.0" text="Title" />
+                              <TableColumn fx:id="appointmentDescriptionCol" prefWidth="174.0" text="Description" />
+                              <TableColumn fx:id="appointmentLocationCol" prefWidth="149.0" text="Location" />
+                              <TableColumn fx:id="appointmentContactCol" prefWidth="98.0" text="Contact" />
+                              <TableColumn fx:id="appointmentTypeCol" prefWidth="82.0" text="Type" />
+                              <TableColumn fx:id="appointmentStartCol" prefWidth="118.0" text="Start Time" />
+                              <TableColumn fx:id="appointmentEndCol" prefWidth="116.0" text="End Time" />
                               <TableColumn fx:id="appointmentCustomerIdCol" prefWidth="78.0" text="Customer ID" />
                               <TableColumn fx:id="appointmentUserIdCol" minWidth="8.0" prefWidth="47.0" text="User ID" />
                           </columns>

@@ -1,6 +1,7 @@
 package Application.Models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Appointment {
@@ -9,13 +10,13 @@ public class Appointment {
     private String description;
     private String location;
     private String type;
-    private LocalDate start;
-    private LocalDate end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int customerId;
     private int userId;
     private int contactId;
 
-    public Appointment(int appointmentId, String title, String description, String location, String type, LocalDate start, LocalDate end, int customerId, int userId, int contactId){
+    public Appointment(int appointmentId, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int userId, int contactId){
         this.appointmentId = appointmentId;
         this.title = title;
         this.description = description;
@@ -68,19 +69,19 @@ public class Appointment {
         this.type = type;
     }
 
-    public LocalDate getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 

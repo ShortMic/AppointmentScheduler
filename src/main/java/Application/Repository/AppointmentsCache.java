@@ -9,12 +9,15 @@ import javafx.collections.transformation.FilteredList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 
 public class AppointmentsCache implements Cachable<AppointmentTable>{
 
     private static AppointmentsCache instance;
     private ObservableList<AppointmentTable> cache;
     public FilteredList<Appointment> filteredAppointments;
+    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public static boolean isCached = false;
 
     private AppointmentsCache() throws SQLException {
@@ -38,8 +41,10 @@ public class AppointmentsCache implements Cachable<AppointmentTable>{
                     rs.getString("Location"),
                     rs.getString("Contact_Name"),
                     rs.getString("Type"),
-                    rs.getDate("Start").toLocalDate(),
-                    rs.getDate("End").toLocalDate(),
+                    rs.getTimestamp("Start").toLocalDateTime(),
+                    rs.getTimestamp("End").toLocalDateTime(),
+                    //(new Timestamp(rs.getDate("Start").getTime()).toLocalDateTime()),
+                    //(new Timestamp(rs.getDate("End").getTime()).toLocalDateTime()),
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"),
                     rs.getInt("Contact_ID")));

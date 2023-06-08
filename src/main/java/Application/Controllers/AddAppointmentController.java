@@ -204,7 +204,7 @@ public class AddAppointmentController implements Initializable{
                     }else{
                         //temporary id to replace on insert update query
                         Appointment appointment = new Appointment(-1, titleTextField.getText(), descriptionTextField.getText(),
-                                locationTextField.getText(), typeTextField.getText(), startDateField.getValue(), endDateField.getValue(),
+                                locationTextField.getText(), typeTextField.getText(), start, end,
                                 customerIDMenuBtn.getSelectionModel().getSelectedItem().getCustomerId(), userIdMenuBtn.getSelectionModel().getSelectedItem().getUserId(), contactMenuBtn.getSelectionModel().getSelectedItem().getContactId());
                         appointment.setAppointmentId(AppointmentQuery.update(appointment));
                         AppointmentsCache.getInstance().getCache().add(new AppointmentTable(appointment, contactMenuBtn.getSelectionModel().getSelectedItem().getContactName()));

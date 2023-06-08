@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable{
@@ -32,8 +33,8 @@ public class MainMenuController implements Initializable{
     @FXML public TableColumn<AppointmentTable, String> appointmentLocationCol;
     @FXML public TableColumn<AppointmentTable, String> appointmentContactCol;
     @FXML public TableColumn<AppointmentTable, String> appointmentTypeCol;
-    @FXML public TableColumn<AppointmentTable, Date> appointmentStartCol; //import sql.date or java.date? currently sql.date
-    @FXML public TableColumn<AppointmentTable, Date> appointmentEndCol;
+    @FXML public TableColumn<AppointmentTable, LocalDateTime> appointmentStartCol; //import sql.date or java.date? currently sql.date
+    @FXML public TableColumn<AppointmentTable, LocalDateTime> appointmentEndCol;
     @FXML public TableColumn<AppointmentTable, Integer> appointmentCustomerIdCol;
     @FXML public TableColumn<AppointmentTable, Integer> appointmentUserIdCol;
     @FXML
@@ -88,8 +89,8 @@ public class MainMenuController implements Initializable{
         appointmentLocationCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("location"));
         appointmentContactCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("contactName"));
         appointmentTypeCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("type"));
-        appointmentStartCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Date>("start"));
-        appointmentEndCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Date>("end"));
+        appointmentStartCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, LocalDateTime>("start"));
+        appointmentEndCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, LocalDateTime>("end"));
         appointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("customerId"));
         appointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("userId"));
         appointmentTable.setItems(appointmentsCache.getCache());

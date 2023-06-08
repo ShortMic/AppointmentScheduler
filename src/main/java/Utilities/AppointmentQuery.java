@@ -2,11 +2,9 @@ package Utilities;
 
 import Application.Models.Appointment;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public abstract class AppointmentQuery extends Queryable implements IQueryable{
 
@@ -45,18 +43,18 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
     public static int update(Appointment appointment) throws SQLException {
         try{
             String sql = "INSERT INTO "+table+" (Title, Description, Location, Type, Start, End, Create_Date," +
-                    "Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"+
-                    " FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID"; //WHERE User_ID = ?";
+                    "Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
             ps.setString(1,appointment.getTitle());
             ps.setString(2,appointment.getDescription());
             ps.setString(3,appointment.getLocation());
             ps.setString(4,appointment.getType());
-            ps.setDate(5, Date.valueOf(appointment.getStart()));
-            ps.setDate(6, Date.valueOf(appointment.getEnd()));
-            ps.setDate(7, Date.valueOf(LocalDate.now()));
+            ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
+            ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
+            ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
+            ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
             ps.setString(8,"App");
-            ps.setDate(9, Date.valueOf(LocalDate.now()));
+            ps.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
             ps.setString(10,"App");
             ps.setInt(11,appointment.getCustomerId());
             ps.setInt(12,appointment.getUserId());
