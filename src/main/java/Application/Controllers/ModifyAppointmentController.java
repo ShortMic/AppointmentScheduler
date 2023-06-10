@@ -58,7 +58,7 @@ public class ModifyAppointmentController implements Initializable{
     private boolean errorFlag = false;
 
     public static Appointment selectedAppointment;
-    private DateTimeFormatter date = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    private DateTimeFormatter date = DateTimeFormatter.ofPattern("MM-dd-yyyy");
     private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
     private DateTimeFormatter timeFormat24hr = DateTimeFormatter.ofPattern("h:mma");
     private LocalDateTime start;
@@ -184,6 +184,13 @@ public class ModifyAppointmentController implements Initializable{
         for(int i = 1; i < 13; i++){
             timeSelectionList.add(i+":00PM");
         }
+    }
+
+    private boolean duringBusinessHours(){
+
+        LocalDateTime startDateTime = LocalDateTime.of(startDateField.getValue(), LocalTime.parse(startTimeMenuBtn.getSelectionModel().getSelectedItem(),timeFormat24hr));
+
+        return false;
     }
 
     public void onStartTimeMenuBtn(ActionEvent actionEvent) {
