@@ -48,9 +48,8 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
         ps.setString(2, appointment.getDescription());
         ps.setString(3, appointment.getLocation());
         ps.setString(4, appointment.getType());
-        //TODO: BUG: When start and end date set, it doesn't convert properly to UTC!
-        ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
-        ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
+        ps.setTimestamp(5, Timestamp.valueOf(appointment.getUTCStart()));
+        ps.setTimestamp(6, Timestamp.valueOf(appointment.getUTCEnd()));
         ps.setTimestamp(7, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));
         ps.setString(8, "App");
         ps.setInt(9, appointment.getCustomerId());
@@ -68,7 +67,7 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
             ps.setString(1,appointment.getTitle());
             ps.setString(2,appointment.getDescription());
             ps.setString(3,appointment.getLocation());
-            ps.setString(4,appointment.getType()); //TODO: convert localtime timestamps of last_update and last_updated_by to UTC
+            ps.setString(4,appointment.getType());
             ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
             ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
             ps.setTimestamp(7, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));

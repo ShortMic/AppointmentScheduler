@@ -127,12 +127,20 @@ public class Appointment {
         return TimeConverter.convertFromUTC(start);
     }
 
+    public LocalDateTime getUTCStart() {
+        return start;
+    }
+
     public void setStart(LocalDateTime start) {
         this.start = TimeConverter.convertToUTC(start).toLocalDateTime();
     }
 
     public LocalDateTime getEnd() {
         return TimeConverter.convertFromUTC(end);
+    }
+
+    public LocalDateTime getUTCEnd() {
+        return end;
     }
 
     public void setEnd(LocalDateTime end) {
