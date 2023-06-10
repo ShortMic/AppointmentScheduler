@@ -229,7 +229,7 @@ public class AddAppointmentController implements Initializable{
                                 locationTextField.getText(), typeTextField.getText(), start, end,
                                 customerIDMenuBtn.getSelectionModel().getSelectedItem().getCustomerId(), userIdMenuBtn.getSelectionModel().getSelectedItem().getUserId(), contactMenuBtn.getSelectionModel().getSelectedItem().getContactId());
                         //TODO: Fix -1 id display for recently added appointments
-                        appointment.setAppointmentId(AppointmentQuery.update(appointment));
+                        appointment.setAppointmentId(AppointmentQuery.create(appointment));
                         AppointmentsCache.getInstance().getCache().add(new AppointmentTable(appointment, contactMenuBtn.getSelectionModel().getSelectedItem().getContactName()));
                         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
                     }

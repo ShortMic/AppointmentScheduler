@@ -39,8 +39,28 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
         return ps.executeQuery();
     }
 
-
     public static int update(Appointment appointment) throws SQLException {
+        String sql = "UPDATE "+table+" SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, " +
+                "Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, " +
+                "Contact_ID = ? WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, appointment.getTitle());
+        ps.setString(2, appointment.getDescription());
+        ps.setString(3, appointment.getLocation());
+        ps.setString(4, appointment.getType());
+        //TODO: BUG: When start and end date set, it doesn't convert properly to UTC!
+        ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
+        ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
+        ps.setTimestamp(7, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));
+        ps.setString(8, "App");
+        ps.setInt(9, appointment.getCustomerId());
+        ps.setInt(10, appointment.getUserId());
+        ps.setInt(11, appointment.getContactId());
+        ps.setInt(12, appointment.getAppointmentId());
+        return ps.executeUpdate();
+    }
+
+    public static int create(Appointment appointment) throws SQLException {
         try{
             String sql = "INSERT INTO "+table+" (Title, Description, Location, Type, Start, End, Create_Date," +
                     "Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -51,9 +71,9 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
             ps.setString(4,appointment.getType()); //TODO: convert localtime timestamps of last_update and last_updated_by to UTC
             ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
             ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
-            ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setTimestamp(7, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));
             ps.setString(8,"App");
-            ps.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setTimestamp(9, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));
             ps.setString(10,"App");
             ps.setInt(11,appointment.getCustomerId());
             ps.setInt(12,appointment.getUserId());

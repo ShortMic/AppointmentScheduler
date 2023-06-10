@@ -230,7 +230,7 @@ public class ModifyAppointmentController implements Initializable{
     }
 
     //TODO: BUG: adds copy of appointment instead of modifying original.
-    public void onAddAppointmentBtn(ActionEvent actionEvent) throws IOException {
+    public void onModifyAppointmentBtn(ActionEvent actionEvent) throws IOException {
         try{
             textFieldDataValidationLogger("Title", titleTextField, "String");
             textFieldDataValidationLogger("Description", descriptionTextField, "String");
@@ -260,13 +260,21 @@ public class ModifyAppointmentController implements Initializable{
                         alert.setHeaderText("Invalid Date/Time");
                         alert.show();
                     }else{
-                        //temporary id to replace on insert update query
-                        Appointment appointment = new Appointment(-1, titleTextField.getText(), descriptionTextField.getText(),
-                                locationTextField.getText(), typeTextField.getText(), start, end,
-                                customerIDMenuBtn.getSelectionModel().getSelectedItem().getCustomerId(), userIdMenuBtn.getSelectionModel().getSelectedItem().getUserId(), contactMenuBtn.getSelectionModel().getSelectedItem().getContactId());
-                        appointment.setAppointmentId(AppointmentQuery.update(appointment));
-                        AppointmentsCache.getInstance().getCache().add(new AppointmentTable(appointment, contactMenuBtn.getSelectionModel().getSelectedItem().getContactName()));
-                        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
+                        int appointmentId = Integer.parseInt(appointmentIdTextField.getText());
+                        AppointmentTable appointment = AppointmentsCache.getInstance().getCache().stream().filter(x -> x.getAppointmentId() == appointmentId).findFirst().orElse(null);
+                        appointment.setTitle(titleTextField.getText());
+                        appointment.setDescription(descriptionTextField.getText());
+                        appointment.setType(typeTextField.getText());
+                        appointment.setLocation(locationTextField.getText());
+                        appointment.setContactId(contactMenuBtn.getSelectionModel().getSelectedItem().getContactId());
+                        appointment.setContactName(contactMenuBtn.getSelectionModel().getSelectedItem().getContactName());
+                        appointment.setStart(start);
+                        appointment.setEnd(end);
+                        appointment.setUserId(userIdMenuBtn.getSelectionModel().getSelectedItem().getUserId());
+                        appointment.setCustomerId(customerIDMenuBtn.getSelectionModel().getSelectedItem().getCustomerId());
+                        AppointmentQuery.update(appointment);
+                        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(
+                                new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
                     }
                 }
             }

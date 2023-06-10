@@ -55,6 +55,6 @@
          </children>
       </GridPane>
       <Button fx:id="cancelAppointmentBtn" layoutX="411.0" layoutY="354.0" mnemonicParsing="false" onAction="#onCancelAppointmentBtn" text="Cancel" textFill="RED" />
-      <Button fx:id="addAppointmentBtn" layoutX="518.0" layoutY="354.0" mnemonicParsing="false" onAction="#onAddAppointmentBtn" text="Save" textFill="#2200ff" />
+      <Button fx:id="addAppointmentBtn" layoutX="518.0" layoutY="354.0" mnemonicParsing="false" onAction="#onModifyAppointmentBtn" text="Save" textFill="#2200ff" />
    </children>
 </AnchorPane>
