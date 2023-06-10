@@ -32,7 +32,7 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
 
     public static ResultSet selectAllApptView() throws SQLException {
         String sql = "SELECT Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, End, Customer_ID, User_ID, appointments.Contact_ID" +
-                " FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID"; //WHERE User_ID = ?";
+                " FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         //Filter by current user
         //ps.setInt(1, UserQuery.userID);
@@ -48,8 +48,7 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
             ps.setString(1,appointment.getTitle());
             ps.setString(2,appointment.getDescription());
             ps.setString(3,appointment.getLocation());
-            ps.setString(4,appointment.getType());
-            ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
+            ps.setString(4,appointment.getType()); //TODO: convert localtime timestamps of last_update and last_updated_by to UTC
             ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
             ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
             ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
@@ -73,8 +72,9 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
         }catch(Exception exception){
             return -1;
         }
-    }//detailed_store1_inventory WHERE detailed_store1_inventory.film_id = OLD.film_id;
+    }
 
+    //TODO: look into cascading delete or adding restrictions, may be relevant only to Customers db, read docs later.
     public static boolean delete(Appointment appointment) throws SQLException {
         try{
             String sql = "DELETE FROM "+table+" WHERE "+table+".Appointment_ID = ?";

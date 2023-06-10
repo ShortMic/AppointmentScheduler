@@ -1,10 +1,6 @@
 package Application.Repository;
 
-import Application.Models.AppointmentTable;
 import Application.Models.Country;
-import Application.Models.Customer;
-import Application.Models.CustomerTable;
-import Utilities.AppointmentQuery;
 import Utilities.CustomerQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +9,7 @@ import javafx.collections.transformation.FilteredList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CountryCache implements Cachable<Country>{
+public class CountryCache implements ICachable<Country> {
 
     private static CountryCache instance;
     private ObservableList<Country> cache;

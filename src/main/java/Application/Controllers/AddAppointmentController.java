@@ -165,6 +165,19 @@ public class AddAppointmentController implements Initializable{
         System.out.println(userZone.toString());
     }
 
+    //TODO: Implement data validation and error handling check to see if appointment time conflicts with business hours
+    private boolean duringBusinessHours(){
+
+        LocalDateTime startDateTime = LocalDateTime.of(startDateField.getValue(), LocalTime.parse(startTimeMenuBtn.getSelectionModel().getSelectedItem(),timeFormat24hr));
+
+        return false;
+    }
+
+    //TODO: Implement data validation and error handling check to see if appointment time conflicts with other appointments
+    private boolean isTimeSlotAvailable(){
+        return false;
+    }
+
     public void onStartTimeMenuBtn(ActionEvent actionEvent) {
     }
 
@@ -202,7 +215,6 @@ public class AddAppointmentController implements Initializable{
                     alert.show();
                     errorFlag = false;
                 }else{
-                    //TODO: Find out about the specific date class use required and format,
                     LocalTime localStartTime = LocalTime.parse(startTimeMenuBtn.getSelectionModel().getSelectedItem(), timeFormat24hr);
                     LocalTime localEndTime = LocalTime.parse(endTimeMenuBtn.getSelectionModel().getSelectedItem(), timeFormat24hr);
                     start = LocalDateTime.of(startDateField.getValue(), localStartTime);
@@ -216,6 +228,7 @@ public class AddAppointmentController implements Initializable{
                         Appointment appointment = new Appointment(-1, titleTextField.getText(), descriptionTextField.getText(),
                                 locationTextField.getText(), typeTextField.getText(), start, end,
                                 customerIDMenuBtn.getSelectionModel().getSelectedItem().getCustomerId(), userIdMenuBtn.getSelectionModel().getSelectedItem().getUserId(), contactMenuBtn.getSelectionModel().getSelectedItem().getContactId());
+                        //TODO: Fix -1 id display for recently added appointments
                         appointment.setAppointmentId(AppointmentQuery.update(appointment));
                         AppointmentsCache.getInstance().getCache().add(new AppointmentTable(appointment, contactMenuBtn.getSelectionModel().getSelectedItem().getContactName()));
                         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));

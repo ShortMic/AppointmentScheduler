@@ -1,6 +1,5 @@
 package Application.Repository;
 
-import Application.Models.AppointmentTable;
 import Application.Models.DivisionLevel1;
 import Utilities.DivisionLevelQuery;
 import javafx.collections.FXCollections;
@@ -10,7 +9,7 @@ import javafx.collections.transformation.FilteredList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DivisionLevelCache implements Cachable<DivisionLevel1>{
+public class DivisionLevelCache implements ICachable<DivisionLevel1> {
 
     private static DivisionLevelCache instance;
     private ObservableList<DivisionLevel1> cache;

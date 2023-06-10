@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
@@ -27,7 +26,7 @@ public class MainMenuController implements Initializable{
     public Text appTitleLabel;
     @FXML
     public Tab appointmentTab;
-    @FXML public TableView<AppointmentTable> appointmentTable; //TODO: Make wrapper class for Appointment & Contact classes and utilize here
+    @FXML public TableView<AppointmentTable> appointmentTable;
     @FXML public TableColumn<AppointmentTable, Integer> appointmentIdCol;
     @FXML public TableColumn<AppointmentTable, String> appointmentTitleCol;
     @FXML public TableColumn<AppointmentTable, String> appointmentDescriptionCol;
@@ -70,6 +69,7 @@ public class MainMenuController implements Initializable{
     public DivisionLevelCache divisionLevelCache;
     public UsersCache usersCache;
     public Label appointmentTablePlaceholderLabel;
+    private boolean isInitialLogin = true;
     private Alert alert;
 
     @Override
@@ -83,6 +83,13 @@ public class MainMenuController implements Initializable{
         populateAppointmentsTable();
         populateCustomersTable();
         populateLocalCaches();
+        if(isInitialLogin){
+            //TODO: Create alert pop-up there is an appointment within 15 minutes of the user’s log-in. A custom message
+            // should be displayed in the user interface and include the appointment ID, date, and time.
+            // If the user does not have any appointments within 15 minutes of logging in, display a custom message
+            // in the user interface indicating there are no upcoming appointments.
+            isInitialLogin = false;
+        }
     }
 
     private void populateAppointmentsTable(){

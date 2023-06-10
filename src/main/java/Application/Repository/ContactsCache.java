@@ -1,10 +1,6 @@
 package Application.Repository;
 
-import Application.Models.AppointmentTable;
 import Application.Models.Contact;
-import Application.Models.Customer;
-import Application.Models.CustomerTable;
-import Utilities.AppointmentQuery;
 import Utilities.ContactQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +9,7 @@ import javafx.collections.transformation.FilteredList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ContactsCache implements Cachable<Contact>{
+public class ContactsCache implements ICachable<Contact> {
 
     private static ContactsCache instance;
     private ObservableList<Contact> cache;

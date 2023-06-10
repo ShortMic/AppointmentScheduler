@@ -28,6 +28,7 @@ import javafx.util.converter.LocalTimeStringConverter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -60,7 +61,7 @@ public class ModifyAppointmentController implements Initializable{
     private boolean errorFlag = false;
 
     public static Appointment selectedAppointment;
-    private DateTimeFormatter date = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+    private DateTimeFormatter date = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
     private DateTimeFormatter timeFormat24hr = DateTimeFormatter.ofPattern("h:mma");
     private LocalDateTime start;
@@ -143,13 +144,13 @@ public class ModifyAppointmentController implements Initializable{
             populateTimeSelection();
             startTimeMenuBtn.setItems(timeSelectionList);
             endTimeMenuBtn.setItems(timeSelectionList);
-            String startStr = (selectedAppointment.getStart().toLocalTime().format(timeFormat24hr));
-            startTimeMenuBtn.getSelectionModel().select(startStr);
-            String endStr = (selectedAppointment.getEnd().toLocalTime().format(timeFormat24hr));
-            endTimeMenuBtn.getSelectionModel().select(endStr);
+            String startTimeStr = (selectedAppointment.getStart().toLocalTime().format(timeFormat24hr));
+            startTimeMenuBtn.getSelectionModel().select(startTimeStr);
+            String endTimeStr = (selectedAppointment.getEnd().toLocalTime().format(timeFormat24hr));
+            endTimeMenuBtn.getSelectionModel().select(endTimeStr);
             userIdMenuBtn.getSelectionModel().select(selectedAppointment.getUserId());
-            startDateField.setPromptText(selectedAppointment.getStart().format(date));
-            endDateField.setPromptText(selectedAppointment.getEnd().format(date));
+            startDateField.setValue(selectedAppointment.getStart().toLocalDate());
+            endDateField.setValue(selectedAppointment.getEnd().toLocalDate());
             try {
                 userIdMenuBtn.getSelectionModel().select(UsersCache.getInstance().getCache().stream()
                         .filter(x -> x.getUserId() == selectedAppointment.getUserId()).findFirst().orElse(null));
@@ -196,12 +197,21 @@ public class ModifyAppointmentController implements Initializable{
         System.out.println(userZone.toString());
     }
 
+    //TODO: Implement data validation and error handling check to see if appointment time conflicts with business hours
     private boolean duringBusinessHours(){
 
-        LocalDateTime startDateTime = LocalDateTime.of(startDateField.getValue(), LocalTime.parse(startTimeMenuBtn.getSelectionModel().getSelectedItem(),timeFormat24hr));
+        LocalDateTime startDateTime = LocalDateTime.of(startDateField.getValue(), LocalTime.parse(startTimeMenuBtn
+                .getSelectionModel().getSelectedItem(),timeFormat24hr));
 
         return false;
     }
+
+    //TODO: Implement data validation and error handling check to see if appointment time conflicts with other appointments
+    private boolean isTimeSlotAvailable(){
+        return false;
+    }
+
+
 
     public void onStartTimeMenuBtn(ActionEvent actionEvent) {
     }
@@ -219,6 +229,7 @@ public class ModifyAppointmentController implements Initializable{
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
 
+    //TODO: BUG: adds copy of appointment instead of modifying original.
     public void onAddAppointmentBtn(ActionEvent actionEvent) throws IOException {
         try{
             textFieldDataValidationLogger("Title", titleTextField, "String");

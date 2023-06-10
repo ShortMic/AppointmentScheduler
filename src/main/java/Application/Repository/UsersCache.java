@@ -9,7 +9,7 @@ import javafx.collections.transformation.FilteredList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UsersCache implements Cachable<User>{
+public class UsersCache implements ICachable<User> {
 
     private static UsersCache instance;
     private ObservableList<User> cache;

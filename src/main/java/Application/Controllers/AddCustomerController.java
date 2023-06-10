@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddCustomerController implements Initializable{
-
+    //TODO: Implement AddCustomerController
     @FXML
     public Text appTitleLabel;
     public TextField locationTextField;

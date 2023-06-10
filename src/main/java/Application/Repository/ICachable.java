@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 
-public interface Cachable<E> {
+public interface ICachable<E> {
 
     public static boolean isCached = false;
     ObservableList<?> cache = null;

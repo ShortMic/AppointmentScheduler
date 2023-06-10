@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ReportsController implements Initializable{
-
+    //TODO: Implement ReportsController adn ReportsView and Report query
     @FXML
     public Text appTitleLabel;
 

@@ -9,10 +9,8 @@ import javafx.collections.transformation.FilteredList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.format.DateTimeFormatter;
 
-public class AppointmentsCache implements Cachable<AppointmentTable>{
+public class AppointmentsCache implements ICachable<AppointmentTable> {
 
     private static AppointmentsCache instance;
     private ObservableList<AppointmentTable> cache;
