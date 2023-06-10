@@ -22,8 +22,10 @@ public abstract class TimeConverter {
     public static boolean duringBusinessHours(LocalDateTime selectedStartDateTime, LocalDateTime selectedEndDateTime){
         ZonedDateTime convertedStartTime = convertToUTC(ZonedDateTime.of(selectedStartDateTime, userTimeZone));
         ZonedDateTime convertedEndTime = convertToUTC(ZonedDateTime.of(selectedEndDateTime, userTimeZone));
-        ZonedDateTime utcOpeningDateTime = convertToUTC(ZonedDateTime.of(LocalDateTime.of(convertedStartTime.toLocalDate(),businessOpeningTime),businessTimeZone));
-        ZonedDateTime utcClosingDateTime = convertToUTC(ZonedDateTime.of(LocalDateTime.of(convertedEndTime.toLocalDate(),businessClosingTime),businessTimeZone));
+        ZonedDateTime utcOpeningDateTime = convertToUTC(ZonedDateTime.of(LocalDateTime.of(convertedStartTime.toLocalDate(),
+                businessOpeningTime),businessTimeZone));
+        ZonedDateTime utcClosingDateTime = convertToUTC(ZonedDateTime.of(LocalDateTime.of(convertedEndTime.toLocalDate(),
+                businessClosingTime),businessTimeZone));
         return (((convertedStartTime.isEqual(utcOpeningDateTime) || convertedStartTime.isAfter(utcOpeningDateTime))
                 && convertedStartTime.isBefore(utcClosingDateTime))
         && (convertedEndTime.isBefore(utcClosingDateTime) || convertedEndTime.isEqual(utcClosingDateTime)));
@@ -45,6 +47,10 @@ public abstract class TimeConverter {
 
     public static ZonedDateTime convertToUTC(LocalDateTime localDateTime){
         return ZonedDateTime.of(localDateTime, userTimeZone).withZoneSameInstant(ZoneOffset.UTC);
+    }
+
+    public static LocalDateTime convertFromUTC(LocalDateTime utcLocalDateTime){
+        return utcLocalDateTime.atZone(ZoneOffset.UTC).withZoneSameInstant(userTimeZone).toLocalDateTime();
     }
 
     public static LocalTime getBusinessOpeningTime() {

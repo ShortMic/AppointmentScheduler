@@ -7,6 +7,7 @@ import Application.Repository.ContactsCache;
 import Application.Repository.CustomersCache;
 import Application.Repository.UsersCache;
 import Utilities.AppointmentQuery;
+import Utilities.TimeConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,6 +30,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -178,12 +180,20 @@ public class ModifyAppointmentController implements Initializable{
 
     private void populateTimeSelection(){
         timeSelectionList = FXCollections.observableArrayList();
-        for(int i = 1; i < 13; i++){
-            timeSelectionList.add(i+":00AM");
+        for(int i = 0; i < TimeConverter.getHoursOpen(); i++){
+            timeSelectionList.add(LocalTime.of((TimeConverter.getOffsetHour(TimeConverter.getBusinessOpeningTime()
+                    .getHour())+i)%24, 0, 0).format(timeFormat24hr).toString());
+            timeSelectionList.add(LocalTime.of((TimeConverter.getOffsetHour(TimeConverter.getBusinessOpeningTime()
+                    .getHour())+i)%24, 15, 0).format(timeFormat24hr).toString());
+            timeSelectionList.add(LocalTime.of((TimeConverter.getOffsetHour(TimeConverter.getBusinessOpeningTime()
+                    .getHour())+i)%24, 30, 0).format(timeFormat24hr).toString());
+            timeSelectionList.add(LocalTime.of((TimeConverter.getOffsetHour(TimeConverter.getBusinessOpeningTime()
+                    .getHour())+i)%24, 45, 0).format(timeFormat24hr).toString());
         }
-        for(int i = 1; i < 13; i++){
-            timeSelectionList.add(i+":00PM");
-        }
+        timeSelectionList.add(LocalTime.of(TimeConverter.getOffsetHour(TimeConverter.getBusinessClosingTime()
+                .getHour()), 0, 0).format(timeFormat24hr).toString());
+        ZoneId userZone = TimeConverter.getUserTimeZone();
+        System.out.println(userZone.toString());
     }
 
     private boolean duringBusinessHours(){
@@ -230,7 +240,6 @@ public class ModifyAppointmentController implements Initializable{
                     alert.show();
                     errorFlag = false;
                 }else{
-                    //TODO: Find out about the specific date class use required and format,
                     LocalTime localStartTime = LocalTime.parse(startTimeMenuBtn.getSelectionModel().getSelectedItem(), timeFormat24hr);
                     LocalTime localEndTime = LocalTime.parse(endTimeMenuBtn.getSelectionModel().getSelectedItem(), timeFormat24hr);
                     start = LocalDateTime.of(startDateField.getValue(), localStartTime);

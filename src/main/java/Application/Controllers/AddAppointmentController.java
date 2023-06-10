@@ -149,11 +149,6 @@ public class AddAppointmentController implements Initializable{
 
     private void populateTimeSelection(){
         timeSelectionList = FXCollections.observableArrayList();
-//        int hour = 0;
-//        int open = TimeConverter.getBusinessOpeningTime().getHour()+1;
-//        int close = TimeConverter.getBusinessClosingTime().getHour()+1;
-//        open = open > 12 ? open-12 : open;
-//        close = close > 12 ? close-12 : close;
         for(int i = 0; i < TimeConverter.getHoursOpen(); i++){
             timeSelectionList.add(LocalTime.of((TimeConverter.getOffsetHour(TimeConverter.getBusinessOpeningTime()
                     .getHour())+i)%24, 0, 0).format(timeFormat24hr).toString());
