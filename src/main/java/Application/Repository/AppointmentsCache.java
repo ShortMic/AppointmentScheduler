@@ -9,6 +9,7 @@ import javafx.collections.transformation.FilteredList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class AppointmentsCache implements ICachable<AppointmentTable> {
 
@@ -57,6 +58,26 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
 
     public ObservableList<AppointmentTable> getCache() {
         return cache;
+    }
+
+    public boolean timeSlotConflict(LocalDateTime start, LocalDateTime end){
+        return cache.stream().anyMatch(x -> (start.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
+                || (end.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
+                || (start.isBefore(x.getStart()) && end.isAfter(x.getEnd()))
+                || (start.isAfter(x.getStart()) && end.isBefore(x.getEnd())));
+    }
+
+    public boolean timeSlotConflict(LocalDateTime start, LocalDateTime end, int id){
+        return cache.stream().anyMatch(x -> {
+            if(x.getAppointmentId() != id) {
+                return ((start.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
+                    || (end.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
+                    || (start.isBefore(x.getStart()) && end.isAfter(x.getEnd()))
+                    || (start.isAfter(x.getStart()) && end.isBefore(x.getEnd())));
+            }else{
+                return false;
+            }
+        });
     }
 
 }

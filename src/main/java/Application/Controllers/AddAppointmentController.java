@@ -223,12 +223,15 @@ public class AddAppointmentController implements Initializable{
                         alert = new Alert(Alert.AlertType.ERROR, "Start date/time is after end date/time!");
                         alert.setHeaderText("Invalid Date/Time");
                         alert.show();
+                    }else if(AppointmentsCache.getInstance().timeSlotConflict(start, end)){
+                        alert = new Alert(Alert.AlertType.ERROR, "Appointment slot conflicts with pre-existing appointment!");
+                        alert.setHeaderText("Invalid Date/Time");
+                        alert.show();
                     }else{
                         //temporary id to replace on insert update query
                         Appointment appointment = new Appointment(-1, titleTextField.getText(), descriptionTextField.getText(),
                                 locationTextField.getText(), typeTextField.getText(), start, end,
                                 customerIDMenuBtn.getSelectionModel().getSelectedItem().getCustomerId(), userIdMenuBtn.getSelectionModel().getSelectedItem().getUserId(), contactMenuBtn.getSelectionModel().getSelectedItem().getContactId());
-                        //TODO: Fix -1 id display for recently added appointments
                         appointment.setAppointmentId(AppointmentQuery.create(appointment));
                         AppointmentsCache.getInstance().getCache().add(new AppointmentTable(appointment, contactMenuBtn.getSelectionModel().getSelectedItem().getContactName()));
                         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));

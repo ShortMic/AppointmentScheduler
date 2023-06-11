@@ -259,6 +259,10 @@ public class ModifyAppointmentController implements Initializable{
                         alert = new Alert(Alert.AlertType.ERROR, "Start date/time is after end date/time!");
                         alert.setHeaderText("Invalid Date/Time");
                         alert.show();
+                    }else if(AppointmentsCache.getInstance().timeSlotConflict(start, end, Integer.parseInt(appointmentIdTextField.getText()))){
+                        alert = new Alert(Alert.AlertType.ERROR, "Appointment slot conflicts with pre-existing appointment!");
+                        alert.setHeaderText("Invalid Date/Time");
+                        alert.show();
                     }else{
                         int appointmentId = Integer.parseInt(appointmentIdTextField.getText());
                         AppointmentTable appointment = AppointmentsCache.getInstance().getCache().stream().filter(x -> x.getAppointmentId() == appointmentId).findFirst().orElse(null);

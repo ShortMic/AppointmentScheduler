@@ -63,13 +63,13 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
         try{
             String sql = "INSERT INTO "+table+" (Title, Description, Location, Type, Start, End, Create_Date," +
                     "Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,appointment.getTitle());
             ps.setString(2,appointment.getDescription());
             ps.setString(3,appointment.getLocation());
             ps.setString(4,appointment.getType());
-            ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
-            ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
+            ps.setTimestamp(5, Timestamp.valueOf(appointment.getUTCStart()));
+            ps.setTimestamp(6, Timestamp.valueOf(appointment.getUTCEnd()));
             ps.setTimestamp(7, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));
             ps.setString(8,"App");
             ps.setTimestamp(9, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));
@@ -78,7 +78,6 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
             ps.setInt(12,appointment.getUserId());
             ps.setInt(13,appointment.getContactId());
             int affectedRows = ps.executeUpdate();
-
             if (affectedRows > 0) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
