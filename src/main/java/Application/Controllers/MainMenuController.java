@@ -4,6 +4,7 @@ import Application.ApplicationMain;
 import Application.Models.*;
 import Application.Repository.*;
 import Utilities.AppointmentQuery;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -69,7 +70,7 @@ public class MainMenuController implements Initializable{
     public DivisionLevelCache divisionLevelCache;
     public UsersCache usersCache;
     public Label appointmentTablePlaceholderLabel;
-    private boolean isInitialLogin = true;
+    public static boolean isInitialLogin = false;
     private Alert alert;
 
     @Override
@@ -84,10 +85,22 @@ public class MainMenuController implements Initializable{
         populateCustomersTable();
         populateLocalCaches();
         if(isInitialLogin){
-            //TODO: Create alert pop-up there is an appointment within 15 minutes of the user’s log-in. A custom message
-            // should be displayed in the user interface and include the appointment ID, date, and time.
-            // If the user does not have any appointments within 15 minutes of logging in, display a custom message
-            // in the user interface indicating there are no upcoming appointments.
+            int userId = User.getCurrentUserId();
+            AppointmentTable appointmentStartIn15 = appointmentsCache.getCache().stream().filter(x -> x.getUserId() == userId &&
+                    (LocalDateTime.now().isAfter(x.getStart().minusMinutes(15))
+                            && (LocalDateTime.now().isBefore(x.getStart())))).findFirst().orElse(null);
+            if(appointmentStartIn15 != null){
+                alert = new Alert(Alert.AlertType.INFORMATION,
+                        "You an upcoming appointment ("+appointmentStartIn15.getTitle()+
+                        " ID: "+appointmentStartIn15.getAppointmentId()+") for "+appointmentStartIn15.getStart().toString()+".");
+                alert.setHeaderText("Upcoming Appointment");
+                alert.show();
+            }else{
+                alert = new Alert(Alert.AlertType.INFORMATION,
+                        "You have no upcoming appointments.");
+                alert.setHeaderText("Upcoming Appointment");
+                alert.show();
+            }
             isInitialLogin = false;
         }
     }
@@ -221,6 +234,7 @@ public class MainMenuController implements Initializable{
     public void onModifyCustomer(ActionEvent actionEvent) {
     }
 
+    //TODO: When deleting a customer record, all of the customer’s appointments must be deleted first, due to foreign key constraints.
     @FXML
     public void onDeleteCustomer(ActionEvent actionEvent) {
     }

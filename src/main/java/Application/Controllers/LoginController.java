@@ -117,6 +117,7 @@ public class LoginController implements Initializable {
     }
 
     private void loadMainMenu(ActionEvent e) throws IOException {
+        MainMenuController.isInitialLogin = true;
         ((Stage)(((Button)e.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
 
