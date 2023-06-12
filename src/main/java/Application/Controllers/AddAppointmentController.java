@@ -33,6 +33,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable{
@@ -166,9 +167,11 @@ public class AddAppointmentController implements Initializable{
     }
 
     //TODO: Implement data validation and error handling check to see if appointment time conflicts with business hours
-    private boolean duringBusinessHours(){
-
-        LocalDateTime startDateTime = LocalDateTime.of(startDateField.getValue(), LocalTime.parse(startTimeMenuBtn.getSelectionModel().getSelectedItem(),timeFormat24hr));
+    private boolean duringBusinessHours(LocalDateTime start, LocalDateTime end){
+        LocalTime opening = TimeConverter.getBusinessOpeningTime();
+        LocalTime closing = TimeConverter.getBusinessClosingTime();
+        //return  start.
+        //LocalDateTime startDateTime = LocalDateTime.of(startDateField.getValue(), LocalTime.parse(startTimeMenuBtn.getSelectionModel().getSelectedItem(),timeFormat24hr));
 
         return false;
     }
