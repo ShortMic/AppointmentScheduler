@@ -5,7 +5,6 @@ import Application.Models.*;
 import Application.Repository.*;
 import Utilities.AppointmentQuery;
 import Utilities.CustomerQuery;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -153,7 +152,7 @@ public class MainMenuController implements Initializable{
     public void onModifyAppointment(ActionEvent actionEvent) throws IOException {
         try{
             if(appointmentTable.getSelectionModel().getSelectedItem() != null) {
-                ModifyAppointmentController.selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
+                ModifyAppointmentController.selectedCustomer = appointmentTable.getSelectionModel().getSelectedItem();
                 ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("EditAppointmentView.fxml")).load(), 600, 400));
             }else{
                 alert = new Alert(Alert.AlertType.ERROR,
@@ -234,6 +233,20 @@ public class MainMenuController implements Initializable{
 
     @FXML
     public void onModifyCustomer(ActionEvent actionEvent) {
+        try{
+            CustomerTable customer = customerTable.getSelectionModel().getSelectedItem();
+            if(customer != null) {
+                ModifyAppointmentController.selectedCustomer = customer;
+                ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("EditAppointmentView.fxml")).load(), 600, 400));
+            }else{
+                alert = new Alert(Alert.AlertType.ERROR,
+                        "You have not selected a valid appointment to modify!");
+                alert.setHeaderText("Invalid Selection");
+                alert.show();
+            }
+        }catch(IOException ioException){
+            System.out.println(ioException.getMessage());
+        }
     }
 
 
