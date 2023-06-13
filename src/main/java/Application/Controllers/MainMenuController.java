@@ -152,7 +152,7 @@ public class MainMenuController implements Initializable{
     public void onModifyAppointment(ActionEvent actionEvent) throws IOException {
         try{
             if(appointmentTable.getSelectionModel().getSelectedItem() != null) {
-                ModifyAppointmentController.selectedCustomer = appointmentTable.getSelectionModel().getSelectedItem();
+                ModifyAppointmentController.selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
                 ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("EditAppointmentView.fxml")).load(), 600, 400));
             }else{
                 alert = new Alert(Alert.AlertType.ERROR,
@@ -236,7 +236,7 @@ public class MainMenuController implements Initializable{
         try{
             CustomerTable customer = customerTable.getSelectionModel().getSelectedItem();
             if(customer != null) {
-                ModifyAppointmentController.selectedCustomer = customer;
+                ModifyCustomerController.selectedCustomer = customer;
                 ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("EditAppointmentView.fxml")).load(), 600, 400));
             }else{
                 alert = new Alert(Alert.AlertType.ERROR,

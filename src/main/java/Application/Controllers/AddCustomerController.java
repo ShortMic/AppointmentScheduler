@@ -12,19 +12,7 @@ import java.util.ResourceBundle;
 public class AddCustomerController implements Initializable{
     //TODO: Implement AddCustomerController
     @FXML
-    public Text appTitleLabel;
-    public TextField locationTextField;
-    public TextField titleTextField;
-    public TextField descriptionTextField;
-    public TextField typeTextField;
-    public MenuButton startTimeMenuBtn;
-    public MenuButton contactMenuBtn;
-    public MenuButton customerIDMenuBtn;
-    public MenuButton endTimeMenuBtn;
-    public DatePicker startDateField;
-    public DatePicker endDateField;
-    public Button cancelAppointmentBtn;
-    public Button addAppointmentBtn;
+    public TextField customerIDTextField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

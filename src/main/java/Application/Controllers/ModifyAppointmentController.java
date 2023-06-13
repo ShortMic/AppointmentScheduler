@@ -54,7 +54,7 @@ public class ModifyAppointmentController implements Initializable{
     private String errorMsg = "";
     private boolean errorFlag = false;
 
-    public static Customer selectedCustomer;
+    public static AppointmentTable selectedAppointment;
     private DateTimeFormatter date = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
     private DateTimeFormatter timeFormat24hr = DateTimeFormatter.ofPattern("h:mma");
@@ -63,14 +63,14 @@ public class ModifyAppointmentController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if(selectedCustomer != null) {
-            titleTextField.setText(selectedCustomer.getTitle());
-            descriptionTextField.setText(selectedCustomer.getDescription());
-            typeTextField.setText(selectedCustomer.getType());
-            locationTextField.setText(selectedCustomer.getLocation());
-            locationTextField.setText(selectedCustomer.getLocation());
+        if(selectedAppointment != null) {
+            titleTextField.setText(selectedAppointment.getTitle());
+            descriptionTextField.setText(selectedAppointment.getDescription());
+            typeTextField.setText(selectedAppointment.getType());
+            locationTextField.setText(selectedAppointment.getLocation());
+            locationTextField.setText(selectedAppointment.getLocation());
 
-            appointmentIdTextField.setText(Integer.toString(selectedCustomer.getAppointmentId()));
+            appointmentIdTextField.setText(Integer.toString(selectedAppointment.getAppointmentId()));
             comboFields = new ArrayList<>();
             comboFields.add(startTimeMenuBtn);
             comboFields.add(endTimeMenuBtn);
@@ -138,20 +138,20 @@ public class ModifyAppointmentController implements Initializable{
             populateTimeSelection();
             startTimeMenuBtn.setItems(timeSelectionList);
             endTimeMenuBtn.setItems(timeSelectionList);
-            String startTimeStr = (selectedCustomer.getStart().toLocalTime().format(timeFormat24hr));
+            String startTimeStr = (selectedAppointment.getStart().toLocalTime().format(timeFormat24hr));
             startTimeMenuBtn.getSelectionModel().select(startTimeStr);
-            String endTimeStr = (selectedCustomer.getEnd().toLocalTime().format(timeFormat24hr));
+            String endTimeStr = (selectedAppointment.getEnd().toLocalTime().format(timeFormat24hr));
             endTimeMenuBtn.getSelectionModel().select(endTimeStr);
-            userIdMenuBtn.getSelectionModel().select(selectedCustomer.getUserId());
-            startDateField.setValue(selectedCustomer.getStart().toLocalDate());
-            endDateField.setValue(selectedCustomer.getEnd().toLocalDate());
+            userIdMenuBtn.getSelectionModel().select(selectedAppointment.getUserId());
+            startDateField.setValue(selectedAppointment.getStart().toLocalDate());
+            endDateField.setValue(selectedAppointment.getEnd().toLocalDate());
             try {
                 userIdMenuBtn.getSelectionModel().select(UsersCache.getInstance().getCache().stream()
-                        .filter(x -> x.getUserId() == selectedCustomer.getUserId()).findFirst().orElse(null));
+                        .filter(x -> x.getUserId() == selectedAppointment.getUserId()).findFirst().orElse(null));
                 contactMenuBtn.getSelectionModel().select(ContactsCache.getInstance().getCache().stream()
-                        .filter(x -> x.getContactId() == selectedCustomer.getContactId()).findFirst().orElse(null));
+                        .filter(x -> x.getContactId() == selectedAppointment.getContactId()).findFirst().orElse(null));
                 customerIDMenuBtn.getSelectionModel().select(CustomersCache.getInstance().getCache().stream()
-                        .filter(x -> x.getCustomerId() == selectedCustomer.getCustomerId()).findFirst().orElse(null));
+                        .filter(x -> x.getCustomerId() == selectedAppointment.getCustomerId()).findFirst().orElse(null));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
