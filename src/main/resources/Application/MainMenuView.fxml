@@ -25,7 +25,7 @@
                      <children>
                         <TableView fx:id="appointmentTable" layoutX="17.0" layoutY="14.0" prefHeight="406.0" prefWidth="995.0">
                             <placeholder>
-                                <Label fx:id="appointmentTablePlaceholderLabel" text="Part Inventory Empty"/>
+                                <Label fx:id="appointmentTablePlaceholderLabel" text="Appointment Schedule Empty"/>
                             </placeholder>
                           <columns>
                             <TableColumn fx:id="appointmentIdCol" prefWidth="50.0" text="Appt ID" />
@@ -52,6 +52,9 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TableView fx:id="customerTable" layoutX="17.0" layoutY="14.0" prefHeight="406.0" prefWidth="995.0">
+                            <placeholder>
+                                <Label fx:id="customerTablePlaceholderLabel" text="Customer Table Empty"/>
+                            </placeholder>
                            <columns>
                               <TableColumn fx:id="customerIdCol" text="Customer ID" />
                               <TableColumn fx:id="customerNameCol" prefWidth="193.0" text="Name" />

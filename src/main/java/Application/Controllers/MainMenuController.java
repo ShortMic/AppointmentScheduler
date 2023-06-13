@@ -4,6 +4,7 @@ import Application.ApplicationMain;
 import Application.Models.*;
 import Application.Repository.*;
 import Utilities.AppointmentQuery;
+import Utilities.CustomerQuery;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,6 +71,7 @@ public class MainMenuController implements Initializable{
     public DivisionLevelCache divisionLevelCache;
     public UsersCache usersCache;
     public Label appointmentTablePlaceholderLabel;
+    public Label customerTablePlaceholderLabel;
     public static boolean isInitialLogin = false;
     private Alert alert;
 
@@ -212,10 +214,10 @@ public class MainMenuController implements Initializable{
                     label.setText(type + " Name/Id not found");
                 }
             }
-            case "Customers" -> {
+            case "Customer" -> {
                 isEmpty = CustomersCache.getInstance().getCache().isEmpty();
                 if (isEmpty) {
-                    label.setText(type + "s Table Empty");
+                    label.setText(type + " Table Empty");
                 } else {
                     label.setText(type + " Name/Id not found");
                 }
@@ -234,9 +236,49 @@ public class MainMenuController implements Initializable{
     public void onModifyCustomer(ActionEvent actionEvent) {
     }
 
-    //TODO: When deleting a customer record, all of the customer’s appointments must be deleted first, due to foreign key constraints.
+
     @FXML
     public void onDeleteCustomer(ActionEvent actionEvent) {
+        try{
+            CustomerTable customer = customerTable.getSelectionModel().getSelectedItem();
+            if(customer != null) {
+                if(hasAppointment(customer)){
+                    alert = new Alert(Alert.AlertType.ERROR,
+                            "Cannot delete customer "+customer.getCustomerName()+" (ID: "+customer.getCustomerId()+
+                                    ") while customer's appointments exist!");
+                    alert.setHeaderText("Invalid Selection");
+                    alert.show();
+                }else{
+                    alert = new Alert(Alert.AlertType.CONFIRMATION,
+                            "Do you want to delete this Customer?");
+                    alert.setHeaderText("Delete");
+                    alert.showAndWait().ifPresent(
+                            response -> {
+                                if (response == ButtonType.OK) {
+                                    try {
+                                        CustomerQuery.delete(customer);
+                                        CustomersCache.getInstance().getCache().remove(customer);
+                                        tableLabelUpdater(customerTablePlaceholderLabel, "Customer");
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                    );
+                }
+            }else{
+                alert = new Alert(Alert.AlertType.ERROR,
+                        "You have not selected a valid customer to delete!");
+                alert.setHeaderText("Invalid Selection");
+                alert.show();
+            }
+        }catch(Exception exception){
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    private boolean hasAppointment(CustomerTable customer) throws SQLException {
+        return AppointmentsCache.getInstance().getCache().stream().anyMatch(x -> x.getCustomerId() == customer.getCustomerId());
     }
 
     @FXML

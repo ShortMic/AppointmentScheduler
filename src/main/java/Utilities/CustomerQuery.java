@@ -1,5 +1,7 @@
 package Utilities;
 
+import Application.Models.CustomerTable;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,5 +45,22 @@ public abstract class CustomerQuery extends Queryable {
                 " INNER JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID"; //WHERE User_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         return ps.executeQuery();
+    }
+
+    public static boolean delete(CustomerTable customer) {
+        try{
+            String sql = "DELETE FROM "+table+" WHERE "+table+".Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customer.getCustomerId());
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Appointment "+customer.getCustomerName()+" (ID: "+customer.getCustomerId()+") has been successfully deleted");
+                return true;
+            }
+            return false;
+        }catch (Exception exception){
+            System.out.println(exception.getMessage());
+            return false;
+        }
     }
 }
