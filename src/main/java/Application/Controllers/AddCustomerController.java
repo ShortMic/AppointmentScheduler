@@ -37,6 +37,7 @@ public class AddCustomerController implements Initializable{
     public ComboBox<DivisionLevel1> stateMenuBtn;
     public Button addCustomerBtn;
     public Button cancelCustomerBtn;
+    private boolean countryMenuModifiedFlag = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,19 +83,21 @@ public class AddCustomerController implements Initializable{
     public void onAddCustomerBtn(ActionEvent actionEvent) {
 
     }
-
-    //TODO: BUG: throws class cast exception on event proc. Find alternate type convertion solution or w/e.
+    
     public void onSelectCountryBtn(ActionEvent actionEvent) throws SQLException {
         Country selectedCountry = ((ComboBox<Country>)actionEvent.getSource()).getSelectionModel().getSelectedItem();
         if(selectedCountry != null){
             stateMenuBtn.setDisable(false);
             populateStateMenuBtn(selectedCountry.getCountryId());
+            countryMenuModifiedFlag = true;
+        }else if(countryMenuModifiedFlag){
+            stateMenuBtn.getSelectionModel().clearSelection();
         }
     }
 
     private void populateStateMenuBtn(int countryId) throws SQLException {
-        ArrayList<DivisionLevel1> arrCountryStates = (ArrayList<DivisionLevel1>) DivisionLevelCache.getInstance().getCache().stream().filter(x -> x.getCountryId() == countryId).toList();
-        ObservableList<DivisionLevel1> countryStates = FXCollections.observableArrayList(arrCountryStates);
+        List<DivisionLevel1> filteredCountryStates = DivisionLevelCache.getInstance().getCache().stream().filter(x -> x.getCountryId() == countryId).toList();
+        ObservableList<DivisionLevel1> countryStates = FXCollections.observableArrayList(new ArrayList<DivisionLevel1>(filteredCountryStates));
         stateMenuBtn.setItems(countryStates);
         stateMenuBtn.setConverter(new StringConverter<DivisionLevel1>() {
             @Override
