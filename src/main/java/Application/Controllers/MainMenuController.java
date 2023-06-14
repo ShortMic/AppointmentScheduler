@@ -228,7 +228,8 @@ public class MainMenuController implements Initializable{
     }
 
     @FXML
-    public void onAddCustomer(ActionEvent actionEvent) {
+    public void onAddCustomer(ActionEvent actionEvent) throws IOException {
+        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("AddCustomerView.fxml")).load(), 464, 400));
     }
 
     @FXML
@@ -237,10 +238,10 @@ public class MainMenuController implements Initializable{
             CustomerTable customer = customerTable.getSelectionModel().getSelectedItem();
             if(customer != null) {
                 ModifyCustomerController.selectedCustomer = customer;
-                ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("EditAppointmentView.fxml")).load(), 600, 400));
+                ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("ModifyCustomerView.fxml")).load(), 464, 400));
             }else{
                 alert = new Alert(Alert.AlertType.ERROR,
-                        "You have not selected a valid appointment to modify!");
+                        "You have not selected a valid customer to modify!");
                 alert.setHeaderText("Invalid Selection");
                 alert.show();
             }

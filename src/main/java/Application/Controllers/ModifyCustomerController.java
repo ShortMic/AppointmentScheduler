@@ -1,5 +1,6 @@
 package Application.Controllers;
 
+import Application.Models.CustomerTable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +14,9 @@ import java.util.ResourceBundle;
 
 public class ModifyCustomerController implements Initializable{
 //TODO: Implement ModifyCustomerController
+
+    public static CustomerTable selectedCustomer;
+
     @FXML
     public Text appTitleLabel;
 

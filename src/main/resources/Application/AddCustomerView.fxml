@@ -11,7 +11,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.AddCustomerController">
    <children>
       <GridPane layoutX="57.0" layoutY="75.0" prefHeight="251.0" prefWidth="274.0">
@@ -34,15 +33,15 @@
             <Label text="Address" GridPane.rowIndex="2" />
             <Label text="Postal Code" GridPane.rowIndex="3" />
             <Label text="Country" GridPane.rowIndex="4" />
-            <Label text="State" GridPane.rowIndex="5" />
+            <Label fx:id="stateLabel" text="State" GridPane.rowIndex="5" />
             <Label text="Phone" GridPane.rowIndex="6" />
-            <TextField fx:id="customerIDTextField" editable="false" promptText="Auto-Generated ID" GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox prefHeight="25.0" prefWidth="266.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <ComboBox disable="true" prefHeight="25.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="customerIDTextField" disable="true" editable="false" promptText="Auto-Generated ID" GridPane.columnIndex="1" />
+            <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="addressTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="zipTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="countryMenuBtn" onAction="#onSelectCountryBtn" prefHeight="25.0" prefWidth="266.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="stateMenuBtn" disable="true" prefHeight="25.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          </children>
       </GridPane>
       <Text layoutX="166.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Customer" underline="true">
@@ -50,7 +49,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Button layoutX="412.0" layoutY="349.0" mnemonicParsing="false" text="Add" textFill="#1100ff" />
-      <Button layoutX="344.0" layoutY="349.0" mnemonicParsing="false" text="Cancel" textFill="RED" />
+      <Button fx:id="addCustomerBtn" layoutX="412.0" layoutY="349.0" mnemonicParsing="false" onAction="#onAddCustomerBtn" text="Add" textFill="#1100ff" />
+      <Button fx:id="cancelCustomerBtn" layoutX="344.0" layoutY="349.0" mnemonicParsing="false" onAction="#onCancelCustomerBtn" text="Cancel" textFill="RED" />
    </children>
 </AnchorPane>
