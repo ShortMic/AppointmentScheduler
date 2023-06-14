@@ -2,11 +2,9 @@ package Application.Controllers;
 
 import Application.ApplicationMain;
 import Application.Models.*;
-import Application.Repository.AppointmentsCache;
 import Application.Repository.CountryCache;
 import Application.Repository.CustomersCache;
 import Application.Repository.DivisionLevelCache;
-import Utilities.AppointmentQuery;
 import Utilities.CustomerQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,15 +14,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -102,8 +97,8 @@ public class ModifyCustomerController implements Initializable{
     public void onCancelCustomerBtn(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
-
-    public void onAddCustomerBtn(ActionEvent actionEvent) {
+    
+    public void onModifyCustomerBtn(ActionEvent actionEvent) {
         try{
             textFieldDataValidationLogger("Name", nameTextField, "String");
             textFieldDataValidationLogger("Address", addressTextField, "String");
@@ -123,10 +118,14 @@ public class ModifyCustomerController implements Initializable{
                     alert.show();
                     errorFlag = false;
                 }else{
-                    Customer customer = new Customer(-1, nameTextField.getText(), addressTextField.getText(),
-                            zipTextField.getText(), phoneTextField.getText(), stateMenuBtn.getSelectionModel().getSelectedItem().getDivisionId());
-                    customer.setCustomerId(CustomerQuery.create(customer));
-                    CustomersCache.getInstance().getCache().add(new CustomerTable(customer, countryMenuBtn.getSelectionModel().getSelectedItem().getCountry(), stateMenuBtn.getSelectionModel().getSelectedItem().getDivision()));
+                    selectedCustomer.setCustomerName(nameTextField.getText());
+                    selectedCustomer.setCountry(countryMenuBtn.getSelectionModel().getSelectedItem().getCountry());
+                    selectedCustomer.setStateProvince(stateMenuBtn.getSelectionModel().getSelectedItem().getDivision());
+                    selectedCustomer.setDivisionId(stateMenuBtn.getSelectionModel().getSelectedItem().getDivisionId());
+                    selectedCustomer.setAddress(addressTextField.getText());
+                    selectedCustomer.setPostalCode(zipTextField.getText());
+                    selectedCustomer.setPhone(phoneTextField.getText());
+                    CustomerQuery.update(selectedCustomer);
                     ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
                 }
             }

@@ -49,7 +49,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
-      <Button fx:id="addCustomerBtn" layoutX="412.0" layoutY="349.0" mnemonicParsing="false" onAction="#onAddCustomerBtn" text="Add" textFill="#1100ff" />
+      <Button fx:id="addCustomerBtn" layoutX="412.0" layoutY="349.0" mnemonicParsing="false" onAction="#onModifyCustomerBtn" text="Add" textFill="#1100ff" />
       <Button fx:id="cancelCustomerBtn" layoutX="344.0" layoutY="349.0" mnemonicParsing="false" onAction="#onCancelCustomerBtn" text="Cancel" textFill="RED" />
    </children>
 </AnchorPane>

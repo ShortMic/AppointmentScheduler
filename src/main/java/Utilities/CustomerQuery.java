@@ -1,12 +1,13 @@
 package Utilities;
 
+import Application.Models.Appointment;
 import Application.Models.Customer;
 import Application.Models.CustomerTable;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 
-public abstract class CustomerQuery extends Queryable {
+public abstract class CustomerQuery extends Queryable implements IQueryable{
 
     public static String table = "customers";
     public static String[] fields = {"Customer_ID", "Customer_Name", "Address", "Postal_Code", "Phone", "Division_ID"};
@@ -62,6 +63,21 @@ public abstract class CustomerQuery extends Queryable {
             System.out.println(exception.getMessage());
             return false;
         }
+    }
+
+    public static int update(Customer customer) throws SQLException {
+        String sql = "UPDATE "+table+" SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Last_Update = ?, " +
+                "Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, customer.getCustomerName());
+        ps.setString(2, customer.getAddress());
+        ps.setString(3, customer.getPostalCode());
+        ps.setString(4, customer.getPhone());
+        ps.setTimestamp(5, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));
+        ps.setString(6, "App");
+        ps.setInt(7, customer.getDivisionId());
+        ps.setInt(8, customer.getCustomerId());
+        return ps.executeUpdate();
     }
 
     public static int create(Customer customer) throws SQLException {
