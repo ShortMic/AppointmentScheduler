@@ -71,15 +71,19 @@ public class ModifyCustomerController implements Initializable{
             System.out.println(exception.getMessage());
         }
         if(selectedCustomer != null){
-            customerIDTextField.setText(selectedCustomer.getCustomerId());
-            nameTextField.setText(selectedCustomer.getName());
+            customerIDTextField.setText(Integer.toString(selectedCustomer.getCustomerId()));
+            nameTextField.setText(selectedCustomer.getCustomerName());
             addressTextField.setText(selectedCustomer.getAddress());
             zipTextField.setText(selectedCustomer.getPostalCode());
             phoneTextField.setText(selectedCustomer.getPhone());
-            countryMenuBtn.getSelectionModel().select(selectedCustomer.getCountry());
-            countryMenuModifiedFlag = true;
-            populateStateMenuBtn(selectedCustomer.getDivisionId());
-            stateMenuBtn.getSelectionModel().select(selectedCustomer.getStateProvince());
+            try {
+                countryMenuBtn.getSelectionModel().select(CountryCache.getInstance().getCache().stream().filter(x -> x.getCountry().equals(selectedCustomer.getCountry())).findFirst().orElse(null));
+                countryMenuModifiedFlag = true;
+                populateStateMenuBtn(countryMenuBtn.getSelectionModel().getSelectedItem().getCountryId());
+                stateMenuBtn.getSelectionModel().select(DivisionLevelCache.getInstance().getCache().stream().filter(x -> x.getDivision().equals(selectedCustomer.getStateProvince())).findFirst().orElse(null));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
