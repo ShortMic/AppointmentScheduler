@@ -70,6 +70,17 @@ public class ModifyCustomerController implements Initializable{
         }catch(Exception exception){
             System.out.println(exception.getMessage());
         }
+        if(selectedCustomer != null){
+            customerIDTextField.setText(selectedCustomer.getCustomerId());
+            nameTextField.setText(selectedCustomer.getName());
+            addressTextField.setText(selectedCustomer.getAddress());
+            zipTextField.setText(selectedCustomer.getPostalCode());
+            phoneTextField.setText(selectedCustomer.getPhone());
+            countryMenuBtn.getSelectionModel().select(selectedCustomer.getCountry());
+            countryMenuModifiedFlag = true;
+            populateStateMenuBtn(selectedCustomer.getDivisionId());
+            stateMenuBtn.getSelectionModel().select(selectedCustomer.getStateProvince());
+        }
     }
 
     public void onStartTimeMenuBtn(ActionEvent actionEvent) {
