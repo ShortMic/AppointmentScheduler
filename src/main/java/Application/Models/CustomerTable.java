@@ -10,6 +10,13 @@ public class CustomerTable extends Customer{
         country = getCountry();
     }
 
+    public CustomerTable(Customer customer, String country, String stateProvince) {
+        super(customer.getCustomerId(), customer.getCustomerName(), customer.getAddress(), customer.getPostalCode(),
+                customer.getPhone(), customer.customerId);
+        this.country = country;
+        this.stateProvince = stateProvince;
+    }
+
     public CustomerTable(int customerId, String customerName, String address, String postalCode, String phone, String country, String stateProvince, int divisionId) {
         super(customerId, customerName, address, postalCode, phone, divisionId);
         this.country = country;

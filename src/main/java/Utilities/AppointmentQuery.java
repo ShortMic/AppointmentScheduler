@@ -88,6 +88,7 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
             }
             return -1;
         }catch(Exception exception){
+            System.out.println(exception.getMessage());
             return -1;
         }
     }

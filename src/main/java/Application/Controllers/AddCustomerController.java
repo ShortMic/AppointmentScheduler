@@ -1,10 +1,13 @@
 package Application.Controllers;
 
 import Application.ApplicationMain;
-import Application.Models.Country;
-import Application.Models.DivisionLevel1;
+import Application.Models.*;
+import Application.Repository.AppointmentsCache;
 import Application.Repository.CountryCache;
+import Application.Repository.CustomersCache;
 import Application.Repository.DivisionLevelCache;
+import Utilities.AppointmentQuery;
+import Utilities.CustomerQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,12 +23,13 @@ import javafx.util.StringConverter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddCustomerController implements Initializable{
-    //TODO: Implement AddCustomerController
     @FXML
     public TextField customerIDTextField;
     public Label stateLabel;
@@ -38,6 +42,9 @@ public class AddCustomerController implements Initializable{
     public Button addCustomerBtn;
     public Button cancelCustomerBtn;
     private boolean countryMenuModifiedFlag = false;
+    private String errorMsg = "";
+    private boolean errorFlag = false;
+    public Alert alert;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,9 +88,92 @@ public class AddCustomerController implements Initializable{
     }
 
     public void onAddCustomerBtn(ActionEvent actionEvent) {
-
+        try{
+            textFieldDataValidationLogger("Name", nameTextField, "String");
+            textFieldDataValidationLogger("Address", addressTextField, "String");
+            textFieldDataValidationLogger("Zipcode", zipTextField, "String");
+            textFieldDataValidationLogger("Phone", phoneTextField, "String");
+            if(errorFlag){
+                alert = new Alert(Alert.AlertType.ERROR, errorMsg);
+                alert.setHeaderText("Invalid Input");
+                alert.show();
+                errorMsg = "";
+                errorFlag = false;
+            }else{
+                errorFlag = (countryMenuBtn.getSelectionModel().getSelectedItem() == null || stateMenuBtn.getSelectionModel().getSelectedItem() == null);
+                if(errorFlag){
+                    alert = new Alert(Alert.AlertType.ERROR, "Combo Box Field(s) not entered. Please make a selection!");
+                    alert.setHeaderText("Missing Required Field");
+                    alert.show();
+                    errorFlag = false;
+                }else{
+                    Customer customer = new Customer(-1, nameTextField.getText(), addressTextField.getText(),
+                            zipTextField.getText(), phoneTextField.getText(), stateMenuBtn.getSelectionModel().getSelectedItem().getDivisionId());
+                    customer.setCustomerId(CustomerQuery.create(customer));
+                    CustomersCache.getInstance().getCache().add(new CustomerTable(customer, countryMenuBtn.getSelectionModel().getSelectedItem().getCountry(), stateMenuBtn.getSelectionModel().getSelectedItem().getDivision()));
+                    ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
+                }
+            }
+        }catch(Exception exception){
+            System.out.println(exception.getMessage());
+        }
     }
-    
+
+    private void textFieldDataValidationLogger(String textFieldLabel, TextField textField, String expectedType){
+        String message = "";
+        switch(expectedType){
+            case "int":
+                if(!tryParseInt(textField.getText())){
+                    message = "Invalid type for "+textFieldLabel+" field: "+"\""+textField.getText()+"\" is not an "+expectedType;
+                }
+                break;
+            case "Double":
+                if(!tryParseDouble(textField.getText())){
+                    message = "Invalid type for "+textFieldLabel+": "+"\""+textField.getText()+"\" is not a "+expectedType;
+                }
+                break;
+            case "String":
+                if(textField.getText().isEmpty()){
+                    message = "Required field "+textFieldLabel+" is empty!";
+                }
+            default:
+                break;
+        }
+        if(!message.equals("")){
+            errorMsg += message+" ";
+            errorFlag = true;
+            System.out.println(message);
+        }
+    }
+
+    /**
+     * Private helper method which returns whether a string is convertible to an int.
+     * @param text  The text to try converting into an int
+     * @return boolean
+     */
+    private boolean tryParseInt(String text){
+        try{
+            Integer.parseInt(text);
+        }catch(Exception exception){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Private helper method which returns whether a string is convertible to a double.
+     * @param text  The text to try converting into a double
+     * @return boolean
+     */
+    private boolean tryParseDouble(String text){
+        try{
+            Double.parseDouble(text);
+        }catch(Exception exception){
+            return false;
+        }
+        return true;
+    }
+
     public void onSelectCountryBtn(ActionEvent actionEvent) throws SQLException {
         Country selectedCountry = ((ComboBox<Country>)actionEvent.getSource()).getSelectionModel().getSelectedItem();
         if(selectedCountry != null){

@@ -1,10 +1,10 @@
 package Utilities;
 
+import Application.Models.Customer;
 import Application.Models.CustomerTable;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 
 public abstract class CustomerQuery extends Queryable {
 
@@ -61,6 +61,36 @@ public abstract class CustomerQuery extends Queryable {
         }catch (Exception exception){
             System.out.println(exception.getMessage());
             return false;
+        }
+    }
+
+    public static int create(Customer customer) throws SQLException {
+        try{
+            String sql = "INSERT INTO "+table+" (Customer_Name, Address, Postal_Code, Phone, Create_Date, " +
+                    "Created_By, Last_Update, Last_Updated_By, Division_ID) VALUES (?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1,customer.getCustomerName());
+            ps.setString(2,customer.getAddress());
+            ps.setString(3,customer.getPostalCode());
+            ps.setString(4,customer.getPhone());
+            ps.setTimestamp(5, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));
+            ps.setString(6,"App");
+            ps.setTimestamp(7, Timestamp.valueOf(TimeConverter.convertToUTC(LocalDateTime.now()).toLocalDateTime()));
+            ps.setString(8,"App");
+            ps.setInt(9,customer.getDivisionId());
+            int affectedRows = ps.executeUpdate();
+            if (affectedRows > 0) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int generatedId = generatedKeys.getInt(1);
+                    System.out.println("Generated ID: " + generatedId);
+                    return generatedId;
+                }
+            }
+            return -1;
+        }catch(Exception exception){
+            System.out.println(exception.getMessage());
+            return -1;
         }
     }
 }
