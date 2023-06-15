@@ -17,8 +17,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class LoginController implements Initializable {
 
@@ -71,6 +76,17 @@ public class LoginController implements Initializable {
             System.out.println("Locale unrecognized! Defaulting country to US");
         }else{
             zoneIdLabel.setText(locale.toString());
+        }
+    }
+
+    public void createLoginLog(String message) {
+        String logFileName = "login_activity.txt";
+
+        try (PrintWriter printWriter = new PrintWriter(new FileWriter(logFileName, true))) {
+            printWriter.println(message);
+            printWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -127,14 +143,17 @@ public class LoginController implements Initializable {
         try{
             userId = UserQuery.select(userNameTextbox.getText(), passwordTextbox.getText());
             if(userId > 0){
+                createLoginLog(LocalDateTime.now().toString()+": User \""+userNameTextbox.getText()+"\" logged in successfully.");
                 System.out.println("User and password accepted!");
                 loadMainMenu(actionEvent);
             }else if(userId == -1){
+                createLoginLog(LocalDateTime.now().toString()+": User \""+userNameTextbox.getText()+"\" login failed (credential mismatch).");
                 alert = new Alert(Alert.AlertType.ERROR,
                         translate("Invalid username and/or password!"));
                 alert.setHeaderText(translate("Login failed"));
                 alert.show();
             }else{
+                createLoginLog(LocalDateTime.now().toString()+": User \""+userNameTextbox.getText()+"\" login failed (connection error).");
                 alert = new Alert(Alert.AlertType.ERROR,
                         translate("Something went wrong with credential verification!"));
                 alert.setHeaderText(translate("Login failed"));

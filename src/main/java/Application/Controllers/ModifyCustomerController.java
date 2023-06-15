@@ -97,7 +97,7 @@ public class ModifyCustomerController implements Initializable{
     public void onCancelCustomerBtn(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
-    
+
     public void onModifyCustomerBtn(ActionEvent actionEvent) {
         try{
             textFieldDataValidationLogger("Name", nameTextField, "String");

@@ -1,0 +1,4 @@
+2023-06-14T17:01:59.415473: User "test" logged in successfully.
+2023-06-14T17:02:44.057844900: User "test" login failed (credential mismatch).
+2023-06-14T17:03:11.848848: User "fds" login failed (credential mismatch).
+2023-06-14T17:03:32.680472700: User "admin" logged in successfully.
