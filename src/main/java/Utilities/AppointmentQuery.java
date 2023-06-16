@@ -93,7 +93,6 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
         }
     }
 
-    //TODO: look into cascading delete or adding restrictions, may be relevant only to Customers db, read docs later.
     public static boolean delete(Appointment appointment) throws SQLException {
         try{
             String sql = "DELETE FROM "+table+" WHERE "+table+".Appointment_ID = ?";

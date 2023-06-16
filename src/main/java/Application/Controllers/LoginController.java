@@ -143,7 +143,7 @@ public class LoginController implements Initializable {
         try{
             userId = UserQuery.select(userNameTextbox.getText(), passwordTextbox.getText());
             if(userId > 0){
-                createLoginLog(LocalDateTime.now().toString()+": User \""+userNameTextbox.getText()+"\" logged in successfully.");
+                createLoginLog("["+LocalDateTime.now().toString()+"] User \""+userNameTextbox.getText()+"\" logged in successfully.");
                 System.out.println("User and password accepted!");
                 loadMainMenu(actionEvent);
             }else if(userId == -1){

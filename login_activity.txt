@@ -2,3 +2,23 @@
 2023-06-14T17:02:44.057844900: User "test" login failed (credential mismatch).
 2023-06-14T17:03:11.848848: User "fds" login failed (credential mismatch).
 2023-06-14T17:03:32.680472700: User "admin" logged in successfully.
+[2023-06-16T06:26:35.659290300] User "test" logged in successfully.
+[2023-06-16T08:55:59.067363700] User "test" logged in successfully.
+[2023-06-16T09:03:34.998610200] User "test" logged in successfully.
+[2023-06-16T09:10:15.295010200] User "test" logged in successfully.
+[2023-06-16T09:48:35.796668700] User "test" logged in successfully.
+[2023-06-16T09:58:44.348902100] User "test" logged in successfully.
+[2023-06-16T11:18:30.547928700] User "test" logged in successfully.
+[2023-06-16T11:19:50.268810500] User "test" logged in successfully.
+[2023-06-16T11:20:50.209670300] User "test" logged in successfully.
+[2023-06-16T11:22:31.189406500] User "test" logged in successfully.
+[2023-06-16T11:25:06.210633100] User "test" logged in successfully.
+[2023-06-16T11:26:29.300219700] User "test" logged in successfully.
+[2023-06-16T11:27:12.566740900] User "test" logged in successfully.
+[2023-06-16T12:19:34.254365300] User "test" logged in successfully.
+[2023-06-16T12:21:30.470049300] User "test" logged in successfully.
+[2023-06-16T12:27:51.728267600] User "test" logged in successfully.
+[2023-06-16T12:28:40.439715700] User "test" logged in successfully.
+[2023-06-16T12:30:31.234907100] User "test" logged in successfully.
+[2023-06-16T12:34:02.475805100] User "test" logged in successfully.
+[2023-06-16T12:36:14.434739600] User "test" logged in successfully.

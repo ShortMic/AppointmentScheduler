@@ -223,7 +223,6 @@ public class ModifyAppointmentController implements Initializable{
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
 
-    //TODO: BUG: adds copy of appointment instead of modifying original.
     public void onModifyAppointmentBtn(ActionEvent actionEvent) throws IOException {
         try{
             textFieldDataValidationLogger("Title", titleTextField, "String");

@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable{
@@ -292,11 +294,45 @@ public class MainMenuController implements Initializable{
     }
 
     private boolean hasAppointment(CustomerTable customer) throws SQLException {
-        return AppointmentsCache.getInstance().getCache().stream().anyMatch(x -> x.getCustomerId() == customer.getCustomerId());
+        return AppointmentsCache.getInstance().getCache().stream()
+                .anyMatch(x -> x.getCustomerId() == customer.getCustomerId());
     }
 
     @FXML
-    public void onOpenReports(ActionEvent actionEvent) {
+    public void onOpenReports(ActionEvent actionEvent) throws IOException {
+        ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("ReportAlertView.fxml")).load(), 365, 180));
+        // Load the custom FXML file for the content of the Alert
+        /*
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ReportAlertView.fxml"));
+        Parent content = loader.load();
+        Alert reportModalWindow = new Alert(Alert.AlertType.CONFIRMATION);
+        reportModalWindow.setTitle("Generate Report");
+        reportModalWindow.setHeaderText("Report Selection");
+        reportModalWindow.getDialogPane().setContent(content);
+        ComboBox<String> comboBox = (ComboBox<String>) loader.getNamespace().get("comboBox");
+        comboBox.getItems().addAll("Month/Type", "Contact", "User");
+        comboBox.getSelectionModel().selectFirst();
+
+// Show the custom Alert and wait for the user response
+        Optional<ButtonType> result = reportModalWindow.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            String selectedOption = comboBox.getSelectionModel().getSelectedItem();
+            switch(selectedOption){
+                case "Month/Type":
+                    loader = new FXMLLoader(getClass().getResource("MonthTypeReportView.fxml")).load();
+                    break;
+                case "Contact":
+                    loader = new FXMLLoader(getClass().getResource("ContactReportView.fxml")).load();
+                    break;
+                case "User":
+                    loader = new FXMLLoader(getClass().getResource("UserReportView.fxml")).load();
+                    break;
+                default:
+                    System.out.println("Something went wrong! No valid option selected for onOpenReports modal window!");
+                    break;
+            }
+        }
+         */
     }
 
     @FXML

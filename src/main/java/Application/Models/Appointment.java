@@ -5,6 +5,7 @@ import Utilities.TimeConverter;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Date;
 
 public class Appointment {
@@ -18,6 +19,7 @@ public class Appointment {
     private int customerId;
     private int userId;
     private int contactId;
+    private Month month;
 
     /**
      * This constructor is used primarily for updating and adding to the local cache for converting POJOs to a MySQL DB
@@ -169,5 +171,9 @@ public class Appointment {
 
     public void setContactId(int contactId) {
         this.contactId = contactId;
+    }
+
+    public Month getMonth(){
+        return start.getMonth();
     }
 }
