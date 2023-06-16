@@ -36,7 +36,7 @@ public class MainMenuController implements Initializable{
     @FXML public TableColumn<AppointmentTable, String> appointmentLocationCol;
     @FXML public TableColumn<AppointmentTable, String> appointmentContactCol;
     @FXML public TableColumn<AppointmentTable, String> appointmentTypeCol;
-    @FXML public TableColumn<AppointmentTable, LocalDateTime> appointmentStartCol; //import sql.date or java.date? currently sql.date
+    @FXML public TableColumn<AppointmentTable, LocalDateTime> appointmentStartCol;
     @FXML public TableColumn<AppointmentTable, LocalDateTime> appointmentEndCol;
     @FXML public TableColumn<AppointmentTable, Integer> appointmentCustomerIdCol;
     @FXML public TableColumn<AppointmentTable, Integer> appointmentUserIdCol;

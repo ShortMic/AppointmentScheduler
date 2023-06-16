@@ -49,7 +49,7 @@ public class ReportAlertController implements Initializable{
                 break;
             case "Contact":
                 ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(
-                        new FXMLLoader(ApplicationMain.class.getResource("ContactTypeReportView.fxml")).load(), 1070, 564));
+                        new FXMLLoader(ApplicationMain.class.getResource("ContactTypeReportView.fxml")).load(), 740, 417));
                 break;
             case "User":
                 ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(
