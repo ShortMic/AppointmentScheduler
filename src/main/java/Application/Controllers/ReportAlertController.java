@@ -53,7 +53,7 @@ public class ReportAlertController implements Initializable{
                 break;
             case "User":
                 ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(
-                        new FXMLLoader(ApplicationMain.class.getResource("UserReportView.fxml")).load(), 1070, 564));
+                        new FXMLLoader(ApplicationMain.class.getResource("UserTypeReportView.fxml")).load(), 740, 417));
                 break;
             default:
                 System.out.println("Something went wrong! No valid option selected for onOpenReports modal window!");

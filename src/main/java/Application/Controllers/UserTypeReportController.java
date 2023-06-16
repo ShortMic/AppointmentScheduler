@@ -2,9 +2,9 @@ package Application.Controllers;
 
 import Application.ApplicationMain;
 import Application.Models.AppointmentTable;
-import Application.Models.Contact;
+import Application.Models.User;
 import Application.Repository.AppointmentsCache;
-import Application.Repository.ContactsCache;
+import Application.Repository.UsersCache;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,8 +27,8 @@ import java.util.ResourceBundle;
 
 public class UserTypeReportController implements Initializable {
     public Button mainMenuBtn;
-    public ComboBox<Contact> contactMenuBox;
-    public TableView<AppointmentTable> contactTable;
+    public ComboBox<User> userMenuBox;
+    public TableView<AppointmentTable> userTable;
     public TableColumn<AppointmentTable, Integer> appointmentIdCol;
     public TableColumn<AppointmentTable, String> titleCol;
     public TableColumn<AppointmentTable, String> typeCol;
@@ -40,24 +40,24 @@ public class UserTypeReportController implements Initializable {
 
     /*
     Each of the following reports and will display the reports in the user interface:
-        •  a schedule for each contact in your organization that includes appointment ID, title, type and description,
+        •  a schedule for each user in your organization that includes appointment ID, title, type and description,
             start date and time, end date and time, and customer ID
      */
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            ObservableList<Contact> contacts = FXCollections.observableList(ContactsCache.getInstance().getCache());
-            contactMenuBox.setItems(contacts);
-            contactMenuBox.setConverter(new StringConverter<Contact>() {
+            ObservableList<User> users = FXCollections.observableList(UsersCache.getInstance().getCache());
+            userMenuBox.setItems(users);
+            userMenuBox.setConverter(new StringConverter<User>() {
                 @Override
-                public String toString(Contact contact) {
-                    return contact == null ? null : contact.getContactName();
+                public String toString(User user) {
+                    return user == null ? null : user.getUserName();
                 }
 
                 @Override
-                public Contact fromString(String s) {
-                    return contacts.stream().filter(x -> x.getContactName().equals(s)).findFirst().orElse(null);
+                public User fromString(String s) {
+                    return users.stream().filter(x -> x.getUserName().equals(s)).findFirst().orElse(null);
                 }
             });
         } catch (SQLException e) {
@@ -71,11 +71,11 @@ public class UserTypeReportController implements Initializable {
     }
 
     private void populateTable() throws SQLException {
-        if(!contactMenuBox.getSelectionModel().isEmpty()){
-            Contact selectedContact = contactMenuBox.getSelectionModel().getSelectedItem();
-            if(selectedContact == null){
-                contactMenuBox.getSelectionModel().selectFirst();
-                selectedContact = contactMenuBox.getSelectionModel().getSelectedItem();
+        if(!userMenuBox.getSelectionModel().isEmpty()){
+            User selectedUser = userMenuBox.getSelectionModel().getSelectedItem();
+            if(selectedUser == null){
+                userMenuBox.getSelectionModel().selectFirst();
+                selectedUser = userMenuBox.getSelectionModel().getSelectedItem();
             }
             if(!tableInitialized){
                 appointmentIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("appointmentId"));
@@ -88,14 +88,14 @@ public class UserTypeReportController implements Initializable {
                 tableInitialized = true;
             }
             try {
-                //Filter cached appointments with selectedContact
-                Contact finalSelectedContact = selectedContact;
+                //Filter cached appointments with selectedUser
+                User finalSelectedUser = selectedUser;
                 ObservableList<AppointmentTable> appointmentTables = FXCollections.observableList(
                         AppointmentsCache.getInstance().getCache().stream()
-                                .filter(x -> x.getContactId() == finalSelectedContact.getContactId()).toList());
-                contactTable.setItems(appointmentTables);
+                                .filter(x -> x.getUserId() == finalSelectedUser.getUserId()).toList());
+                userTable.setItems(appointmentTables);
                 //Maybe try filtering after the fact?
-                //contactTable.setItems(AppointmentsCache.getInstance().getCache());
+                //userTable.setItems(AppointmentsCache.getInstance().getCache());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -106,10 +106,10 @@ public class UserTypeReportController implements Initializable {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
 
-    public void onContactMenuBox(ActionEvent actionEvent) throws SQLException {
-        Contact selectedContact = contactMenuBox.getSelectionModel().getSelectedItem();
-        ObservableList<AppointmentTable> appointmentTables = contactTable.getItems();
-        appointmentTables.filtered(x -> x.getContactId() == selectedContact.getContactId());
+    public void onUserMenuBox(ActionEvent actionEvent) throws SQLException {
+        User selectedUser = userMenuBox.getSelectionModel().getSelectedItem();
+        ObservableList<AppointmentTable> appointmentTables = userTable.getItems();
+        appointmentTables.filtered(x -> x.getUserId() == selectedUser.getUserId());
         populateTable();
     }
 }
