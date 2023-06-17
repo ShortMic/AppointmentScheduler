@@ -40,7 +40,6 @@ public class MonthTypeReportController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //List<Month> months = Arrays.stream(Month.values()).toList();
         ObservableList<Month> months = FXCollections.observableArrayList(new ArrayList<Month>(Arrays.stream(Month.values()).toList()));
         monthCol.setCellValueFactory(x -> {
             String monthName = x.getValue().getDisplayName(TextStyle.FULL, Locale.getDefault());

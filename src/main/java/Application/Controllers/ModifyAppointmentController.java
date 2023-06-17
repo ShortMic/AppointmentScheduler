@@ -191,34 +191,6 @@ public class ModifyAppointmentController implements Initializable{
         System.out.println(userZone.toString());
     }
 
-    //TODO: Implement data validation and error handling check to see if appointment time conflicts with business hours
-    private boolean duringBusinessHours(){
-
-        LocalDateTime startDateTime = LocalDateTime.of(startDateField.getValue(), LocalTime.parse(startTimeMenuBtn
-                .getSelectionModel().getSelectedItem(),timeFormat24hr));
-
-        return false;
-    }
-
-    //TODO: Implement data validation and error handling check to see if appointment time conflicts with other appointments
-    private boolean isTimeSlotAvailable(){
-        return false;
-    }
-
-
-
-    public void onStartTimeMenuBtn(ActionEvent actionEvent) {
-    }
-
-    public void onEndTimeMenuBtn(ActionEvent actionEvent) {
-    }
-
-    public void onStartDateField(ActionEvent actionEvent) {
-    }
-
-    public void onEndDateField(ActionEvent actionEvent) {
-    }
-
     public void onCancelAppointmentBtn(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
@@ -236,7 +208,6 @@ public class ModifyAppointmentController implements Initializable{
                 errorMsg = "";
                 errorFlag = false;
             }else{
-                String customerId, userId, contactName, startTime, endTime;
                 errorFlag = comboFields.stream().anyMatch(comboBox -> comboBox.getSelectionModel().getSelectedItem() == null);
                 if(errorFlag){
                     alert = new Alert(Alert.AlertType.ERROR, "Combo Box Field(s) not entered. Please make a selection!");
@@ -339,9 +310,5 @@ public class ModifyAppointmentController implements Initializable{
             return false;
         }
         return true;
-    }
-
-    public void onUserIdMenuBtn(ActionEvent actionEvent) {
-
     }
 }

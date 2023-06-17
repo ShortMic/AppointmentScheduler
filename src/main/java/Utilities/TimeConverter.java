@@ -36,7 +36,6 @@ public abstract class TimeConverter {
     }
 
     public static int getOffsetHour(int businessHour){
-        //OffsetTime offsetTime = OffsetTime.of(businessHour, 0, 0, 0, offset);
         LocalTime localTime = LocalTime.of(businessHour,0).plusSeconds(offset.getTotalSeconds());
         return localTime.getHour();
     }

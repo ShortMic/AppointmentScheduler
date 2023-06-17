@@ -38,11 +38,6 @@ public class UserTypeReportController implements Initializable {
     public TableColumn<AppointmentTable, Integer> customerIdCol;
     private boolean tableInitialized = false;
 
-    /*
-    Each of the following reports and will display the reports in the user interface:
-        •  a schedule for each user in your organization that includes appointment ID, title, type and description,
-            start date and time, end date and time, and customer ID
-     */
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

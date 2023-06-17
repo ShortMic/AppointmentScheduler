@@ -33,13 +33,6 @@ public class CountryCache implements ICachable<Country> {
         while(rs.next()){
             cache.add(new Country(rs.getInt("Country_ID"),
                     rs.getString("Country")));
-            /*
-            if(ContactsCache.isCached && AppointmentsCache.isCached){
-
-            }else{
-
-            }
-             */
         }
         isCached = true;
     }

@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 public class LoginController implements Initializable {
@@ -52,8 +51,6 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Locale settings
-        //https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=5251c286-743e-410d-b7c9-ab4901120742
         rb = resourceBundle;
         if(DEBUG){Locale.setDefault(new Locale("fr","FR"));}
         locale = Locale.getDefault();
@@ -81,7 +78,6 @@ public class LoginController implements Initializable {
 
     public void createLoginLog(String message) {
         String logFileName = "login_activity.txt";
-
         try (PrintWriter printWriter = new PrintWriter(new FileWriter(logFileName, true))) {
             printWriter.println(message);
             printWriter.flush();
@@ -164,10 +160,5 @@ public class LoginController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
-
-//    @FXML
-//    protected void onHelloButtonClick() {
-//        welcomeText.setText("Welcome to JavaFX Application!");
-//    }
 
 }

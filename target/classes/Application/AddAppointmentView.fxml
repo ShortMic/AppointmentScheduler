@@ -34,9 +34,9 @@
             <TextField fx:id="locationTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ComboBox fx:id="customerIDMenuBtn" prefHeight="25.0" prefWidth="186.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <ComboBox fx:id="userIdMenuBtn" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="3" />
-            <DatePicker fx:id="startDateField" onAction="#onStartDateField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <DatePicker fx:id="startDateField" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <ComboBox fx:id="startTimeMenuBtn" prefHeight="25.0" prefWidth="176.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <DatePicker fx:id="endDateField" onAction="#onEndDateField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <DatePicker fx:id="endDateField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <ComboBox fx:id="endTimeMenuBtn" prefHeight="25.0" prefWidth="179.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <ComboBox fx:id="contactMenuBtn" prefHeight="25.0" prefWidth="176.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
             <Label text="Appointment ID" />

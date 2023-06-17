@@ -23,10 +23,6 @@ public class CustomerTable extends Customer{
         this.stateProvince = stateProvince;
     }
 
-    private String populateCountry(){
-        return "";
-    }
-
     public String getCountry() {
         return country;
     }

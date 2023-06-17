@@ -12,25 +12,6 @@ public abstract class CustomerQuery extends Queryable implements IQueryable{
     public static String table = "customers";
     public static String[] fields = {"Customer_ID", "Customer_Name", "Address", "Postal_Code", "Phone", "Division_ID"};
 
-    /*
-    public static Appointment insert(String userName, String password) throws SQLException {
-        String sql = "INSERT INTO "+table+" (User_Name, Password) VALUES(?, ?)";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, userName);
-        ps.setString(2, password);
-        return ps.executeUpdate();
-    }
-
-    public static Appointment update(int userId, String userName, String password) throws SQLException {
-        String sql = "UPDATE "+table+" SET User_Name = ?, Password = ? WHERE User_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, userName);
-        ps.setString(2, password);
-        ps.setInt(3, userId);
-        return ps.executeUpdate();
-    }
-     */
-
     private static String fieldsToString(){
         String arrToStr = "";
         for (String s: fields) {

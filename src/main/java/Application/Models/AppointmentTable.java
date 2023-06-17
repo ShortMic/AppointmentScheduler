@@ -1,9 +1,7 @@
 package Application.Models;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class AppointmentTable extends Appointment{
 

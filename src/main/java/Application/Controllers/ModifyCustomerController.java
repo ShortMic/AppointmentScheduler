@@ -82,18 +82,6 @@ public class ModifyCustomerController implements Initializable{
         }
     }
 
-    public void onStartTimeMenuBtn(ActionEvent actionEvent) {
-    }
-
-    public void onEndTimeMenuBtn(ActionEvent actionEvent) {
-    }
-
-    public void onStartDateField(ActionEvent actionEvent) {
-    }
-
-    public void onEndDateField(ActionEvent actionEvent) {
-    }
-
     public void onCancelCustomerBtn(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }

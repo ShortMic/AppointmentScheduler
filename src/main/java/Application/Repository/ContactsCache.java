@@ -35,13 +35,6 @@ public class ContactsCache implements ICachable<Contact> {
             cache.add(new Contact(rs.getInt("Contact_ID"),
                     rs.getString("Contact_Name"),
                     rs.getString("Email")));
-            /*
-            if(ContactsCache.isCached && AppointmentsCache.isCached){
-
-            }else{
-
-            }
-             */
         }
         isCached = true;
     }

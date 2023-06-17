@@ -35,13 +35,6 @@ public class UsersCache implements ICachable<User> {
             cache.add(new User(rs.getInt("User_ID"),
                     rs.getString("User_Name"),
                     rs.getString("Password")));
-            /*
-            if(ContactsCache.isCached && AppointmentsCache.isCached){
-
-            }else{
-
-            }
-             */
         }
         isCached = true;
     }

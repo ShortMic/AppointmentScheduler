@@ -23,14 +23,6 @@ public class ApplicationMain extends Application {
 
     public static void main(String[] args) throws SQLException {
         JDBC.openConnection();
-        /*
-        int rowsAffected = UserQuery.update(3,"Michael", "Alligator1");
-        if(rowsAffected > 0){
-            System.out.println("Insert successful!");
-        }else{
-            System.out.println("Insert failed!");
-        }
-        */
         launch(args);
         String exitMsg = "Closing system";
         if(User.isAssigned()){

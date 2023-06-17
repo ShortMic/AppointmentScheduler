@@ -3,10 +3,8 @@ package Application.Models;
 import Utilities.TimeConverter;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Date;
 
 public class Appointment {
     private int appointmentId;

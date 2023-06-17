@@ -7,7 +7,6 @@ import Application.Repository.AppointmentsCache;
 import Application.Repository.ContactsCache;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -38,12 +37,6 @@ public class ContactTypeReportController implements Initializable {
     public TableColumn<AppointmentTable, LocalDateTime> endCol;
     public TableColumn<AppointmentTable, Integer> customerIdCol;
     private boolean tableInitialized = false;
-
-    /*
-    Each of the following reports and will display the reports in the user interface:
-        •  a schedule for each contact in your organization that includes appointment ID, title, type and description,
-            start date and time, end date and time, and customer ID
-     */
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -147,7 +147,8 @@ public class MainMenuController implements Initializable{
 
     @FXML
     public void onAddAppointment(ActionEvent actionEvent) throws IOException {
-        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("AddAppointmentView.fxml")).load(), 600, 400));
+        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(
+                ApplicationMain.class.getResource("AddAppointmentView.fxml")).load(), 600, 400));
     }
 
     @FXML
@@ -155,7 +156,8 @@ public class MainMenuController implements Initializable{
         try{
             if(appointmentTable.getSelectionModel().getSelectedItem() != null) {
                 ModifyAppointmentController.selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
-                ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("EditAppointmentView.fxml")).load(), 600, 400));
+                ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(
+                        ApplicationMain.class.getResource("EditAppointmentView.fxml")).load(), 600, 400));
             }else{
                 alert = new Alert(Alert.AlertType.ERROR,
                         "You have not selected a valid appointment to modify!");
@@ -231,7 +233,8 @@ public class MainMenuController implements Initializable{
 
     @FXML
     public void onAddCustomer(ActionEvent actionEvent) throws IOException {
-        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("AddCustomerView.fxml")).load(), 464, 400));
+        ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(
+                ApplicationMain.class.getResource("AddCustomerView.fxml")).load(), 464, 400));
     }
 
     @FXML
@@ -240,7 +243,8 @@ public class MainMenuController implements Initializable{
             CustomerTable customer = customerTable.getSelectionModel().getSelectedItem();
             if(customer != null) {
                 ModifyCustomerController.selectedCustomer = customer;
-                ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("ModifyCustomerView.fxml")).load(), 464, 400));
+                ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(
+                        ApplicationMain.class.getResource("ModifyCustomerView.fxml")).load(), 464, 400));
             }else{
                 alert = new Alert(Alert.AlertType.ERROR,
                         "You have not selected a valid customer to modify!");
@@ -300,39 +304,8 @@ public class MainMenuController implements Initializable{
 
     @FXML
     public void onOpenReports(ActionEvent actionEvent) throws IOException {
-        ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("ReportAlertView.fxml")).load(), 365, 180));
-        // Load the custom FXML file for the content of the Alert
-        /*
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ReportAlertView.fxml"));
-        Parent content = loader.load();
-        Alert reportModalWindow = new Alert(Alert.AlertType.CONFIRMATION);
-        reportModalWindow.setTitle("Generate Report");
-        reportModalWindow.setHeaderText("Report Selection");
-        reportModalWindow.getDialogPane().setContent(content);
-        ComboBox<String> comboBox = (ComboBox<String>) loader.getNamespace().get("comboBox");
-        comboBox.getItems().addAll("Month/Type", "Contact", "User");
-        comboBox.getSelectionModel().selectFirst();
-
-// Show the custom Alert and wait for the user response
-        Optional<ButtonType> result = reportModalWindow.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            String selectedOption = comboBox.getSelectionModel().getSelectedItem();
-            switch(selectedOption){
-                case "Month/Type":
-                    loader = new FXMLLoader(getClass().getResource("MonthTypeReportView.fxml")).load();
-                    break;
-                case "Contact":
-                    loader = new FXMLLoader(getClass().getResource("ContactReportView.fxml")).load();
-                    break;
-                case "User":
-                    loader = new FXMLLoader(getClass().getResource("UserReportView.fxml")).load();
-                    break;
-                default:
-                    System.out.println("Something went wrong! No valid option selected for onOpenReports modal window!");
-                    break;
-            }
-        }
-         */
+        ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(
+                ApplicationMain.class.getResource("ReportAlertView.fxml")).load(), 365, 180));
     }
 
     @FXML

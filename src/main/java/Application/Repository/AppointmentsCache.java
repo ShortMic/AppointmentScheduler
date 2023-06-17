@@ -16,7 +16,6 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
     private static AppointmentsCache instance;
     private ObservableList<AppointmentTable> cache;
     public FilteredList<Appointment> filteredAppointments;
-    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public static boolean isCached = false;
 
     private AppointmentsCache() throws SQLException {
@@ -45,13 +44,6 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
                     rs.getInt("Customer_ID"),
                     rs.getInt("User_ID"),
                     rs.getInt("Contact_ID")));
-            /*
-            if(ContactsCache.isCached && AppointmentsCache.isCached){
-
-            }else{
-
-            }
-             */
         }
         isCached = true;
     }

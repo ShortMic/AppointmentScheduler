@@ -39,7 +39,6 @@ import java.util.ResourceBundle;
 public class AddAppointmentController implements Initializable{
 
     @FXML
-    public Text appTitleLabel;
     public Alert alert;
     public TextField locationTextField;
     public TextField titleTextField;
@@ -73,18 +72,6 @@ public class AddAppointmentController implements Initializable{
         comboFields.add(userIdMenuBtn);
         comboFields.add(contactMenuBtn);
         comboFields.add(customerIDMenuBtn);
-        //customerIDMenuBtn = new ComboBox<CustomerTable>();
-//        menuSelection = new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent actionEvent) {
-//                ((MenuButton)actionEvent.getSource()).setText(((MenuItem)actionEvent.getSource()).getText());
-//            }
-//        };
-//        userIdMenuBtn.getItems().clear();
-//        startTimeMenuBtn.getItems().clear();
-//        endTimeMenuBtn.getItems().clear();
-//        customerIDMenuBtn.getItems().clear();
-//        contactMenuBtn.getItems().clear();
         try {
             userIdMenuBtn.setItems(UsersCache.getInstance().getCache());
             userIdMenuBtn.setConverter(new StringConverter<User>() {
@@ -166,33 +153,6 @@ public class AddAppointmentController implements Initializable{
         System.out.println(userZone.toString());
     }
 
-    //TODO: Implement data validation and error handling check to see if appointment time conflicts with business hours
-    private boolean duringBusinessHours(LocalDateTime start, LocalDateTime end){
-        LocalTime opening = TimeConverter.getBusinessOpeningTime();
-        LocalTime closing = TimeConverter.getBusinessClosingTime();
-        //return  start.
-        //LocalDateTime startDateTime = LocalDateTime.of(startDateField.getValue(), LocalTime.parse(startTimeMenuBtn.getSelectionModel().getSelectedItem(),timeFormat24hr));
-
-        return false;
-    }
-
-    //TODO: Implement data validation and error handling check to see if appointment time conflicts with other appointments
-    private boolean isTimeSlotAvailable(){
-        return false;
-    }
-
-    public void onStartTimeMenuBtn(ActionEvent actionEvent) {
-    }
-
-    public void onEndTimeMenuBtn(ActionEvent actionEvent) {
-    }
-
-    public void onStartDateField(ActionEvent actionEvent) {
-    }
-
-    public void onEndDateField(ActionEvent actionEvent) {
-    }
-
     public void onCancelAppointmentBtn(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
@@ -210,7 +170,6 @@ public class AddAppointmentController implements Initializable{
                 errorMsg = "";
                 errorFlag = false;
             }else{
-                String customerId, userId, contactName, startTime, endTime;
                 errorFlag = comboFields.stream().anyMatch(comboBox -> comboBox.getSelectionModel().getSelectedItem() == null);
                 if(errorFlag){
                     alert = new Alert(Alert.AlertType.ERROR, "Combo Box Field(s) not entered. Please make a selection!");
@@ -305,9 +264,5 @@ public class AddAppointmentController implements Initializable{
             return false;
         }
         return true;
-    }
-
-    public void onUserIdMenuBtn(ActionEvent actionEvent) {
-
     }
 }

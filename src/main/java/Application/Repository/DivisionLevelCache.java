@@ -35,13 +35,6 @@ public class DivisionLevelCache implements ICachable<DivisionLevel1> {
             cache.add(new DivisionLevel1(rs.getInt("Division_ID"),
                     rs.getString("Division"),
                     rs.getInt("Country_ID")));
-            /*
-            if(ContactsCache.isCached && AppointmentsCache.isCached){
-
-            }else{
-
-            }
-             */
         }
         isCached = true;
     }
