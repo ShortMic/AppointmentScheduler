@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.Label?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="564.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Controllers.MainMenuController">
    <children>
-      <Text id="cssAppTitleLabel" fx:id="appTitleLabel" layoutX="375.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduler" textAlignment="CENTER" wrappingWidth="320.595703125">
+      <Text id="cssAppTitleLabel" fx:id="appTitleLabel" layoutX="375.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointment Scheduler" textAlignment="CENTER" underline="true" wrappingWidth="320.595703125">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -25,7 +27,7 @@
                      <children>
                         <TableView fx:id="appointmentTable" layoutX="17.0" layoutY="14.0" prefHeight="406.0" prefWidth="995.0">
                             <placeholder>
-                                <Label fx:id="appointmentTablePlaceholderLabel" text="Appointment Schedule Empty"/>
+                                <Label fx:id="appointmentTablePlaceholderLabel" text="Appointment Schedule Empty" />
                             </placeholder>
                           <columns>
                             <TableColumn fx:id="appointmentIdCol" prefWidth="50.0" text="Appt ID" />
@@ -43,6 +45,13 @@
                         <Button fx:id="addAppointmentBtn" layoutX="900.0" layoutY="427.0" mnemonicParsing="false" onAction="#onAddAppointment" text="Add Appointment" />
                         <Button fx:id="modifyAppointmentBtn" layoutX="739.0" layoutY="427.0" mnemonicParsing="false" onAction="#onModifyAppointment" text="Modify Appointment" />
                         <Button fx:id="deleteAppointmentBtn" layoutX="568.0" layoutY="427.0" mnemonicParsing="false" onAction="#onDeleteAppointment" text="Delete Appointment" />
+                        <RadioButton fx:id="viewAllRadioBtn" layoutX="17.0" layoutY="431.0" mnemonicParsing="false" onAction="#onViewAllRadioBtn" selected="true" text="View All">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="appointmentFilterBtns" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="viewMonthRadioBtn" layoutX="146.0" layoutY="431.0" mnemonicParsing="false" onAction="#onViewMonthRadioBtn" text="View Month" toggleGroup="$appointmentFilterBtns" />
+                        <RadioButton fx:id="viewWeekRadioBtn" layoutX="282.0" layoutY="431.0" mnemonicParsing="false" onAction="#onViewWeekRadioBtn" text="View Week" toggleGroup="$appointmentFilterBtns" />
                      </children>
                   </AnchorPane>
             </content>
@@ -53,7 +62,7 @@
                      <children>
                         <TableView fx:id="customerTable" layoutX="17.0" layoutY="14.0" prefHeight="406.0" prefWidth="995.0">
                             <placeholder>
-                                <Label fx:id="customerTablePlaceholderLabel" text="Customer Table Empty"/>
+                                <Label fx:id="customerTablePlaceholderLabel" text="Customer Table Empty" />
                             </placeholder>
                            <columns>
                               <TableColumn fx:id="customerIdCol" text="Customer ID" />

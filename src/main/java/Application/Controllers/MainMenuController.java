@@ -74,6 +74,10 @@ public class MainMenuController implements Initializable{
     public Label appointmentTablePlaceholderLabel;
     public Label customerTablePlaceholderLabel;
     public static boolean isInitialLogin = false;
+    public RadioButton viewAllRadioBtn;
+    public ToggleGroup appointmentFilterBtns;
+    public RadioButton viewMonthRadioBtn;
+    public RadioButton viewWeekRadioBtn;
     private Alert alert;
 
     @Override
@@ -108,6 +112,8 @@ public class MainMenuController implements Initializable{
         }
     }
 
+    //TODO: Write code that enables the user to view appointment schedules by month and week using a TableView and allows
+    // the user to choose between these two options using tabs or radio buttons for filtering appointments.
     private void populateAppointmentsTable(){
         appointmentIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("appointmentId"));
         appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("title"));
@@ -311,5 +317,14 @@ public class MainMenuController implements Initializable{
     @FXML
     public void onExit(ActionEvent actionEvent) {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).close();
+    }
+
+    public void onViewWeekRadioBtn(ActionEvent actionEvent) {
+    }
+
+    public void onViewMonthRadioBtn(ActionEvent actionEvent) {
+    }
+
+    public void onViewAllRadioBtn(ActionEvent actionEvent) {
     }
 }
