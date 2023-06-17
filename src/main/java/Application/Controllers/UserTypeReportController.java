@@ -102,9 +102,9 @@ public class UserTypeReportController implements Initializable {
     }
 
     public void onUserMenuBox(ActionEvent actionEvent) throws SQLException {
-        User selectedUser = userMenuBox.getSelectionModel().getSelectedItem();
-        ObservableList<AppointmentTable> appointmentTables = userTable.getItems();
-        appointmentTables.filtered(x -> x.getUserId() == selectedUser.getUserId());
+        //User selectedUser = userMenuBox.getSelectionModel().getSelectedItem();
+        //ObservableList<AppointmentTable> appointmentTables = userTable.getItems();
+        //appointmentTables.filtered(x -> x.getUserId() == selectedUser.getUserId());
         populateTable();
     }
 }

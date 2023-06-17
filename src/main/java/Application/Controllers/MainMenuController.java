@@ -5,6 +5,9 @@ import Application.Models.*;
 import Application.Repository.*;
 import Utilities.AppointmentQuery;
 import Utilities.CustomerQuery;
+import Utilities.TimeConverter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +25,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import static Utilities.TimeConverter.getWeekNumber;
 
 public class MainMenuController implements Initializable{
 
@@ -79,6 +84,7 @@ public class MainMenuController implements Initializable{
     public RadioButton viewMonthRadioBtn;
     public RadioButton viewWeekRadioBtn;
     private Alert alert;
+    private boolean appointmentTableInitialized = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -115,17 +121,35 @@ public class MainMenuController implements Initializable{
     //TODO: Write code that enables the user to view appointment schedules by month and week using a TableView and allows
     // the user to choose between these two options using tabs or radio buttons for filtering appointments.
     private void populateAppointmentsTable(){
-        appointmentIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("appointmentId"));
-        appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("title"));
-        appointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("description"));
-        appointmentLocationCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("location"));
-        appointmentContactCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("contactName"));
-        appointmentTypeCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("type"));
-        appointmentStartCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, LocalDateTime>("start"));
-        appointmentEndCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, LocalDateTime>("end"));
-        appointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("customerId"));
-        appointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("userId"));
-        appointmentTable.setItems(appointmentsCache.getCache());
+        if(!appointmentTableInitialized){
+            appointmentIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("appointmentId"));
+            appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("title"));
+            appointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("description"));
+            appointmentLocationCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("location"));
+            appointmentContactCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("contactName"));
+            appointmentTypeCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, String>("type"));
+            appointmentStartCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, LocalDateTime>("start"));
+            appointmentEndCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, LocalDateTime>("end"));
+            appointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("customerId"));
+            appointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("userId"));
+            appointmentTableInitialized = true;
+        }
+        if(viewMonthRadioBtn.isSelected()){
+            ObservableList<AppointmentTable> appointmentList = FXCollections.observableList(
+                    appointmentsCache.getCache().stream()
+                            .filter(x -> x.getStart().getYear() == LocalDateTime.now().getYear()
+                                    && x.getStart().getMonth().equals(LocalDateTime.now().getMonth())).toList());
+            appointmentTable.setItems(appointmentList);
+        }else if(viewWeekRadioBtn.isSelected()){
+            ObservableList<AppointmentTable> appointmentList = FXCollections.observableList(
+                    appointmentsCache.getCache().stream()
+                            .filter(x -> x.getStart().getYear() == LocalDateTime.now().getYear()
+                                    && TimeConverter.getWeekNumber(x.getStart()) ==
+                                    TimeConverter.getWeekNumber(LocalDateTime.now())).toList());
+            appointmentTable.setItems(appointmentList);
+        }else{
+            appointmentTable.setItems(appointmentsCache.getCache());
+        }
     }
 
     private void populateCustomersTable(){
@@ -320,11 +344,14 @@ public class MainMenuController implements Initializable{
     }
 
     public void onViewWeekRadioBtn(ActionEvent actionEvent) {
+        populateAppointmentsTable();
     }
 
     public void onViewMonthRadioBtn(ActionEvent actionEvent) {
+        populateAppointmentsTable();
     }
 
     public void onViewAllRadioBtn(ActionEvent actionEvent) {
+        populateAppointmentsTable();
     }
 }

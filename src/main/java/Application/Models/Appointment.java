@@ -5,6 +5,7 @@ import Utilities.TimeConverter;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.temporal.WeekFields;
 
 public class Appointment {
     private int appointmentId;
@@ -174,4 +175,5 @@ public class Appointment {
     public Month getMonth(){
         return start.getMonth();
     }
+
 }

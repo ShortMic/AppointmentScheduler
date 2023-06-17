@@ -2,6 +2,7 @@ package Utilities;
 
 import java.time.*;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.WeekFields;
 
 public abstract class TimeConverter {
     private static final ZoneId userTimeZone = ZoneId.systemDefault();
@@ -70,6 +71,11 @@ public abstract class TimeConverter {
 
     public static ZoneId getUniversalTimeZone() {
         return universalTimeZone;
+    }
+
+    public static int getWeekNumber(LocalDateTime localDateTime){
+        WeekFields weekFields = WeekFields.of(DayOfWeek.SUNDAY, 1);
+        return localDateTime.get(weekFields.weekOfWeekBasedYear());
     }
 
 }
