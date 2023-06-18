@@ -5,8 +5,15 @@ import Utilities.TimeConverter;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.temporal.WeekFields;
 
+/**
+ * The Appointment Model meant to represent and store appointment records from the database appointment table for local
+ * caching and editing. Stores LocalDateTime in original UTC format from the database and converts them to local machine
+ * time for GUI display.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public class Appointment {
     private int appointmentId;
     private String title;
@@ -172,6 +179,10 @@ public class Appointment {
         this.contactId = contactId;
     }
 
+    /**
+     * For use with the Appointment by month aggregate report.
+     * @return the month of the appointment start date
+     */
     public Month getMonth(){
         return start.getMonth();
     }

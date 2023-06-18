@@ -30,6 +30,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * The ModifyAppointmentController which is responsible for the logic behind EditAppointmentView. It helps provide I/O
+ * functionality and acts as an interface between the front end GUI and backend database and provides user data validation,
+ * error handling and local cache storage for editing pre-existing Appointment POJOs. It also pre-populates the GUI fields based
+ * on the previous screen's selected Appointment in the Appointment Table.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public class ModifyAppointmentController implements Initializable{
 
     @FXML
@@ -61,6 +70,13 @@ public class ModifyAppointmentController implements Initializable{
     private LocalDateTime start;
     private LocalDateTime end;
 
+    /**
+     * The initialize method (inherited by Initializable) which runs automatically upon loading the controller's
+     * associated fxml file in the main application class. Initializes pre-declared table view components and links associated
+     * Part collections with their respective field properties to column categories.
+     * @param url loads the url (automatically inherited and handled by the javafx framework)
+     * @param resourceBundle loads the associated resourceBundle (automatically inherited and handled by the javafx framework)
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(selectedAppointment != null) {
@@ -173,6 +189,10 @@ public class ModifyAppointmentController implements Initializable{
         }
     }
 
+    /**
+     * A private helper method meant to populate the startTimeMenuBtn and endTimeMenuBtn with a time range that complies
+     * with business hours that has automatically been converted from EST to the user's local machine time.
+     */
     private void populateTimeSelection(){
         timeSelectionList = FXCollections.observableArrayList();
         for(int i = 0; i < TimeConverter.getHoursOpen(); i++){
@@ -191,10 +211,21 @@ public class ModifyAppointmentController implements Initializable{
         System.out.println(userZone.toString());
     }
 
+    /**
+     * Event handler/listener that fires from the cancel button and redirects back to the MainMenuView screen.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     public void onCancelAppointmentBtn(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
 
+    /**
+     * Event handler/listener that fires from the Modify button and attempts to update the associated appointment
+     * and it's field details to the local cache and database.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     public void onModifyAppointmentBtn(ActionEvent actionEvent) throws IOException {
         try{
             textFieldDataValidationLogger("Title", titleTextField, "String");

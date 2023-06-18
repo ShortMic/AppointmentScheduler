@@ -2,17 +2,17 @@ package Application.Models;
 
 public class User {
 
-    //Current User
+    //Current User fields
     private static int currentUserId;
     private static String currentUserName; //unique
     private static String currentPassword;
     private static boolean assigned = false;
-    //Generic Users
+    //Generic User fields
     private int userId;
     private String userName; //unique
     private String password;
 
-    //Current User
+    //Current User Accessor methods
     public static void setCurrentUserId(int userId) {
         User.currentUserId = userId;
     }
@@ -47,6 +47,9 @@ public class User {
         return assigned;
     }
 
+    /**
+     * A static method meant to clear the current instanced user's fields when disconnecting or logging out.
+     */
     public static void clear(){
         currentUserId = 0;
         currentUserName = null;
@@ -54,7 +57,14 @@ public class User {
         assigned = false;
     }
 
-    //Generic Users
+    //Generic User constructor
+
+    /**
+     *
+     * @param userId The associated and unique user id
+     * @param userName The associated and unique user name
+     * @param password The associated user's password
+     */
     public User(int userId, String userName, String password){
         this.userId = userId;
         this.userName = userName;

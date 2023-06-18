@@ -2,6 +2,12 @@ package Utilities;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * The JDBC abstract class is a utility for securing and closing a connection to the MySQL database for the app.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public abstract class JDBC {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
@@ -13,6 +19,9 @@ public abstract class JDBC {
     private static String password = "Passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
 
+    /**
+     * Opens the connection with the back end database
+     */
     public static void openConnection()
     {
         try {
@@ -26,6 +35,9 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Closes the connection with the back end database
+     */
     public static void closeConnection() {
         try {
             connection.close();

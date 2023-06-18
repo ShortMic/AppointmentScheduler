@@ -6,6 +6,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The CustomerQuery abstract class is a utility for read and update operations on the MySQL database to populate the
+ * CustomersCache.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public abstract class UserQuery extends Queryable {
 
     public static String table = "users";
@@ -29,6 +36,13 @@ public abstract class UserQuery extends Queryable {
         return ps.executeUpdate();
     }
 
+    /**
+     * Queries the user table in the database for a specific username.
+     * @param userName the associated username to find
+     * @param password the associated password to find
+     * @return The user Id or -1 on a mismatch or failure
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     public static int select(String userName, String password) throws SQLException {
         String sql = "SELECT User_ID, User_Name, Password FROM users WHERE User_Name = ? AND Password = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

@@ -4,6 +4,13 @@ import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.WeekFields;
 
+/**
+ * The Abstract TimeConverter class is a utility that converts different timezones (e.g. the business EST time, local
+ * machine time, and database UTC time), stores business hours of operation and determines other time/date calculations.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public abstract class TimeConverter {
     private static final ZoneId userTimeZone = ZoneId.systemDefault();
     //private static final ZoneId userTimeZone = ZoneId.of("Pacific/Midway");
@@ -20,6 +27,13 @@ public abstract class TimeConverter {
         return hoursOpen;
     }
 
+    /**
+     * Utility function that determines whether a LocalDateTime range is within business hours. Converts and compares
+     * from business EST to UTC vs local machine time to UTC.
+     * @param selectedStartDateTime start date and time range
+     * @param selectedEndDateTime end date and time range
+     * @return a bool of whether the range is within business hours
+     */
     public static boolean duringBusinessHours(LocalDateTime selectedStartDateTime, LocalDateTime selectedEndDateTime){
         ZonedDateTime convertedStartTime = convertToUTC(ZonedDateTime.of(selectedStartDateTime, userTimeZone));
         ZonedDateTime convertedEndTime = convertToUTC(ZonedDateTime.of(selectedEndDateTime, userTimeZone));

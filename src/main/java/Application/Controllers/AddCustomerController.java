@@ -29,6 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * The AddCustomerController which is responsible for the logic behind AddCustomerView. It helps provide I/O
+ * functionality and acts as an interface between the front end GUI and backend database and provides user data validation,
+ * error handling and local cache storage for creating new Customer POJOs.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public class AddCustomerController implements Initializable{
     @FXML
     public TextField customerIDTextField;
@@ -46,6 +54,14 @@ public class AddCustomerController implements Initializable{
     private boolean errorFlag = false;
     public Alert alert;
 
+    /**
+     * The initialize method (inherited by Initializable) which runs automatically upon loading the controller's
+     * associated fxml file in the main application class. Initializes pre-declared table view components and links associated
+     * Part collections with their respective field properties to column categories.
+     *
+     * @param url loads the url (automatically inherited and handled by the javafx framework)
+     * @param resourceBundle loads the associated resourceBundle (automatically inherited and handled by the javafx framework)
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
@@ -71,22 +87,20 @@ public class AddCustomerController implements Initializable{
         }
     }
 
-    public void onStartTimeMenuBtn(ActionEvent actionEvent) {
-    }
-
-    public void onEndTimeMenuBtn(ActionEvent actionEvent) {
-    }
-
-    public void onStartDateField(ActionEvent actionEvent) {
-    }
-
-    public void onEndDateField(ActionEvent actionEvent) {
-    }
-
+    /**
+     * Event handler/listener that fires from the cancel button and redirects back to the MainMenuView screen.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     public void onCancelCustomerBtn(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
 
+    /**
+     * Event handler/listener that fires from the add Customer button and attempts to create and add the Customer
+     * and their field details to the local cache and database.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     */
     public void onAddCustomerBtn(ActionEvent actionEvent) {
         try{
             textFieldDataValidationLogger("Name", nameTextField, "String");
@@ -119,6 +133,12 @@ public class AddCustomerController implements Initializable{
         }
     }
 
+    /**
+     * Private helper method that logs conversion error messages for the associated text fields and their expected types
+     * @param textFieldLabel    The currently asserted text field label
+     * @param textField         The currently asserted text field object
+     * @param expectedType      The expected datatype to assert for
+     */
     private void textFieldDataValidationLogger(String textFieldLabel, TextField textField, String expectedType){
         String message = "";
         switch(expectedType){
@@ -174,6 +194,12 @@ public class AddCustomerController implements Initializable{
         return true;
     }
 
+    /**
+     * Event handler/listener that fires from the user selecting a country option in the Combo Box. Doing this enables
+     * the state/province Combo Box to be selectable and populates its choices according to the user's country selection.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws SQLException
+     */
     public void onSelectCountryBtn(ActionEvent actionEvent) throws SQLException {
         Country selectedCountry = ((ComboBox<Country>)actionEvent.getSource()).getSelectionModel().getSelectedItem();
         if(selectedCountry != null){
@@ -185,6 +211,11 @@ public class AddCustomerController implements Initializable{
         }
     }
 
+    /**
+     * Private helper method which populates the state/province Combo Box based on the countryId provided.
+     * @param countryId The country id from the selected country object.
+     * @throws SQLException
+     */
     private void populateStateMenuBtn(int countryId) throws SQLException {
         List<DivisionLevel1> filteredCountryStates = DivisionLevelCache.getInstance().getCache().stream().filter(x -> x.getCountryId() == countryId).toList();
         ObservableList<DivisionLevel1> countryStates = FXCollections.observableArrayList(new ArrayList<DivisionLevel1>(filteredCountryStates));

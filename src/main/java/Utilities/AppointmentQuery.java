@@ -6,11 +6,25 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * The AppointmentQuery abstract class is a utility for CRUD operations on the MySQL database to populate the
+ * AppointmentCache.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public abstract class AppointmentQuery extends Queryable implements IQueryable{
 
     public static String table = "appointments";
-    public static String[] fields = {"User_ID", "User_Name", "Password"};
+    public static String[] fields = {"Appointment_ID", "Title", "Description", "Location", "Contact_Name", "Type", "Start", "End", "Customer_ID", "User_ID"};
 
+    /**
+     * Queries the Appointment Table in the MySQL database for all records as well as the additional external table
+     * fields required for the GUI Appointment table display and AppointmentTable type objects.
+     *
+     * @return The result set from the query
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     public static ResultSet selectAllApptView() throws SQLException {
         String sql = "SELECT Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, End, Customer_ID, User_ID, appointments.Contact_ID" +
                 " FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID";
@@ -20,6 +34,12 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
         return ps.executeQuery();
     }
 
+    /**
+     * Queries and updates all the fields with the associated Appointment record in the Appointment Table of the MySQL database.
+     * @param appointment The associated appointment object to update in the database
+     * @return the number of rows updated
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     public static int update(Appointment appointment) throws SQLException {
         String sql = "UPDATE "+table+" SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, " +
                 "Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, " +
@@ -40,6 +60,12 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
         return ps.executeUpdate();
     }
 
+    /**
+     * Queries & creates a new record from an appointment object in the Appointment Table of the MySQL database.
+     * @param appointment The associated appointment object to insert into the database
+     * @return the number of rows affected
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     public static int create(Appointment appointment) throws SQLException {
         try{
             String sql = "INSERT INTO "+table+" (Title, Description, Location, Type, Start, End, Create_Date," +
@@ -74,6 +100,12 @@ public abstract class AppointmentQuery extends Queryable implements IQueryable{
         }
     }
 
+    /**
+     * Queries & deletes the associated Appointment record from the appointment table of the MySQL database.
+     * @param appointment The associated appointment object to delete from the database
+     * @return a boolean of if the delete was successful
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     public static boolean delete(Appointment appointment) throws SQLException {
         try{
             String sql = "DELETE FROM "+table+" WHERE "+table+".Appointment_ID = ?";

@@ -27,6 +27,14 @@ import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.*;
 
+/**
+ * The MonthTypeReportController which is responsible for the logic behind ContactTypeReportView. It generates the
+ * filtered report data which populates the GUI table view for appointments associated with the selected contact.
+ * Provides the sum of all appointments per month or per type.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public class MonthTypeReportController implements Initializable {
 
     @FXML
@@ -38,6 +46,13 @@ public class MonthTypeReportController implements Initializable {
     public TableColumn<Map.Entry<String, Integer>, String> typeCol;
     public TableColumn<Map.Entry<String, Integer>, Integer> typeQtyCol;
 
+    /**
+     * The initialize method (inherited by Initializable) which runs automatically upon loading the controller's
+     * associated fxml file in the main application class. Initializes pre-declared table view components and links associated
+     * Part collections with their respective field properties to column categories.
+     * @param url loads the url (automatically inherited and handled by the javafx framework)
+     * @param resourceBundle loads the associated resourceBundle (automatically inherited and handled by the javafx framework)
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<Month> months = FXCollections.observableArrayList(new ArrayList<Month>(Arrays.stream(Month.values()).toList()));
@@ -73,6 +88,11 @@ public class MonthTypeReportController implements Initializable {
         typeTable.setItems(filteredAppointmentTypes);
     }
 
+    /**
+     * Event handler/listener that fires from the main menu button and redirects back to the MainMenuView screen.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     public void onMainMenuBtn(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }

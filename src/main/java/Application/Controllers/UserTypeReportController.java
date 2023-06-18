@@ -38,7 +38,13 @@ public class UserTypeReportController implements Initializable {
     public TableColumn<AppointmentTable, Integer> customerIdCol;
     private boolean tableInitialized = false;
 
-
+    /**
+     * The initialize method (inherited by Initializable) which runs automatically upon loading the controller's
+     * associated fxml file in the main application class. Initializes pre-declared table view components and links associated
+     * Part collections with their respective field properties to column categories.
+     * @param url loads the url (automatically inherited and handled by the javafx framework)
+     * @param resourceBundle loads the associated resourceBundle (automatically inherited and handled by the javafx framework)
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -65,6 +71,11 @@ public class UserTypeReportController implements Initializable {
         }
     }
 
+    /**
+     * A private helper method to populate the table with the filtered custom report data based on the user selection made
+     * in the Contact Combo Box.
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     private void populateTable() throws SQLException {
         if(!userMenuBox.getSelectionModel().isEmpty()){
             User selectedUser = userMenuBox.getSelectionModel().getSelectedItem();
@@ -97,14 +108,22 @@ public class UserTypeReportController implements Initializable {
         }
     }
 
+    /**
+     * Event handler/listener that fires from the main menu button and redirects back to the MainMenuView screen.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     public void onMainMenuBtn(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
 
+    /**
+     * Event handler/listener that fires from the Contact Combo Box and provides a filter for the data displayed on the
+     * table based on the selection.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     public void onUserMenuBox(ActionEvent actionEvent) throws SQLException {
-        //User selectedUser = userMenuBox.getSelectionModel().getSelectedItem();
-        //ObservableList<AppointmentTable> appointmentTables = userTable.getItems();
-        //appointmentTables.filtered(x -> x.getUserId() == selectedUser.getUserId());
         populateTable();
     }
 }

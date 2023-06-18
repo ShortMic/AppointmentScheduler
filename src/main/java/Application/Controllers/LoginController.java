@@ -24,6 +24,13 @@ import java.util.ResourceBundle;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+/**
+ * The LoginController providing logic behind LoginView with error handling and login credential verification that helps
+ * control application access to intended users.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public class LoginController implements Initializable {
 
     public static Locale locale;
@@ -49,6 +56,13 @@ public class LoginController implements Initializable {
     @FXML
     public Label zoneIdLabel;
 
+    /**
+     * The initialize method (inherited by Initializable) which runs automatically upon loading the controller's
+     * associated fxml file in the main application class. Initializes pre-declared table view components and links associated
+     * Part collections with their respective field properties to column categories.
+     * @param url loads the url (automatically inherited and handled by the javafx framework)
+     * @param resourceBundle loads the associated resourceBundle (automatically inherited and handled by the javafx framework)
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
@@ -76,6 +90,10 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * Creates (or appends the pre-existing) login_activity.txt logging file at the application's root.
+     * @param message Custom detailed log message passed in
+     */
     public void createLoginLog(String message) {
         String logFileName = "login_activity.txt";
         try (PrintWriter printWriter = new PrintWriter(new FileWriter(logFileName, true))) {
@@ -86,6 +104,12 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * Private helper method that translates the passed in argument to the current local machine language resource bundle
+     * (provided the locale language is supported).
+     * @param t The text to translate
+     * @return Translated String
+     */
     private String translate(Text t){
         String[] str = t.getText().toString().split("\\s+");
         String translation = "";
@@ -100,6 +124,12 @@ public class LoginController implements Initializable {
         return translation;
     }
 
+    /**
+     * Private helper method that translates the passed in argument to the current local machine language resource bundle
+     * (provided the locale language is supported).
+     * @param t The Label to translate
+     * @return Translated String
+     */
     private String translate(Label t){
         String[] str = t.getText().toString().split("\\s+");
         String translation = "";
@@ -114,6 +144,12 @@ public class LoginController implements Initializable {
         return translation;
     }
 
+    /**
+     * Private helper method that translates the passed in argument to the current local machine language resource bundle
+     * (provided the locale language is supported).
+     * @param t The String to translate
+     * @return Translated String
+     */
     private String translate(String t){
         String[] str = t.split("\\s+");
         String translation = "";
@@ -128,11 +164,23 @@ public class LoginController implements Initializable {
         return translation;
     }
 
+    /**
+     * Private helper method that loads the main menu and sets the isInitialLogin flag to true for the initial login upcoming
+     * appointment alert window prompt
+     * @param e Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     private void loadMainMenu(ActionEvent e) throws IOException {
         MainMenuController.isInitialLogin = true;
         ((Stage)(((Button)e.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(ApplicationMain.class.getResource("MainMenuView.fxml")).load(), 1070, 564));
     }
 
+    /**
+     * The Login Controller's credential validation method. Provides error handling and verifies user credential with
+     * the User Database and grants or denies access to the application accordingly.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     @FXML
     public void onLoginSubmit(ActionEvent actionEvent) throws SQLException {
         int userId = 0;

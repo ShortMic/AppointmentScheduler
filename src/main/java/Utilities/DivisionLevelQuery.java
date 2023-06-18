@@ -4,17 +4,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The DivisionLevelQuery abstract class is a utility for CRUD operations on the MySQL database to populate the
+ * DivisionLevelCache.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public abstract class DivisionLevelQuery extends Queryable {
 
     public static String table = "first_level_divisions";
     public static String[] fields = {"User_ID", "User_Name", "Password"};
 
-    public static ResultSet selectAllApptView() throws SQLException {
-        String sql = "SELECT Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, End, Customer_ID, User_ID, appointments.Contact_ID" +
-                " FROM appointments INNER JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID"; //WHERE User_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        //Filter by current user
-        //ps.setInt(1, UserQuery.userID);
-        return ps.executeQuery();
-    }
 }

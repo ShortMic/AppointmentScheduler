@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,11 +22,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static Utilities.TimeConverter.getWeekNumber;
-
+/**
+ * The MainMenuController which is responsible for the logic behind MainMenuView. It helps provide the data for the
+ * displayed tables for the GUI as well as buttons for functionality and routing to add, modify and reporting screens.
+ * Provides robust error handling and local machine time conversion from UTC timestamps directly from the cache/database.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public class MainMenuController implements Initializable{
 
     @FXML
@@ -86,6 +90,13 @@ public class MainMenuController implements Initializable{
     private Alert alert;
     private boolean appointmentTableInitialized = false;
 
+    /**
+     * The initialize method (inherited by Initializable) which runs automatically upon loading the controller's
+     * associated fxml file in the main application class. Initializes pre-declared table view components and links associated
+     * Part collections with their respective field properties to column categories.
+     * @param url loads the url (automatically inherited and handled by the javafx framework)
+     * @param resourceBundle loads the associated resourceBundle (automatically inherited and handled by the javafx framework)
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -118,8 +129,10 @@ public class MainMenuController implements Initializable{
         }
     }
 
-    //TODO: Write code that enables the user to view appointment schedules by month and week using a TableView and allows
-    // the user to choose between these two options using tabs or radio buttons for filtering appointments.
+    /**
+     * Private helper method that populates the GUI's Appointment Table view based on the current filter selection and
+     * data pulled from the local cache.
+     */
     private void populateAppointmentsTable(){
         if(!appointmentTableInitialized){
             appointmentIdCol.setCellValueFactory(new PropertyValueFactory<AppointmentTable, Integer>("appointmentId"));
@@ -152,6 +165,9 @@ public class MainMenuController implements Initializable{
         }
     }
 
+    /**
+     * Private helper method that populates the GUI's Customer Table view based on data pulled from the local cache.
+     */
     private void populateCustomersTable(){
         customerIdCol.setCellValueFactory(new PropertyValueFactory<CustomerTable, Integer>("customerId"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<CustomerTable, String>("customerName"));
@@ -163,6 +179,10 @@ public class MainMenuController implements Initializable{
         customerTable.setItems(customersCache.getCache());
     }
 
+    /**
+     * Private helper method used in the controller's initialization method to populate all local cache model collections to reduce database
+     * server calls and for quick ease of access
+     */
     private void populateLocalCaches(){
         try {
             contactsCache = ContactsCache.getInstance();
@@ -175,12 +195,24 @@ public class MainMenuController implements Initializable{
         System.out.println("Local Caches populated!");
     }
 
+    /**
+     * Event handler/listener that fires from the Add button and directs to the AddAppointmentView screen.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     @FXML
     public void onAddAppointment(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(
                 ApplicationMain.class.getResource("AddAppointmentView.fxml")).load(), 600, 400));
     }
 
+    /**
+     * Event handler/listener that fires from the Modify button and directs to the EditAppointmentView screen assigning
+     * the ModifyAppointmentController.selectedAppointment to the selected Appointment on the Appointment table or alerts
+     * the user to make a valid selection.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     @FXML
     public void onModifyAppointment(ActionEvent actionEvent) throws IOException {
         try{
@@ -199,6 +231,11 @@ public class MainMenuController implements Initializable{
         }
     }
 
+    /**
+     * Deletes the selected Appointment on the Appointment Table and updates the MySQL database accordingly. Alerts
+     * the user to make a valid selection if nothing is selected.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     */
     @FXML
     public void onDeleteAppointment(ActionEvent actionEvent) {
         try{
@@ -261,12 +298,24 @@ public class MainMenuController implements Initializable{
         }
     }
 
+    /**
+     * Event handler/listener that fires from the Add button and directs to the AddCustomerView screen.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     @FXML
     public void onAddCustomer(ActionEvent actionEvent) throws IOException {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(
                 ApplicationMain.class.getResource("AddCustomerView.fxml")).load(), 464, 400));
     }
 
+    /**
+     * Event handler/listener that fires from the Modify button and directs to the ModifyCustomerView screen assigning
+     * the ModifyCustomerController.selectedCustomer to the selected Customer on the Customer table or alerts
+     * the user to make a valid selection.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     @FXML
     public void onModifyCustomer(ActionEvent actionEvent) {
         try{
@@ -286,7 +335,11 @@ public class MainMenuController implements Initializable{
         }
     }
 
-
+    /**
+     * Deletes the selected Customer on the Customer Table and updates the MySQL database accordingly. Alerts
+     * the user to make a valid selection if nothing is selected.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     */
     @FXML
     public void onDeleteCustomer(ActionEvent actionEvent) {
         try{
@@ -327,30 +380,58 @@ public class MainMenuController implements Initializable{
         }
     }
 
+    /**
+     * Private helper method used in onDeleteCustomer to check if selected Customer has any Appointments to prevent
+     * invalid or redundant appointments and to emulate and comply with the Database Tables delete restrictions.
+     * @param customer selected customer from the CustomerTable
+     * @return boolean of if selected customer has an existing appointment
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     private boolean hasAppointment(CustomerTable customer) throws SQLException {
         return AppointmentsCache.getInstance().getCache().stream()
                 .anyMatch(x -> x.getCustomerId() == customer.getCustomerId());
     }
 
+    /**
+     * Event handler/listener that fires from the Reports button and directs to the ReportsView screen assigning
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     * @throws IOException An exception for unintended input/output from/for the user when accepting and parsing text from the user
+     */
     @FXML
     public void onOpenReports(ActionEvent actionEvent) throws IOException {
         ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).setScene(new Scene(new FXMLLoader(
                 ApplicationMain.class.getResource("ReportAlertView.fxml")).load(), 365, 180));
     }
 
+    /**
+     * Event handler/listener that fires from the Exit button and exits the program.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     */
     @FXML
     public void onExit(ActionEvent actionEvent) {
         ((Stage)(((Button)actionEvent.getSource()).getScene().getWindow())).close();
     }
 
+    /**
+     * Event handler/listener that fires from the Weekly radio button and filters the Appointment Table accordingly.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     */
     public void onViewWeekRadioBtn(ActionEvent actionEvent) {
         populateAppointmentsTable();
     }
 
+    /**
+     * Event handler/listener that fires from the Monthly radio button and filters the Appointment Table accordingly.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     */
     public void onViewMonthRadioBtn(ActionEvent actionEvent) {
         populateAppointmentsTable();
     }
 
+    /**
+     * Event handler/listener that fires from the All radio button and filters the Appointment Table accordingly.
+     * @param actionEvent Pre-generated and auto-handled event argument.
+     */
     public void onViewAllRadioBtn(ActionEvent actionEvent) {
         populateAppointmentsTable();
     }

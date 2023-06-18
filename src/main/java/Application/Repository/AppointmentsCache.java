@@ -11,6 +11,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+/**
+ * The AppointmentsCache is a singleton like instanced local cache object meant to store the collection of Appointment &
+ * AppointmentTable type objects for access, reporting, deleting and editing purposes. Initially populates from the
+ * database and has schedule error validation.
+ *
+ * @author Michael Short
+ * @version 1.0
+ */
 public class AppointmentsCache implements ICachable<AppointmentTable> {
 
     private static AppointmentsCache instance;
@@ -18,10 +26,19 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
     public FilteredList<Appointment> filteredAppointments;
     public static boolean isCached = false;
 
+    /**
+     * Private constructor only used within getInstance if the AppointmentCache has not been initialized
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     private AppointmentsCache() throws SQLException {
         populateCache();
     }
 
+    /**
+     * Creates or supplies the AppointmentCache. Acts as a public accessor for the cache.
+     * @return The singleton like instance of the AppointmentsCache
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     public static AppointmentsCache getInstance() throws SQLException {
         if(instance == null){
             instance = new AppointmentsCache();
@@ -29,6 +46,10 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
         return instance;
     }
 
+    /**
+     * Populates the Appointments Cache from the MySQL Database, storing a collection of AppointmentTable objects
+     * @throws SQLException An exception for unexpected SQL issues (i.e. connectivity problems, query syntax errors, data type errors, etc)
+     */
     public void populateCache() throws SQLException {
         cache = FXCollections.observableArrayList();
         ResultSet rs = AppointmentQuery.selectAllApptView();
@@ -48,10 +69,21 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
         isCached = true;
     }
 
+    /**
+     * Accessor method for the local AppointmentTable collection cache
+     * @return the Appointment local cache
+     */
     public ObservableList<AppointmentTable> getCache() {
         return cache;
     }
 
+    /**
+     * Provides an error handling flag for any specific LocalDateTime ranges to see if the range conflicts with
+     * pre-existing appointments in the collection
+     * @param start The start appointment LocalDateTime range
+     * @param end The end appointment LocalDateTime range
+     * @return boolean of if the time range conflicts with a pre-existing schedule
+     */
     public boolean timeSlotConflict(LocalDateTime start, LocalDateTime end){
         return cache.stream().anyMatch(x -> (start.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
                 || (end.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
@@ -59,6 +91,15 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
                 || (start.isAfter(x.getStart()) && end.isBefore(x.getEnd())));
     }
 
+    /**
+     * Provides an error handling flag for any specific LocalDateTime ranges to see if the range conflicts with
+     * pre-existing appointments in the collection. Excludes the id argument passed in on the basis of the associated
+     * appointment is the one being edited.
+     * @param start The start appointment LocalDateTime range
+     * @param end The end appointment LocalDateTime range
+     * @param id The id associated with the appointment time range to exclude
+     * @return boolean of if the time range conflicts with a pre-existing schedule
+     */
     public boolean timeSlotConflict(LocalDateTime start, LocalDateTime end, int id){
         return cache.stream().anyMatch(x -> {
             if(x.getAppointmentId() != id) {
