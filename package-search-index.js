@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"AppointmentScheduler","l":"Application"},{"m":"AppointmentScheduler","l":"Application.Controllers"},{"m":"AppointmentScheduler","l":"Application.Models"},{"m":"AppointmentScheduler","l":"Application.Repository"},{"m":"AppointmentScheduler","l":"Utilities"}];updateSearchResults();
