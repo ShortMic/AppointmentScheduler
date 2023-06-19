@@ -219,6 +219,10 @@ public class AddAppointmentController implements Initializable{
                         alert = new Alert(Alert.AlertType.ERROR, "Appointment slot conflicts with pre-existing appointment!");
                         alert.setHeaderText("Invalid Date/Time");
                         alert.show();
+                    }else if(!TimeConverter.duringBusinessHours(start, end)){
+                        alert = new Alert(Alert.AlertType.ERROR, "Appointment slot is not during business hours!");
+                        alert.setHeaderText("Invalid Date/Time");
+                        alert.show();
                     }else{
                         //temporary id to replace on insert update query
                         Appointment appointment = new Appointment(-1, titleTextField.getText(), descriptionTextField.getText(),

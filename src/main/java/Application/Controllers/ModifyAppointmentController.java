@@ -258,6 +258,10 @@ public class ModifyAppointmentController implements Initializable{
                         alert = new Alert(Alert.AlertType.ERROR, "Appointment slot conflicts with pre-existing appointment!");
                         alert.setHeaderText("Invalid Date/Time");
                         alert.show();
+                    }else if(!TimeConverter.duringBusinessHours(start, end)){
+                        alert = new Alert(Alert.AlertType.ERROR, "Appointment slot is not during business hours!");
+                        alert.setHeaderText("Invalid Date/Time");
+                        alert.show();
                     }else{
                         int appointmentId = Integer.parseInt(appointmentIdTextField.getText());
                         AppointmentTable appointment = AppointmentsCache.getInstance().getCache().stream().filter(x -> x.getAppointmentId() == appointmentId).findFirst().orElse(null);

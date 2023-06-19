@@ -39,11 +39,12 @@ public abstract class TimeConverter {
         ZonedDateTime convertedEndTime = convertToUTC(ZonedDateTime.of(selectedEndDateTime, userTimeZone));
         ZonedDateTime utcOpeningDateTime = convertToUTC(ZonedDateTime.of(LocalDateTime.of(convertedStartTime.toLocalDate(),
                 businessOpeningTime),businessTimeZone));
-        ZonedDateTime utcClosingDateTime = convertToUTC(ZonedDateTime.of(LocalDateTime.of(convertedEndTime.toLocalDate(),
-                businessClosingTime),businessTimeZone));
-        return (((convertedStartTime.isEqual(utcOpeningDateTime) || convertedStartTime.isAfter(utcOpeningDateTime))
-                && convertedStartTime.isBefore(utcClosingDateTime))
-        && (convertedEndTime.isBefore(utcClosingDateTime) || convertedEndTime.isEqual(utcClosingDateTime)));
+        ZonedDateTime utcClosingDateTime = utcOpeningDateTime.plusHours((long)hoursOpen);
+                //convertToUTC(ZonedDateTime.of(LocalDateTime.of(convertedEndTime.toLocalDate(), businessClosingTime),businessTimeZone));
+        boolean startIsWithinRange = ((convertedStartTime.isEqual(utcOpeningDateTime) || convertedStartTime.isAfter(utcOpeningDateTime))
+                && convertedStartTime.isBefore(utcClosingDateTime));
+        boolean endIsWithinRange = ((convertedEndTime.isBefore(utcClosingDateTime) || convertedEndTime.isEqual(utcClosingDateTime)) && convertedEndTime.isAfter(utcOpeningDateTime));
+        return (startIsWithinRange && endIsWithinRange);
     }
 
     public static ZoneOffset getOffset(){
