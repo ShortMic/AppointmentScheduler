@@ -212,7 +212,8 @@ public class AddCustomerController implements Initializable{
     }
 
     /**
-     * Private helper method which populates the state/province Combo Box based on the countryId provided.
+     * Private helper method which populates the state/province Combo Box based on the countryId provided. Uses a lambda
+     * funciton to filter the divisionlevel selection accordingly to the selected country.
      * @param countryId The country id from the selected country object.
      * @throws SQLException
      */

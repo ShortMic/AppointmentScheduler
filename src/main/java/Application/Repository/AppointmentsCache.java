@@ -79,7 +79,8 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
 
     /**
      * Provides an error handling flag for any specific LocalDateTime ranges to see if the range conflicts with
-     * pre-existing appointments in the collection
+     * pre-existing appointments in the collection. Uses a lambda function to return a bool of whether any appointments
+     * fall under the conflicting time slot criteria.
      * @param start The start appointment LocalDateTime range
      * @param end The end appointment LocalDateTime range
      * @return boolean of if the time range conflicts with a pre-existing schedule

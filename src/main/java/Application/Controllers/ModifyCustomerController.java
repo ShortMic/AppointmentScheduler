@@ -54,7 +54,8 @@ public class ModifyCustomerController implements Initializable{
     /**
      * The initialize method (inherited by Initializable) which runs automatically upon loading the controller's
      * associated fxml file in the main application class. Initializes pre-declared table view components and links associated
-     * Part collections with their respective field properties to column categories.
+     * Part collections with their respective field properties to column categories. Uses a lambda function for filtering
+     * the country cache dataset for the correct selected item as well as filtering the divisioncache for valid options to populate based on the country.
      * @param url loads the url (automatically inherited and handled by the javafx framework)
      * @param resourceBundle loads the associated resourceBundle (automatically inherited and handled by the javafx framework)
      */
