@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * The CustomerQuery abstract class is a utility for read and update operations on the MySQL database to populate the
- * CustomersCache.
+ * The UserQuery abstract class is a utility for read and update operations on the MySQL database to populate the
+ * UserCache.
  *
  * @author Michael Short
  * @version 1.0
