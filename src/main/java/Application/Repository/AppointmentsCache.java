@@ -86,10 +86,8 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
      * @return boolean of if the time range conflicts with a pre-existing schedule
      */
     public boolean timeSlotConflict(LocalDateTime start, LocalDateTime end){
-        return cache.stream().anyMatch(x -> (start.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
-                || (end.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
-                || (start.isBefore(x.getStart()) && end.isAfter(x.getEnd()))
-                || (start.isAfter(x.getStart()) && end.isBefore(x.getEnd())));
+        return !cache.stream().allMatch(x -> ((start.isAfter(x.getEnd()) || start.isEqual(x.getEnd())) && end.isAfter(x.getEnd())
+                || ((end.isBefore(x.getStart()) || end.isEqual(x.getStart())) && start.isBefore(x.getEnd()))));
     }
 
     /**
@@ -102,14 +100,12 @@ public class AppointmentsCache implements ICachable<AppointmentTable> {
      * @return boolean of if the time range conflicts with a pre-existing schedule
      */
     public boolean timeSlotConflict(LocalDateTime start, LocalDateTime end, int id){
-        return cache.stream().anyMatch(x -> {
+        return !cache.stream().allMatch(x -> {
             if(x.getAppointmentId() != id) {
-                return ((start.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
-                    || (end.isBefore(x.getEnd()) && start.isAfter(x.getStart()))
-                    || (start.isBefore(x.getStart()) && end.isAfter(x.getEnd()))
-                    || (start.isAfter(x.getStart()) && end.isBefore(x.getEnd())));
+                return ((start.isAfter(x.getEnd()) || start.isEqual(x.getEnd())) && end.isAfter(x.getEnd())
+                        || ((end.isBefore(x.getStart()) || end.isEqual(x.getStart())) && start.isBefore(x.getEnd())));
             }else{
-                return false;
+                return true;
             }
         });
     }
