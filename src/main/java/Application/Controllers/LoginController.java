@@ -1,6 +1,7 @@
 package Application.Controllers;
 
 import Application.ApplicationMain;
+import Utilities.TimeConverter;
 import Utilities.UserQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,6 +68,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         rb = resourceBundle;
         if(DEBUG){Locale.setDefault(new Locale("fr","FR"));}
+        zoneIdLabel.setText(TimeConverter.getUserTimeZone().toString());
         locale = Locale.getDefault();
         String localeCountry = locale.getCountry();
         String localeLanguage = locale.getLanguage();
@@ -85,8 +87,6 @@ public class LoginController implements Initializable {
         }
         if(localeCountry.isEmpty()){
             System.out.println("Locale unrecognized! Defaulting country to US");
-        }else{
-            zoneIdLabel.setText(locale.toString());
         }
     }
 

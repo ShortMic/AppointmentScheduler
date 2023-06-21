@@ -25,6 +25,6 @@
       </Text>
       <Button id="cssSubmitCredentialsButton" fx:id="submitCredentialsButton" layoutX="275.0" layoutY="260.0" mnemonicParsing="false" onAction="#onLoginSubmit" text="Enter" />
       <Label id="cssLocaleLabel" fx:id="localeLabel" layoutX="110.0" layoutY="129.0" text="Locale" />
-      <Label id="cssZoneIdLabel" fx:id="zoneIdLabel" layoutX="265.0" layoutY="130.0" text="US (Default)" />
+      <Label id="cssZoneIdLabel" fx:id="zoneIdLabel" layoutX="222.0" layoutY="129.0" text="US (Default)" textAlignment="CENTER" />
    </children>
 </AnchorPane>
