@@ -239,7 +239,8 @@ public class MainMenuController implements Initializable{
     @FXML
     public void onDeleteAppointment(ActionEvent actionEvent) {
         try{
-            if(appointmentTable.getSelectionModel().getSelectedItem() != null) {
+            AppointmentTable selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
+            if(selectedAppointment != null) {
                 alert = new Alert(Alert.AlertType.CONFIRMATION,
                         "Do you want to delete this appointment?");
                 alert.setHeaderText("Delete");
@@ -247,9 +248,13 @@ public class MainMenuController implements Initializable{
                         response -> {
                             if (response == ButtonType.OK) {
                                 try {
-                                    AppointmentQuery.delete(appointmentTable.getSelectionModel().getSelectedItem());
-                                    AppointmentsCache.getInstance().getCache().remove(appointmentTable.getSelectionModel().getSelectedItem());
+                                    AppointmentQuery.delete(selectedAppointment);
+                                    AppointmentsCache.getInstance().getCache().remove(selectedAppointment);
                                     tableLabelUpdater(appointmentTablePlaceholderLabel, "Appointment");
+                                    alert = new Alert(Alert.AlertType.INFORMATION,
+                                            "Appointment "+selectedAppointment.getTitle()+" (ID: "+selectedAppointment.getAppointmentId()+") has been successfully deleted");
+                                    alert.setHeaderText("Appointment Deleted");
+                                    alert.show();
                                 } catch (SQLException e) {
                                     e.printStackTrace();
                                 }
