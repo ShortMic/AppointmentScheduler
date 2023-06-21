@@ -252,7 +252,7 @@ public class MainMenuController implements Initializable{
                                     AppointmentsCache.getInstance().getCache().remove(selectedAppointment);
                                     tableLabelUpdater(appointmentTablePlaceholderLabel, "Appointment");
                                     alert = new Alert(Alert.AlertType.INFORMATION,
-                                            "Appointment "+selectedAppointment.getTitle()+" (ID: "+selectedAppointment.getAppointmentId()+") has been successfully deleted");
+                                            "Appointment "+selectedAppointment.getTitle()+" (ID: "+selectedAppointment.getAppointmentId()+", Type: "+selectedAppointment.getType()+") has been successfully deleted");
                                     alert.setHeaderText("Appointment Deleted");
                                     alert.show();
                                 } catch (SQLException e) {
